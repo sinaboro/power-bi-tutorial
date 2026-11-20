@@ -1,0 +1,12 @@
+{
+  "name": "하루커피",
+  "dataColors": ["#6F4E37", "#C08552", "#3E7C59", "#D7A86E", "#8D6E63", "#E07A5F", "#4E6E81", "#B5A642"],
+  "background": "#FFFFFF",
+  "foreground": "#3E2723",
+  "tableAccent": "#6F4E37",
+  "textClasses": {
+    "title": { "fontFace": "Malgun Gothic", "color": "#3E2723", "fontSize": 13 },
+    "label": { "fontFace": "Malgun Gothic" },
+    "callout": { "fontFace": "Malgun Gothic", "color": "#6F4E37" }
+  }
+}
