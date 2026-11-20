@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>6장. 슬라이서와 서식 - 보기 좋고 쓰기 쉬운 보고서 - Power BI 기초</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="6장. 슬라이서와 서식 - 보기 좋고 쓰기 쉬운 보고서 - Power BI 기초"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>기초</b></a><span class="sp"></span>
+<a class="btn hide-s" href="../index.html#chapters">목차</a>
+<a class="btn" href="../PowerBI_%EA%B8%B0%EC%B4%88_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF</a>
+<a class="btn" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><a href="ch00.html">0장 과정 안내</a><a href="ch01.html">1장 데이터 불러오기</a><a href="ch02.html">2장 Power Query 정리</a><a href="ch03.html">3장 관계와 날짜 테이블</a><a href="ch04.html">4장 측정값 (DAX)</a><a href="ch05.html">5장 차트 만들기</a><a href="ch06.html" class=on>6장 슬라이서와 서식</a><a href="ch07.html">7장 대시보드 완성</a><a href="ch08.html">8장 과제 - 편의점</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내</option><option value="ch01.html">1장 데이터 불러오기</option><option value="ch02.html">2장 Power Query 정리</option><option value="ch03.html">3장 관계와 날짜 테이블</option><option value="ch04.html">4장 측정값 (DAX)</option><option value="ch05.html">5장 차트 만들기</option><option value="ch06.html" selected>6장 슬라이서와 서식</option><option value="ch07.html">7장 대시보드 완성</option><option value="ch08.html">8장 과제 - 편의점</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="6장-슬라이서와-서식---보기-좋고-쓰기-쉬운-보고서">6장. 슬라이서와 서식 - 보기 좋고 쓰기 쉬운 보고서</h1>
+<h2 id="학습-목표">학습 목표</h2>
+<ul>
+<li>슬라이서로 보는 사람이 직접 연도·매장을 고르게 한다.</li>
+<li>서식 창에서 제목, 데이터 레이블, 표시 단위를 바꾼다.</li>
+<li>테마 파일을 불러와 보고서 전체 색을 한 번에 바꾼다.</li>
+<li>카드를 정확한 숫자로 보여 준다.</li>
+</ul>
+<h2 id="6-1-슬라이서">6-1. 슬라이서</h2>
+<p><strong>슬라이서</strong>는 보고서를 보는 사람이 누르는 "필터 단추" 다. 5장에서 차트를 눌러 거른 것을 정식 단추로 만든 것이라고 보면 된다.</p>
+<ol>
+<li>캔버스 빈 곳을 누르고 시각화 창의 <strong>슬라이서</strong> 아이콘(깔때기 달린 표 모양)을 누른다.</li>
+<li><strong>날짜 → 연도</strong> 를 <strong>필드</strong> 칸에 넣는다.</li>
+<li>오른쪽 위에 작게 놓는다.</li>
+<li>같은 방법으로 <strong>매장 → 매장명</strong> 슬라이서를 하나 더 만든다.</li>
+</ol>
+<p>슬라이서 모양을 바꾸려면 슬라이서를 고르고 시각화 창의 <strong>시각적 개체 서식 지정</strong>(붓 모양 아이콘) → <strong>슬라이서 설정 → 옵션 → 스타일</strong> 에서 고른다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>스타일</th>
+<th>모양</th>
+<th>쓰는 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>세로 목록</td>
+<td>체크 상자 목록</td>
+<td>항목이 몇 개 안 될 때</td>
+</tr>
+<tr>
+<td>타일</td>
+<td>단추가 가로로 나열</td>
+<td>연도처럼 짧은 항목</td>
+</tr>
+<tr>
+<td><strong>드롭다운</strong></td>
+<td>누르면 펼쳐지는 목록</td>
+<td>자리를 아끼고 싶을 때 (이 과정)</td>
+</tr>
+</tbody>
+</table></div>
+<p>슬라이서에서 <strong>2025</strong> 를 고르면 페이지의 모든 차트가 2025년 숫자로 바뀐다. <strong>Ctrl</strong> 을 누른 채 고르면 여러 개를 고를 수 있다.</p>
+<blockquote class="note">
+<p><strong>필터 창 vs 슬라이서</strong> 오른쪽 <strong>필터</strong> 창에도 조건을 걸 수 있다. 필터 창은 만드는 사람이 "이 보고서는 항상 2024년 이후만" 처럼 고정하는 데, 슬라이서는 보는 사람이 바꿔 보는 데 쓴다.</p>
+</blockquote>
+<h2 id="6-2-서식-창-둘러보기">6-2. 서식 창 둘러보기</h2>
+<p>시각적 개체를 하나 고르고 시각화 창 위쪽의 두 번째 아이콘 <strong>시각적 개체 서식 지정</strong>(붓 모양)을 누른다.</p>
+<figure><a href="../images/ui_format.png" target="_blank"><img src="../images/ui_format.png" alt="매장별 매출 차트의 서식 창" loading="lazy"></a><figcaption>매장별 매출 차트의 서식 창</figcaption></figure>
+<p>서식 창은 두 탭으로 나뉜다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>탭</th>
+<th>바꾸는 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>시각적 개체</strong></td>
+<td>그 차트만의 설정 - 축, 데이터 레이블, 색, 범례</td>
+</tr>
+<tr>
+<td><strong>일반</strong></td>
+<td>모든 시각적 개체 공통 - 제목, 테두리, 배경, 크기</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="6-3-제목-데이터-레이블-표시-단위">6-3. 제목, 데이터 레이블, 표시 단위</h2>
+<p><strong>매장별 매출</strong> 막대 차트를 고르고 차례로 바꾼다.</p>
+<ol>
+<li><strong>일반 → 제목 → 텍스트</strong> 를 <code>매장별 매출 (백만 원)</code> 으로.</li>
+<li><strong>시각적 개체 → 데이터 레이블</strong> 을 <strong>켜기</strong>. 막대 위에 값이 나온다.</li>
+<li><strong>데이터 레이블 → 값 → 표시 단위</strong> 를 <strong>백만</strong>. <code>866백만</code> 처럼 보인다.</li>
+<li><strong>Y축 → 값 → 표시 단위</strong> 도 <strong>백만</strong>.</li>
+</ol>
+<p><strong>도넛형 차트</strong>는 비율이 중요하다.</p>
+<ol>
+<li><strong>시각적 개체 → 세부 정보 레이블 → 옵션 → 레이블 내용</strong> 을 <strong>총 퍼센트</strong> 로.</li>
+<li>가운데 큰 숫자(합계)가 거슬리면 <strong>시각적 개체 → 중앙값</strong> 을 끈다.</li>
+</ol>
+<p><strong>카드</strong>는 정확한 숫자로 보여 준다.</p>
+<ol>
+<li>카드를 고르고 <strong>시각적 개체 → 설명 → 값 → 표시 단위</strong> 를 <strong>없음</strong> 으로. <code>2십억</code> 이 <code>2,116,506,700</code> 이 된다.</li>
+</ol>
+<blockquote class="note">
+<p>메뉴 이름(설명, 세부 정보 레이블, 중앙값 등)은 차트 종류와 Power BI 버전에 따라 조금 다르다. 서식 창 위쪽의 <strong>검색</strong> 칸에 <code>표시 단위</code> 처럼 바꾸고 싶은 것을 치면 바로 찾아 준다.</p>
+</blockquote>
+<h2 id="6-4-테마---보고서-전체-색-바꾸기">6-4. 테마 - 보고서 전체 색 바꾸기</h2>
+<p>차트마다 색을 바꾸는 대신 <strong>테마</strong>로 한 번에 바꾼다.</p>
+<ol>
+<li>리본 <strong>보기 → 테마</strong> 의 ▾ (테마 목록 펼치기).</li>
+<li>기본 테마 중 하나를 골라 보자. 모든 차트의 색이 한꺼번에 바뀐다.</li>
+<li>목록 아래쪽 <strong>테마 찾아보기</strong> → <code>C:\study\power-bi-tutorial\data\하루커피_테마.json</code> → <strong>열기</strong>.</li>
+</ol>
+<p>하루커피 테마는 커피색(갈색) 계열이다. 테마 파일은 색과 글꼴을 적은 간단한 JSON 글자 파일이다.</p>
+<!-- file: data/하루커피_테마.json -->
+
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;하루커피&quot;,
+  &quot;dataColors&quot;: [&quot;#6F4E37&quot;, &quot;#C08552&quot;, &quot;#3E7C59&quot;, &quot;#D7A86E&quot;, &quot;#8D6E63&quot;, &quot;#E07A5F&quot;, &quot;#4E6E81&quot;, &quot;#B5A642&quot;],
+  &quot;background&quot;: &quot;#FFFFFF&quot;,
+  &quot;foreground&quot;: &quot;#3E2723&quot;,
+  &quot;tableAccent&quot;: &quot;#6F4E37&quot;,
+  &quot;textClasses&quot;: {
+    &quot;title&quot;: { &quot;fontFace&quot;: &quot;Malgun Gothic&quot;, &quot;color&quot;: &quot;#3E2723&quot;, &quot;fontSize&quot;: 13 },
+    &quot;label&quot;: { &quot;fontFace&quot;: &quot;Malgun Gothic&quot; },
+    &quot;callout&quot;: { &quot;fontFace&quot;: &quot;Malgun Gothic&quot;, &quot;color&quot;: &quot;#6F4E37&quot; }
+  }
+}
+</code></pre>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>항목</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dataColors</code></td>
+<td>차트가 차례로 쓰는 색 8개 (첫 색 <code>#6F4E37</code> = 커피색)</td>
+</tr>
+<tr>
+<td><code>background</code>, <code>foreground</code></td>
+<td>배경색, 글자색</td>
+</tr>
+<tr>
+<td><code>textClasses</code></td>
+<td>제목·레이블 글꼴과 크기</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="note">
+<p>테마 JSON 을 메모장으로 열어 <code>dataColors</code> 의 색 코드를 바꾸고 다시 불러오면 나만의 테마가 된다.</p>
+</blockquote>
+<h2 id="6-5-페이지-정리">6-5. 페이지 정리</h2>
+<p>5장의 매출 분석 페이지를 이렇게 정리한다.</p>
+<ol>
+<li>리본 <strong>삽입 → 텍스트 상자</strong> 로 제목 <code>하루커피 매출 대시보드</code> (글꼴 크기 22, 굵게).</li>
+<li>슬라이서 두 개를 오른쪽 위에.</li>
+<li>카드 4개(총매출, 주문수, 객단가, 판매수량)를 제목 아래 한 줄로.</li>
+<li>그 아래 꺾은선·막대, 맨 아래 도넛·행렬.</li>
+</ol>
+<blockquote class="note">
+<p><strong>맞춤</strong> 여러 개체를 <strong>Ctrl</strong> 로 함께 고른 뒤 리본 <strong>서식 → 맞춤 → 위쪽 맞춤</strong>, <strong>가로 간격 균등</strong> 을 쓰면 줄이 깔끔하게 맞는다.</p>
+</blockquote>
+<figure><a href="../images/pbi_06_슬라이서와서식_p1.png" target="_blank"><img src="../images/pbi_06_슬라이서와서식_p1.png" alt="6장 완성" loading="lazy"></a><figcaption>6장 완성</figcaption></figure>
+<h2 id="정리">정리</h2>
+<ul>
+<li>슬라이서 = 보는 사람이 고르는 필터. 스타일은 서식 창의 슬라이서 설정에서.</li>
+<li>서식 창: <strong>시각적 개체</strong>(그 차트만) / <strong>일반</strong>(제목·테두리 등 공통). 검색 칸을 활용한다.</li>
+<li>큰 숫자는 <strong>표시 단위</strong>(없음, 천, 백만)로 읽기 쉽게.</li>
+<li>색은 <strong>테마</strong>로 한 번에. 테마 파일은 JSON.</li>
+</ul>
+<h2 id="확인-문제">확인 문제</h2>
+<ol>
+<li>연도 슬라이서에서 <strong>2024</strong> 만 고르면 카드의 총매출은 얼마인가? (부록 C 의 값과 비교)</li>
+<li>매장명 슬라이서에서 <strong>판교점</strong>, 연도 슬라이서에서 <strong>2023</strong> 을 고르면 차트들이 어떻게 보이는가? 왜 그런가?</li>
+<li>카드의 표시 단위를 <strong>천</strong> 으로 바꾸면 총매출이 어떻게 보이는가?</li>
+<li>하루커피 테마의 <code>dataColors</code> 첫 번째 색을 <code>#1F4E79</code>(남색)로 바꿔 불러오면 무엇이 바뀌는가?</li>
+</ol>
+<nav class="pager"><a href="ch05.html"><small>← 이전</small>5장 차트 만들기</a><a class="next" href="ch07.html"><small>다음 →</small>7장 대시보드 완성</a></nav>
+</article></div>
+<footer>Power BI 기초 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>부록 A. 자주 만나는 문제와 해결 - Power BI 기초</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="부록 A. 자주 만나는 문제와 해결 - Power BI 기초"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>기초</b></a><span class="sp"></span>
+<a class="btn hide-s" href="../index.html#chapters">목차</a>
+<a class="btn" href="../PowerBI_%EA%B8%B0%EC%B4%88_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF</a>
+<a class="btn" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><a href="ch00.html">0장 과정 안내</a><a href="ch01.html">1장 데이터 불러오기</a><a href="ch02.html">2장 Power Query 정리</a><a href="ch03.html">3장 관계와 날짜 테이블</a><a href="ch04.html">4장 측정값 (DAX)</a><a href="ch05.html">5장 차트 만들기</a><a href="ch06.html">6장 슬라이서와 서식</a><a href="ch07.html">7장 대시보드 완성</a><a href="ch08.html">8장 과제 - 편의점</a><a href="appA.html" class=on>부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내</option><option value="ch01.html">1장 데이터 불러오기</option><option value="ch02.html">2장 Power Query 정리</option><option value="ch03.html">3장 관계와 날짜 테이블</option><option value="ch04.html">4장 측정값 (DAX)</option><option value="ch05.html">5장 차트 만들기</option><option value="ch06.html">6장 슬라이서와 서식</option><option value="ch07.html">7장 대시보드 완성</option><option value="ch08.html">8장 과제 - 편의점</option><option value="appA.html" selected>부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="부록-a-자주-만나는-문제와-해결">부록 A. 자주 만나는 문제와 해결</h1>
+<h2 id="a-1-설치파일-열기">A-1. 설치·파일 열기</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>증상</th>
+<th>원인</th>
+<th>해결</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>처음 실행할 때 로그인 창이 뜬다</td>
+<td>Power BI 서비스용 로그인 안내</td>
+<td>이 과정은 로그인하지 않아도 된다. X 로 닫는다</td>
+</tr>
+<tr>
+<td>완성 파일(.pbix)을 열었는데 화면은 나오지만 <strong>새로 고침</strong> 하면 "파일을 찾을 수 없습니다"</td>
+<td>실습 폴더가 <code>C:\study\power-bi-tutorial</code> 이 아니다</td>
+<td>폴더를 그 위치로 옮기거나, <strong>홈 → 데이터 변환 ▾ → 데이터 원본 설정 → 원본 변경</strong> 에서 파일 경로를 내 위치로 바꾼다</td>
+</tr>
+<tr>
+<td>.pbix 를 두 번 눌러도 Power BI 가 안 열린다</td>
+<td>파일 연결이 안 됨</td>
+<td>Power BI Desktop 을 먼저 실행하고 <strong>파일 → 열기 → 이 장치 찾아보기</strong></td>
+</tr>
+<tr>
+<td>"이 파일은 최신 버전의 Power BI Desktop 에서 만들어졌습니다"</td>
+<td>내 Power BI 가 오래됨</td>
+<td>Microsoft Store 에서 업데이트한다</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="a-2-데이터-불러오기power-query">A-2. 데이터 불러오기·Power Query</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>증상</th>
+<th>원인</th>
+<th>해결</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CSV 의 한글이 <code>ì¹´íŽ˜</code> 처럼 깨진다</td>
+<td>파일 원본이 UTF-8 이 아님</td>
+<td>미리 보기에서 <strong>파일 원본 → 65001: 유니코드(UTF-8)</strong>. 이미 불러왔다면 Power Query 의 <code>원본</code> 단계 톱니바퀴에서 바꾼다</td>
+</tr>
+<tr>
+<td>모든 값이 열 하나에 붙어 있다</td>
+<td>구분 기호가 틀림</td>
+<td>미리 보기에서 <strong>구분 기호 → 쉼표</strong></td>
+</tr>
+<tr>
+<td>열 이름이 <code>Column1</code>, <code>Column2</code></td>
+<td>첫 줄이 머리글로 올라가지 않음</td>
+<td>Power Query <strong>홈 → 첫 행을 머리글로 사용</strong></td>
+</tr>
+<tr>
+<td>숫자 열의 값이 왼쪽 정렬되고 합계가 안 된다</td>
+<td>형식이 텍스트</td>
+<td>열 머리글의 형식 아이콘 → <strong>정수</strong></td>
+</tr>
+<tr>
+<td>값 바꾸기를 했는데 일부가 그대로</td>
+<td>대소문자·빈칸이 다름 (<code>Card</code>, <code>카드</code>)</td>
+<td>값 목록(열 머리글 ▾)으로 실제 값을 확인하고 하나씩 바꾼다. 빈칸은 <strong>공백 제거</strong> 먼저</td>
+</tr>
+<tr>
+<td>단계를 잘못 만들었다</td>
+<td>-</td>
+<td>적용된 단계에서 그 단계 왼쪽의 ✕. 설정만 바꾸려면 단계 오른쪽 톱니바퀴</td>
+</tr>
+<tr>
+<td>중간 단계를 지웠더니 아래 단계들에 노란 경고(오류)</td>
+<td>아래 단계가 지운 단계의 결과(열 이름 등)를 쓰고 있었음</td>
+<td>오류가 난 단계를 눌러 내용을 확인하고 다시 만든다. 단계는 <strong>맨 아래부터</strong> 지우는 것이 안전하다</td>
+</tr>
+<tr>
+<td>닫기 및 적용이 아주 오래 걸린다</td>
+<td>36만 줄을 다시 읽는 중</td>
+<td>정상. 기다린다. (작업 중에는 Power Query 미리 보기만 보고, 적용은 마지막에 한 번)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="a-3-관계dax">A-3. 관계·DAX</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>증상</th>
+<th>원인</th>
+<th>해결</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DAX 식에 "잘못된 토큰" 오류 (<code>판매[수량]</code> 근처)</td>
+<td>한글 테이블 이름을 따옴표 없이 씀</td>
+<td><code>'판매'[수량]</code> 처럼 작은따옴표로 감싼다</td>
+</tr>
+<tr>
+<td>"열 '…' 을(를) 찾을 수 없습니다"</td>
+<td>열·측정값 이름 오타, 다른 테이블의 열</td>
+<td>수식 입력줄에서 <code>'</code> 나 <code>[</code> 를 쳐서 나오는 자동 완성 목록에서 고른다</td>
+</tr>
+<tr>
+<td>관계를 만들 때 "카디널리티가 다대다" 경고</td>
+<td>일(1) 쪽 표에 같은 키가 두 번 있음 (메뉴 중복)</td>
+<td>2장 2-4 의 중복 제거를 했는지 확인한다</td>
+</tr>
+<tr>
+<td>행렬의 모든 칸에 같은 숫자</td>
+<td>관계가 없거나 엉뚱한 열끼리 이어짐</td>
+<td>모델 보기에서 선을 확인. 선을 두 번 눌러 어느 열끼리 이었는지 본다</td>
+</tr>
+<tr>
+<td>요일이 금, 목, 수 … 순서로 나온다</td>
+<td>열 기준 정렬을 안 함</td>
+<td>3장 3-5. <strong>열 도구 → 열 기준 정렬 → 요일번호</strong></td>
+</tr>
+<tr>
+<td>측정값이 엉뚱한 테이블에 들어갔다</td>
+<td>새 측정값을 누를 때 다른 테이블이 선택돼 있었음</td>
+<td>측정값을 고르고 <strong>측정값 도구 → 홈 테이블</strong> 을 판매로 바꾼다</td>
+</tr>
+<tr>
+<td>객단가 칸에 아무것도 안 나온다</td>
+<td>주문수가 0(그 조건에 판매가 없음)</td>
+<td>정상. <code>DIVIDE</code> 는 0 으로 나눌 때 빈칸을 돌려준다</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="a-4-차트보고서">A-4. 차트·보고서</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>증상</th>
+<th>원인</th>
+<th>해결</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>아이콘을 눌렀는데 새 차트가 안 생기고 기존 차트가 바뀌었다</td>
+<td>차트가 선택된 상태였음</td>
+<td><strong>Ctrl+Z</strong> 로 되돌리고, 캔버스 빈 곳을 누른 뒤 아이콘을 누른다</td>
+</tr>
+<tr>
+<td>숫자가 <code>2십억</code>, <code>0.87십억</code> 으로 보인다</td>
+<td>표시 단위가 <strong>자동</strong></td>
+<td>서식 창에서 <strong>표시 단위 → 없음</strong> 또는 <strong>백만</strong> (6장 6-3)</td>
+</tr>
+<tr>
+<td>월별 꺾은선의 X축 이름이 <code>2023-…</code> 로 잘린다</td>
+<td>글자 열(연월)을 축에 씀</td>
+<td>날짜 형식 열(<strong>월시작일</strong>)을 쓴다 (5장 5-3)</td>
+</tr>
+<tr>
+<td>숫자 열을 넣었더니 합계가 아니라 개수가 나온다</td>
+<td>열의 요약 방식이 개수</td>
+<td>필드 칸에서 그 필드의 ▾ → <strong>합계</strong>. 또는 측정값을 만들어 쓴다</td>
+</tr>
+<tr>
+<td>슬라이서를 바꿨는데 어떤 차트는 그대로</td>
+<td>상호 작용이 꺼져 있음</td>
+<td>슬라이서를 고르고 <strong>서식 → 상호 작용 편집</strong> 에서 그 차트의 필터 아이콘을 켠다</td>
+</tr>
+<tr>
+<td>다른 페이지의 슬라이서가 따로 논다</td>
+<td>동기화 안 됨</td>
+<td><strong>보기 → 슬라이서 동기화</strong> 창에서 페이지를 체크</td>
+</tr>
+<tr>
+<td>시각적 개체에 "하나 이상의 필드에 문제가 있습니다"</td>
+<td>쓰던 열·측정값의 이름을 바꾸거나 지움</td>
+<td><strong>이 항목 수정</strong> → 필드를 다시 넣는다</td>
+</tr>
+</tbody>
+</table></div>
+<nav class="pager"><a href="ch08.html"><small>← 이전</small>8장 과제 - 편의점</a><a class="next" href="appB.html"><small>다음 →</small>부록 B 용어 풀이</a></nav>
+</article></div>
+<footer>Power BI 기초 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

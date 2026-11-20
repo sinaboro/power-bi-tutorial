@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2장. Power Query 로 데이터 정리하기 - Power BI 기초</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="2장. Power Query 로 데이터 정리하기 - Power BI 기초"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>기초</b></a><span class="sp"></span>
+<a class="btn hide-s" href="../index.html#chapters">목차</a>
+<a class="btn" href="../PowerBI_%EA%B8%B0%EC%B4%88_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF</a>
+<a class="btn" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><a href="ch00.html">0장 과정 안내</a><a href="ch01.html">1장 데이터 불러오기</a><a href="ch02.html" class=on>2장 Power Query 정리</a><a href="ch03.html">3장 관계와 날짜 테이블</a><a href="ch04.html">4장 측정값 (DAX)</a><a href="ch05.html">5장 차트 만들기</a><a href="ch06.html">6장 슬라이서와 서식</a><a href="ch07.html">7장 대시보드 완성</a><a href="ch08.html">8장 과제 - 편의점</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내</option><option value="ch01.html">1장 데이터 불러오기</option><option value="ch02.html" selected>2장 Power Query 정리</option><option value="ch03.html">3장 관계와 날짜 테이블</option><option value="ch04.html">4장 측정값 (DAX)</option><option value="ch05.html">5장 차트 만들기</option><option value="ch06.html">6장 슬라이서와 서식</option><option value="ch07.html">7장 대시보드 완성</option><option value="ch08.html">8장 과제 - 편의점</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="2장-power-query-로-데이터-정리하기">2장. Power Query 로 데이터 정리하기</h1>
+<h2 id="학습-목표">학습 목표</h2>
+<ul>
+<li>Power Query 편집기를 열고 화면 구성을 안다.</li>
+<li>중복 행 제거, 빈 값 거르기, 값 바꾸기, 공백 제거로 지저분한 데이터를 정리한다.</li>
+<li>날짜·시간을 나누고, 계산된 열(매출액)을 추가하고, 필요 없는 열을 지운다.</li>
+<li>"적용된 단계" 가 무엇이고 왜 편리한지 설명할 수 있다.</li>
+</ul>
+<h2 id="2-1-왜-정리부터-해야-할까">2-1. 왜 정리부터 해야 할까</h2>
+<p>1장에서 본 판매 데이터에는 문제가 있었다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>문제</th>
+<th>그대로 두면</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>똑같은 줄이 두 번 들어간 <strong>중복 행</strong> (40줄)</td>
+<td>매출이 실제보다 크게 나온다</td>
+</tr>
+<tr>
+<td><strong>수량이 빈</strong> 줄 (30줄)</td>
+<td>매출 계산이 틀리거나 빈칸이 생긴다</td>
+</tr>
+<tr>
+<td>결제수단이 <code>카드</code> / <code>신용카드</code> / <code>CARD</code> 로 섞임</td>
+<td>결제수단별 차트에 카드가 세 덩어리로 나뉜다</td>
+</tr>
+<tr>
+<td>메뉴명 앞뒤의 <strong>빈칸</strong> (<code>바닐라라떼</code>)</td>
+<td>같은 메뉴가 다른 메뉴처럼 보인다</td>
+</tr>
+<tr>
+<td>메뉴 표의 <strong>중복</strong> (콜드브루 두 번)</td>
+<td>3장에서 관계를 만들 때 오류가 난다</td>
+</tr>
+</tbody>
+</table></div>
+<p>데이터 분석 시간의 절반 이상은 이런 정리에 쓴다는 말이 있다. Power BI 에서는 이 일을 <strong>Power Query</strong> 가 맡는다.</p>
+<h2 id="2-2-power-query-편집기-열기">2-2. Power Query 편집기 열기</h2>
+<p>1장의 <code>내카페.pbix</code> 를 열고 리본 <strong>홈 → 데이터 변환</strong> 을 누른다. 새 창으로 <strong>Power Query 편집기</strong>가 열린다.</p>
+<figure><a href="../images/ui_pq_sales.png" target="_blank"><img src="../images/ui_pq_sales.png" alt="Power Query 편집기 - 정리를 마친 판매 쿼리" loading="lazy"></a><figcaption>Power Query 편집기 - 정리를 마친 판매 쿼리</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>부분</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>왼쪽 <strong>쿼리</strong> 목록</td>
+<td>불러온 테이블 하나가 쿼리 하나 (판매, 메뉴, 매장)</td>
+</tr>
+<tr>
+<td>가운데 <strong>미리 보기</strong></td>
+<td>처음 1,000줄 정도를 보여 준다. 열 머리글을 눌러 열을 고른다</td>
+</tr>
+<tr>
+<td>위쪽 <strong>수식 입력줄</strong></td>
+<td>지금 단계가 하는 일을 M 이라는 언어로 보여 준다 (읽기만 해도 된다)</td>
+</tr>
+<tr>
+<td>오른쪽 <strong>적용된 단계</strong></td>
+<td>지금까지 한 작업이 순서대로 기록된다</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="note">
+<p>수식 입력줄이 안 보이면 Power Query 편집기의 <strong>보기</strong> 탭에서 <strong>수식 입력줄</strong> 을 체크한다.</p>
+</blockquote>
+<figure><a href="../images/fig_query_steps.png" target="_blank"><img src="../images/fig_query_steps.png" alt="적용된 단계 - 작업이 순서대로 기록된다" loading="lazy"></a><figcaption>적용된 단계 - 작업이 순서대로 기록된다</figcaption></figure>
+<p><strong>적용된 단계</strong>가 Power Query 의 핵심이다. 한 작업이 단계 하나가 되고, 단계를 누르면 그 시점의 데이터를 볼 수 있다. 잘못한 단계는 왼쪽의 ✕ 로 지우면 된다. 그리고 새로 고침할 때마다 이 단계들이 <strong>처음부터 자동으로 다시 실행</strong>된다. 다음 달에 새 CSV 가 와도 정리 작업을 다시 할 필요가 없다.</p>
+<h2 id="2-3-판매-쿼리-정리하기">2-3. 판매 쿼리 정리하기</h2>
+<p>왼쪽 쿼리 목록에서 <strong>판매</strong> 를 고른다. 오른쪽 적용된 단계에는 이미 <code>원본</code>, <code>승격된 헤더</code>, <code>변경된 유형</code> 세 단계가 있다. 불러올 때 Power BI 가 자동으로 한 일이다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>자동 단계</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>원본</td>
+<td>CSV 파일을 읽는다</td>
+</tr>
+<tr>
+<td>승격된 헤더</td>
+<td>첫 줄(주문번호, 주문일시 …)을 열 이름으로 올린다</td>
+</tr>
+<tr>
+<td>변경된 유형</td>
+<td>열마다 데이터 형식(정수, 텍스트, 날짜/시간)을 정한다</td>
+</tr>
+</tbody>
+</table></div>
+<figure><a href="../images/ui_pq_sales_before.png" target="_blank"><img src="../images/ui_pq_sales_before.png" alt="정리 전 - 변경된 유형 단계의 판매 데이터" loading="lazy"></a><figcaption>정리 전 - 변경된 유형 단계의 판매 데이터</figcaption></figure>
+<h3 id="①-중복-행-제거">① 중복 행 제거</h3>
+<ol>
+<li>미리 보기의 아무 셀이나 누른 뒤 <strong>Ctrl+A</strong> 로 모든 열을 고른다. (열 머리글이 모두 초록색이 된다)</li>
+<li><strong>홈 → 행 제거 → 중복된 항목 제거</strong>.</li>
+</ol>
+<p>단계 <code>제거된 중복 항목 수</code> 가 생긴다. 모든 열의 값이 똑같은 줄을 하나만 남긴다. (주문상세번호까지 같으니 진짜 중복이다)</p>
+<blockquote class="note">
+<p>열 하나만 고른 채 중복을 제거하면 <strong>그 열 기준</strong>으로 지운다. 예를 들어 주문번호 열만 고르면 메뉴가 여러 개인 주문의 줄까지 지워져 버린다. 무엇을 골랐는지 꼭 확인하자.</p>
+</blockquote>
+<h3 id="②-수량이-빈-행-거르기">② 수량이 빈 행 거르기</h3>
+<ol>
+<li><strong>수량</strong> 열 머리글의 ▾ 를 누른다.</li>
+<li>목록에서 <strong>(null)</strong> 의 체크를 끈다. (안 보이면 아래쪽 <strong>추가 로드</strong> 를 누른다) → <strong>확인</strong>.</li>
+</ol>
+<p>단계 <code>필터링된 행</code> 이 생긴다. <code>null</code> 은 "값이 없음" 을 뜻한다.</p>
+<h3 id="③-결제수단-표기-통일-값-바꾸기">③ 결제수단 표기 통일 (값 바꾸기)</h3>
+<ol>
+<li><strong>결제수단</strong> 열 머리글을 눌러 고른다.</li>
+<li><strong>변환 → 값 바꾸기</strong>. 찾을 값 <code>신용카드</code>, 바꿀 항목 <code>카드</code> → <strong>확인</strong>.</li>
+<li>한 번 더 <strong>값 바꾸기</strong>. 찾을 값 <code>CARD</code>, 바꿀 항목 <code>카드</code> → <strong>확인</strong>.</li>
+</ol>
+<p>단계 <code>바꾼 값</code>, <code>바꾼 값1</code> 이 생긴다. 결제수단 ▾ 를 눌러 보면 이제 <code>간편결제</code>, <code>카드</code>, <code>현금</code> 세 가지뿐이다.</p>
+<h3 id="④-주문일시를-날짜와-시로-나누기">④ 주문일시를 날짜와 시로 나누기</h3>
+<p>나중에 "날짜별", "시간대별" 로 분석하려면 날짜와 시(0~23)가 따로 있어야 편하다.</p>
+<ol>
+<li><strong>주문일시</strong> 열을 고른다.</li>
+<li><strong>열 추가 → 날짜 → 날짜만</strong>. 맨 오른쪽에 <code>날짜</code> 열이 생긴다.</li>
+<li>다시 <strong>주문일시</strong> 열을 고르고 <strong>열 추가 → 시간 → 시</strong>. <code>시</code> 열이 생긴다.</li>
+<li>새 열 머리글을 두 번 눌러 이름을 바꾼다: <code>날짜</code> → <strong>주문일자</strong>, <code>시</code> → <strong>주문시</strong>.</li>
+</ol>
+<blockquote class="note">
+<p><strong>열 추가</strong> 탭의 단추는 원래 열을 그대로 두고 <strong>새 열을 만든다.</strong> 같은 이름의 <strong>변환</strong> 탭 단추는 원래 열을 <strong>바꿔 버린다.</strong> 지금은 열 추가를 써야 한다.</p>
+</blockquote>
+<h3 id="⑤-매출액-열-만들기-사용자-지정-열">⑤ 매출액 열 만들기 (사용자 지정 열)</h3>
+<p>판매 데이터에는 "얼마어치 팔았나" 가 없다. 수량 × 단가로 만든다.</p>
+<ol>
+<li><strong>열 추가 → 사용자 지정 열</strong>.</li>
+<li>새 열 이름 <code>매출액</code>, 사용자 지정 열 수식에 <code>[수량] * [단가]</code> 를 입력한다. (오른쪽 목록의 열 이름을 두 번 누르면 <code>[수량]</code> 처럼 자동으로 들어간다)</li>
+<li><strong>확인</strong>. 매출액 열 머리글 왼쪽의 형식 아이콘(ABC123)을 눌러 <strong>정수</strong> 로 바꾼다.</li>
+</ol>
+<h3 id="⑥-필요-없는-열-제거">⑥ 필요 없는 열 제거</h3>
+<p><strong>주문상세번호</strong> 는 중복을 찾을 때만 필요했고, <strong>주문일시</strong> 는 주문일자·주문시로 나눴으니 더는 필요 없다.</p>
+<ol>
+<li><strong>주문상세번호</strong> 를 누르고 <strong>Ctrl</strong> 을 누른 채 <strong>주문일시</strong> 를 누른다.</li>
+<li><strong>홈 → 열 제거</strong>.</li>
+</ol>
+<blockquote class="note">
+<p>필요 없는 열을 지우면 .pbix 파일이 작아지고 보고서가 빨라진다. 특히 주문일시처럼 값이 거의 모두 다른 열은 용량을 많이 차지한다. 이 정리로 완성 파일 크기가 절반 이하로 줄었다.</p>
+</blockquote>
+<p>판매 쿼리의 적용된 단계는 이렇게 된다.</p>
+<pre><code class="language-text">원본
+승격된 헤더
+변경된 유형
+제거된 중복 항목 수
+필터링된 행
+바꾼 값
+바꾼 값1
+삽입된 날짜
+삽입된 시간
+이름을 바꾼 열 수
+추가된 사용자 지정 항목
+변경된 유형1
+제거된 열 수
+</code></pre>
+<blockquote class="note">
+<p>단계 이름은 Power BI 버전에 따라 조금 다를 수 있다. 이름보다 <strong>순서와 결과</strong>가 같은지 확인하자.</p>
+</blockquote>
+<h2 id="2-4-메뉴-쿼리-정리하기">2-4. 메뉴 쿼리 정리하기</h2>
+<ol>
+<li>왼쪽에서 <strong>메뉴</strong> 쿼리를 고른다.</li>
+<li><strong>메뉴명</strong> 열을 고르고 <strong>변환 → 서식 → 공백 제거</strong>. 앞뒤 빈칸이 사라진다 (단계 <code>잘린 텍스트</code>).</li>
+<li><strong>Ctrl+A</strong> 로 모든 열을 고르고 <strong>홈 → 행 제거 → 중복된 항목 제거</strong>. 23줄이 22줄이 된다.</li>
+</ol>
+<figure><a href="../images/ui_pq_menu.png" target="_blank"><img src="../images/ui_pq_menu.png" alt="정리한 메뉴 쿼리" loading="lazy"></a><figcaption>정리한 메뉴 쿼리</figcaption></figure>
+<blockquote class="note">
+<p>엑셀에서 불러온 메뉴·매장 쿼리에는 <code>원본</code> 다음에 <strong><code>탐색</code></strong> 단계가 하나 더 있다. 엑셀 파일 안에서 어느 시트를 쓸지 고르는 단계다 (1장 탐색 창에서 고른 것).</p>
+</blockquote>
+<h2 id="2-5-매장-쿼리---형식-바꾸기">2-5. 매장 쿼리 - 형식 바꾸기</h2>
+<p><strong>오픈일</strong> 열은 엑셀에서 날짜/시간(<code>2021-05-01 오전 12:00:00</code>)으로 들어왔다. 시각은 필요 없으니 <strong>오픈일</strong> 머리글의 형식 아이콘을 눌러 <strong>날짜</strong> 로 바꾼다.</p>
+<figure><a href="../images/ui_pq_store.png" target="_blank"><img src="../images/ui_pq_store.png" alt="매장 쿼리" loading="lazy"></a><figcaption>매장 쿼리</figcaption></figure>
+<h2 id="2-6-닫기-및-적용">2-6. 닫기 및 적용</h2>
+<p><strong>홈 → 닫기 및 적용</strong> 을 누르면 편집기가 닫히고, 정리한 결과로 데이터를 다시 불러온다. 테이블 보기에서 판매가 <strong>360,400개 행</strong>(= 360,470 − 중복 40 − 빈 수량 30)인지 확인하자.</p>
+<p>보고서 페이지에는 정리한 메뉴를 표로 올려 확인해 두었다.</p>
+<figure><a href="../images/pbi_02_데이터정리_p1.png" target="_blank"><img src="../images/pbi_02_데이터정리_p1.png" alt="2장 완성 화면" loading="lazy"></a><figcaption>2장 완성 화면</figcaption></figure>
+<blockquote class="note">
+<p><strong>원본 파일은 바뀌지 않는다.</strong> Power Query 는 원본 CSV·엑셀을 고치지 않는다. 읽어 온 다음 정리해서 Power BI 안에만 넣는다. 그래서 언제든 단계를 고치거나 지워서 되돌릴 수 있다.</p>
+</blockquote>
+<h2 id="정리">정리</h2>
+<ul>
+<li>Power Query 편집기: <strong>홈 → 데이터 변환</strong>. 작업은 <strong>적용된 단계</strong>로 기록되고 새로 고침 때마다 다시 실행된다.</li>
+<li>행 정리: 중복된 항목 제거(Ctrl+A 로 모든 열), 필터로 (null) 제거.</li>
+<li>값 정리: 값 바꾸기, 공백 제거, 형식 바꾸기.</li>
+<li>열 만들기: <strong>열 추가</strong> 탭(날짜만, 시, 사용자 지정 열). 필요 없는 열은 지운다.</li>
+<li>끝나면 <strong>닫기 및 적용</strong>.</li>
+</ul>
+<h2 id="확인-문제">확인 문제</h2>
+<ol>
+<li>중복을 제거할 때 <strong>주문번호 열만</strong> 고르고 중복된 항목 제거를 하면 어떤 문제가 생기는가?</li>
+<li>적용된 단계에서 <code>바꾼 값</code> 단계를 누르면 결제수단 목록에 무엇이 남아 있는가? 그 이유는?</li>
+<li>사용자 지정 열 수식을 <code>[수량] + [단가]</code> 로 잘못 썼다. 고치는 방법을 쓰시오. (힌트: 단계 오른쪽의 톱니바퀴)</li>
+<li>2-6 에서 판매가 360,400개 행이 아니라 360,430개 행이 나왔다. 어느 단계를 빠뜨렸을까?</li>
+</ol>
+<nav class="pager"><a href="ch01.html"><small>← 이전</small>1장 데이터 불러오기</a><a class="next" href="ch03.html"><small>다음 →</small>3장 관계와 날짜 테이블</a></nav>
+</article></div>
+<footer>Power BI 기초 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

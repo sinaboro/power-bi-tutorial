@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3장. 관계와 날짜 테이블 - Power BI 기초</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="3장. 관계와 날짜 테이블 - Power BI 기초"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>기초</b></a><span class="sp"></span>
+<a class="btn hide-s" href="../index.html#chapters">목차</a>
+<a class="btn" href="../PowerBI_%EA%B8%B0%EC%B4%88_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF</a>
+<a class="btn" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><a href="ch00.html">0장 과정 안내</a><a href="ch01.html">1장 데이터 불러오기</a><a href="ch02.html">2장 Power Query 정리</a><a href="ch03.html" class=on>3장 관계와 날짜 테이블</a><a href="ch04.html">4장 측정값 (DAX)</a><a href="ch05.html">5장 차트 만들기</a><a href="ch06.html">6장 슬라이서와 서식</a><a href="ch07.html">7장 대시보드 완성</a><a href="ch08.html">8장 과제 - 편의점</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내</option><option value="ch01.html">1장 데이터 불러오기</option><option value="ch02.html">2장 Power Query 정리</option><option value="ch03.html" selected>3장 관계와 날짜 테이블</option><option value="ch04.html">4장 측정값 (DAX)</option><option value="ch05.html">5장 차트 만들기</option><option value="ch06.html">6장 슬라이서와 서식</option><option value="ch07.html">7장 대시보드 완성</option><option value="ch08.html">8장 과제 - 편의점</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="3장-관계와-날짜-테이블">3장. 관계와 날짜 테이블</h1>
+<h2 id="학습-목표">학습 목표</h2>
+<ul>
+<li>사실 테이블과 차원 테이블, 별 모양 모델을 설명할 수 있다.</li>
+<li>모델 보기에서 테이블 사이의 관계(1 : 다)를 만들고 확인한다.</li>
+<li>DAX 로 날짜 테이블을 만들고, 열을 추가하고, 날짜 테이블로 표시한다.</li>
+<li>관계가 있어야 "매장별·연도별 매출" 같은 분석이 된다는 것을 확인한다.</li>
+</ul>
+<h2 id="3-1-테이블을-나눠-두는-이유">3-1. 테이블을 나눠 두는 이유</h2>
+<p>판매 표에는 <code>S01</code>, <code>M02</code> 같은 <strong>코드</strong>만 있다. 매장 이름이나 메뉴 분류는 매장·메뉴 표에 따로 있다. 판매 36만 줄마다 "강남역점, 서울, 48석" 을 반복해 적으면 용량이 커지고, 매장 이름이 바뀌면 36만 줄을 다 고쳐야 한다. 그래서 데이터는 보통 이렇게 나뉘어 있다.</p>
+<figure><a href="../images/fig_star.png" target="_blank"><img src="../images/fig_star.png" alt="별 모양 스키마" loading="lazy"></a><figcaption>별 모양 스키마</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>종류</th>
+<th>이 과정에서</th>
+<th>특징</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>사실(Fact) 테이블</strong></td>
+<td>판매</td>
+<td>사건(주문)이 일어날 때마다 줄이 늘어난다. 숫자(수량, 매출액)가 있다</td>
+</tr>
+<tr>
+<td><strong>차원(Dimension) 테이블</strong></td>
+<td>메뉴, 매장, 날짜</td>
+<td>무엇으로 나눠 볼지 정하는 설명 정보. 줄이 적다</td>
+</tr>
+</tbody>
+</table></div>
+<p>Power BI 는 이 표들을 <strong>관계</strong>로 이어서, 판매 표에 없는 "매장명" 이나 "분류" 로도 매출을 나눠 볼 수 있게 한다.</p>
+<h2 id="3-2-모델-보기에서-관계-확인하기">3-2. 모델 보기에서 관계 확인하기</h2>
+<p>왼쪽 보기 단추에서 세 번째 <strong>모델 보기</strong> 를 누른다. 테이블이 상자로 보이고, 관계는 상자 사이의 선으로 보인다.</p>
+<figure><a href="../images/ui_model.png" target="_blank"><img src="../images/ui_model.png" alt="모델 보기 - 관계가 연결된 모습 (3장 완성)" loading="lazy"></a><figcaption>모델 보기 - 관계가 연결된 모습 (3장 완성)</figcaption></figure>
+<blockquote class="note">
+<p><strong>이미 선이 있나요?</strong> Power BI 는 데이터를 불러올 때 열 이름이 같은 열(메뉴코드, 매장코드)을 찾아 <strong>관계를 자동으로 만들기도 한다.</strong> 이미 있으면 아래 3-3 은 확인만 하고 넘어가면 된다.</p>
+</blockquote>
+<figure><a href="../images/fig_one_many.png" target="_blank"><img src="../images/fig_one_many.png" alt="1 : 다 관계" loading="lazy"></a><figcaption>1 : 다 관계</figcaption></figure>
+<p>선의 양 끝 표시를 읽는 법:</p>
+<ul>
+<li><strong>1</strong> - 메뉴 쪽. 메뉴코드가 한 번씩만 나온다 (2장에서 중복을 지운 이유!)</li>
+<li><strong>*</strong> (다) - 판매 쪽. 같은 메뉴코드가 여러 번 나온다.</li>
+<li>선 가운데 화살표 - 필터가 흐르는 방향. 메뉴 → 판매. "분류 = 커피" 를 고르면 판매 표도 커피 줄만 남는다.</li>
+</ul>
+<h2 id="3-3-관계-만들기---메뉴와-매장">3-3. 관계 만들기 - 메뉴와 매장</h2>
+<p>선이 없다면 직접 만든다.</p>
+<ol>
+<li>모델 보기에서 <strong>메뉴</strong> 상자의 <strong>메뉴코드</strong> 를 끌어서 <strong>판매</strong> 상자의 <strong>메뉴코드</strong> 위에 놓는다.</li>
+<li><strong>새 관계</strong> 창이 열린다. 카디널리티 <strong>다대일(*:1)</strong> 또는 <strong>일대다(1:*)</strong>, 교차 필터 방향 <strong>단일</strong> 인지 확인하고 <strong>저장</strong>.</li>
+<li>같은 방법으로 <strong>매장[매장코드]</strong> → <strong>판매[매장코드]</strong> 를 잇는다.</li>
+</ol>
+<blockquote class="note">
+<p>관계 선을 두 번 누르면 설정을 다시 볼 수 있다. 잘못 만든 관계는 선을 오른쪽 클릭 → <strong>삭제</strong>.</p>
+</blockquote>
+<h2 id="3-4-날짜-테이블-만들기">3-4. 날짜 테이블 만들기</h2>
+<p>월별·요일별로 보려면 날짜마다 연도, 월, 요일을 알려 주는 <strong>날짜 테이블</strong>이 있으면 편하다. 판매가 없는 날(휴일 등)도 빠짐없이 들어 있어야 하므로 판매 표의 날짜를 쓰지 않고 따로 만든다.</p>
+<ol>
+<li>리본 <strong>모델링 → 새 테이블</strong>.</li>
+<li>위쪽 수식 입력줄에 다음을 입력하고 <strong>Enter</strong>.</li>
+</ol>
+<pre><code class="language-dax">날짜 = CALENDAR(DATE(2023, 1, 1), DATE(2025, 12, 31))
+</code></pre>
+<p><code>CALENDAR(시작일, 끝일)</code> 은 시작일부터 끝일까지 하루에 한 줄씩, <strong>Date</strong> 라는 열 하나짜리 표를 만든다. 3년이라 1,096줄(2024년은 윤년)이다.</p>
+<p>이런 식을 <strong>DAX</strong>(Data Analysis Expressions)라고 한다. 엑셀 수식과 비슷하게 생긴 Power BI 의 계산 언어다.</p>
+<ol start="3">
+<li><strong>날짜</strong> 테이블을 고른 채로 <strong>테이블 도구 → 새 열</strong> 을 눌러 아래 열을 하나씩 추가한다. (식 하나 입력 → Enter → 다시 새 열)</li>
+</ol>
+<pre><code class="language-dax">연도 = YEAR('날짜'[Date])
+월 = MONTH('날짜'[Date])
+연월 = FORMAT('날짜'[Date], &quot;yyyy-mm&quot;)
+월시작일 = DATE(YEAR('날짜'[Date]), MONTH('날짜'[Date]), 1)
+요일 = FORMAT('날짜'[Date], &quot;aaa&quot;)
+요일번호 = WEEKDAY('날짜'[Date], 2)
+</code></pre>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>열</th>
+<th>함수</th>
+<th>결과 예 (2024-07-15)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>연도</td>
+<td><code>YEAR</code></td>
+<td>2024</td>
+</tr>
+<tr>
+<td>월</td>
+<td><code>MONTH</code></td>
+<td>7</td>
+</tr>
+<tr>
+<td>연월</td>
+<td><code>FORMAT(날짜, "yyyy-mm")</code></td>
+<td>2024-07</td>
+</tr>
+<tr>
+<td>월시작일</td>
+<td>그 달 1일</td>
+<td>2024-07-01 (5장의 월별 추이 차트 축)</td>
+</tr>
+<tr>
+<td>요일</td>
+<td><code>FORMAT(날짜, "aaa")</code></td>
+<td>월</td>
+</tr>
+<tr>
+<td>요일번호</td>
+<td><code>WEEKDAY(날짜, 2)</code></td>
+<td>1 (월=1 … 일=7)</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="note">
+<p><strong>'날짜'[Date] 처럼 테이블 이름을 작은따옴표로 감싸야 한다.</strong> DAX 는 한글 테이블 이름을 따옴표 없이 쓰면 "잘못된 토큰" 오류를 낸다. 수식 입력줄에서 <code>'</code> 를 치면 자동 완성 목록이 나오니 골라서 넣자.</p>
+</blockquote>
+<figure><a href="../images/ui_tableview_date.png" target="_blank"><img src="../images/ui_tableview_date.png" alt="날짜 테이블 (테이블 보기)" loading="lazy"></a><figcaption>날짜 테이블 (테이블 보기)</figcaption></figure>
+<h2 id="3-5-날짜-테이블로-표시-요일-정렬">3-5. 날짜 테이블로 표시, 요일 정렬</h2>
+<ol>
+<li><strong>날짜</strong> 테이블을 고르고 <strong>테이블 도구 → 날짜 테이블로 표시</strong> → 날짜 열 <strong>Date</strong> → <strong>저장</strong>. 이제 Power BI 가 이 표를 "공식 달력" 으로 쓴다.</li>
+<li>테이블 보기에서 <strong>요일</strong> 열을 고르고 <strong>열 도구 → 열 기준 정렬 → 요일번호</strong>. 이렇게 하지 않으면 요일이 가나다순(금, 목, 수, 월 …)으로 정렬된다.</li>
+</ol>
+<h2 id="3-6-날짜-관계-만들기">3-6. 날짜 관계 만들기</h2>
+<p>모델 보기에서 <strong>날짜[Date]</strong> 를 끌어 <strong>판매[주문일자]</strong> 위에 놓는다 (일대다, 단일). 이제 관계가 세 개다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>일(1) 쪽</th>
+<th>다(*) 쪽</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>메뉴[메뉴코드]</td>
+<td>판매[메뉴코드]</td>
+</tr>
+<tr>
+<td>매장[매장코드]</td>
+<td>판매[매장코드]</td>
+</tr>
+<tr>
+<td>날짜[Date]</td>
+<td>판매[주문일자]</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-7-관계가-잘-됐는지-확인하기">3-7. 관계가 잘 됐는지 확인하기</h2>
+<p>보고서 보기에서 <strong>행렬</strong> 시각적 개체를 하나 만든다.</p>
+<ol>
+<li>시각화 창의 <strong>행렬</strong> 아이콘을 누른다.</li>
+<li>데이터 창에서 <strong>매장 → 매장명</strong> 을 <strong>행</strong> 칸에, <strong>날짜 → 연도</strong> 를 <strong>열</strong> 칸에, <strong>판매 → 매출액</strong> 을 <strong>값</strong> 칸에 끌어 놓는다.</li>
+</ol>
+<figure><a href="../images/pbi_03_관계와날짜_p1.png" target="_blank"><img src="../images/pbi_03_관계와날짜_p1.png" alt="3장 완성 - 매장별·연도별 매출액 합계" loading="lazy"></a><figcaption>3장 완성 - 매장별·연도별 매출액 합계</figcaption></figure>
+<p>매장명(매장 표)과 연도(날짜 표)는 판매 표에 없는 열인데도 매출액이 매장·연도별로 나뉘었다. 관계가 일하고 있다는 증거다. 판교점의 2023년 칸이 비어 있는 것도 맞다. 2024년 3월에 열었기 때문이다.</p>
+<blockquote class="note">
+<p>모든 칸에 같은 숫자(전체 합계)가 나온다면 관계가 없거나 잘못 이어진 것이다. 모델 보기에서 선을 확인하자.</p>
+</blockquote>
+<h2 id="정리">정리</h2>
+<ul>
+<li>사실 테이블(판매) + 차원 테이블(메뉴, 매장, 날짜) = 별 모양 모델.</li>
+<li>관계는 차원의 키(1) → 사실의 같은 열(*). 필터는 1 → * 방향으로 흐른다.</li>
+<li>날짜 테이블: <code>CALENDAR</code> 로 만들고, 새 열(연도·월·요일…)을 더하고, <strong>날짜 테이블로 표시</strong>.</li>
+<li>DAX 에서 한글 테이블 이름은 <code>'날짜'[Date]</code> 처럼 작은따옴표로 감싼다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제</h2>
+<ol>
+<li>메뉴 표에 콜드브루가 두 줄 남아 있었다면, 메뉴 → 판매 관계를 만들 때 어떤 일이 생길지 쓰시오.</li>
+<li>요일 열에 <strong>열 기준 정렬</strong> 을 하지 않으면 요일별 차트의 막대 순서가 어떻게 되는가?</li>
+<li><code>날짜 = CALENDAR(DATE(2023,1,1), DATE(2025,12,31))</code> 를 입력했더니 "잘못된 토큰" 이 아니라 행이 1,096개 생겼다. 2023~2025년의 날 수를 계산해 맞는지 확인하시오.</li>
+<li>3-7 의 행렬에 <strong>메뉴 → 분류</strong> 를 <strong>행</strong> 칸의 매장명 아래에 하나 더 넣으면 어떻게 보이는가?</li>
+</ol>
+<nav class="pager"><a href="ch02.html"><small>← 이전</small>2장 Power Query 정리</a><a class="next" href="ch04.html"><small>다음 →</small>4장 측정값 (DAX)</a></nav>
+</article></div>
+<footer>Power BI 기초 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

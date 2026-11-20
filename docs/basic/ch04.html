@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>4장. 측정값 만들기 - DAX 첫걸음 - Power BI 기초</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="4장. 측정값 만들기 - DAX 첫걸음 - Power BI 기초"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>기초</b></a><span class="sp"></span>
+<a class="btn hide-s" href="../index.html#chapters">목차</a>
+<a class="btn" href="../PowerBI_%EA%B8%B0%EC%B4%88_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF</a>
+<a class="btn" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><a href="ch00.html">0장 과정 안내</a><a href="ch01.html">1장 데이터 불러오기</a><a href="ch02.html">2장 Power Query 정리</a><a href="ch03.html">3장 관계와 날짜 테이블</a><a href="ch04.html" class=on>4장 측정값 (DAX)</a><a href="ch05.html">5장 차트 만들기</a><a href="ch06.html">6장 슬라이서와 서식</a><a href="ch07.html">7장 대시보드 완성</a><a href="ch08.html">8장 과제 - 편의점</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내</option><option value="ch01.html">1장 데이터 불러오기</option><option value="ch02.html">2장 Power Query 정리</option><option value="ch03.html">3장 관계와 날짜 테이블</option><option value="ch04.html" selected>4장 측정값 (DAX)</option><option value="ch05.html">5장 차트 만들기</option><option value="ch06.html">6장 슬라이서와 서식</option><option value="ch07.html">7장 대시보드 완성</option><option value="ch08.html">8장 과제 - 편의점</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="4장-측정값-만들기---dax-첫걸음">4장. 측정값 만들기 - DAX 첫걸음</h1>
+<h2 id="학습-목표">학습 목표</h2>
+<ul>
+<li>계산 열과 측정값의 차이를 안다.</li>
+<li>SUM, DISTINCTCOUNT, DIVIDE 로 측정값 4개(총매출, 판매수량, 주문수, 객단가)를 만든다.</li>
+<li>측정값에 숫자 서식(천 단위 쉼표)을 정한다.</li>
+<li>같은 측정값이 행마다 다른 값이 되는 이유(필터 컨텍스트)를 설명할 수 있다.</li>
+</ul>
+<h2 id="4-1-측정값이란">4-1. 측정값이란?</h2>
+<p>3장 끝에서 매출액 <strong>열</strong>을 행렬에 끌어 놓았더니 "매출액의 합계" 가 나왔다. 숫자 열은 이렇게 끌어 놓기만 해도 합계가 된다(<strong>암시적 측정값</strong>). 하지만 다음과 같은 값은 끌어 놓기만으로는 만들 수 없다.</p>
+<ul>
+<li><strong>주문수</strong> - 줄 수가 아니라 <strong>서로 다른 주문번호의 개수</strong> (주문 하나에 여러 줄이 있으므로)</li>
+<li><strong>객단가</strong> - 주문 한 번에 평균 얼마를 썼나 = 총매출 ÷ 주문수</li>
+</ul>
+<p>이렇게 "어떻게 계산할지" 를 직접 정한 것이 <strong>측정값</strong>(measure)이다.</p>
+<figure><a href="../images/fig_column_measure.png" target="_blank"><img src="../images/fig_column_measure.png" alt="계산 열과 측정값" loading="lazy"></a><figcaption>계산 열과 측정값</figcaption></figure>
+<h2 id="4-2-첫-측정값-총매출">4-2. 첫 측정값: 총매출</h2>
+<ol>
+<li>데이터 창에서 <strong>판매</strong> 테이블을 한 번 누른다. (새 측정값이 이 테이블 안에 만들어진다)</li>
+<li>리본 <strong>홈 → 새 측정값</strong>.</li>
+<li>수식 입력줄에 입력하고 <strong>Enter</strong>.</li>
+</ol>
+<pre><code class="language-dax">총매출 = SUM('판매'[매출액])
+</code></pre>
+<p>데이터 창의 판매 아래에 계산기 모양 아이콘이 붙은 <strong>총매출</strong> 이 생긴다.</p>
+<ol start="4">
+<li><strong>총매출</strong> 을 고른 상태에서 리본 <strong>측정값 도구</strong> 탭의 서식 칸에서 <strong>정수</strong>(또는 <strong>,</strong> 천 단위 구분 기호 단추)를 고른다. 이제 2116506700 이 아니라 <strong>2,116,506,700</strong> 으로 보인다.</li>
+</ol>
+<h2 id="4-3-나머지-측정값-3개">4-3. 나머지 측정값 3개</h2>
+<p>같은 방법(판매 선택 → 새 측정값)으로 만든다. 서식도 모두 천 단위 쉼표로 정한다.</p>
+<pre><code class="language-dax">판매수량 = SUM('판매'[수량])
+</code></pre>
+<pre><code class="language-dax">주문수 = DISTINCTCOUNT('판매'[주문번호])
+</code></pre>
+<pre><code class="language-dax">객단가 = DIVIDE([총매출], [주문수])
+</code></pre>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>측정값</th>
+<th>함수</th>
+<th>뜻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>판매수량</td>
+<td><code>SUM(열)</code></td>
+<td>열의 값을 모두 더한다</td>
+</tr>
+<tr>
+<td>주문수</td>
+<td><code>DISTINCTCOUNT(열)</code></td>
+<td>열에서 <strong>서로 다른 값</strong>이 몇 개인지 센다. 같은 주문번호가 여러 줄이어도 하나로 센다</td>
+</tr>
+<tr>
+<td>객단가</td>
+<td><code>DIVIDE(분자, 분모)</code></td>
+<td>나누기. 분모가 0 이거나 비면 오류 대신 빈칸을 돌려준다 (<code>/</code> 보다 안전하다)</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="note">
+<p>측정값 안에서 다른 측정값을 부를 때는 <code>[총매출]</code> 처럼 <strong>테이블 이름 없이 대괄호</strong>만 쓴다. 열을 쓸 때는 <code>'판매'[매출액]</code> 처럼 테이블 이름을 붙인다. 이렇게 구분하면 식을 읽을 때 무엇이 측정값이고 무엇이 열인지 바로 보인다.</p>
+</blockquote>
+<p>데이터 창에서 측정값을 누르면 위쪽 수식 입력줄에 식이 나온다. 고칠 때도 여기서 고친다.</p>
+<figure><a href="../images/ui_measure.png" target="_blank"><img src="../images/ui_measure.png" alt="측정값 객단가를 고른 화면 - 수식 입력줄에 식이 보인다" loading="lazy"></a><figcaption>측정값 객단가를 고른 화면 - 수식 입력줄에 식이 보인다</figcaption></figure>
+<h2 id="4-4-카드로-확인하기">4-4. 카드로 확인하기</h2>
+<p><strong>카드</strong> 시각적 개체는 숫자 하나를 크게 보여 준다.</p>
+<ol>
+<li>캔버스 빈 곳을 누르고, 시각화 창의 <strong>카드</strong> 아이콘을 누른다.</li>
+<li>데이터 창의 <strong>총매출</strong> 을 카드에 끌어 놓는다(또는 체크).</li>
+<li>같은 방법으로 주문수, 객단가, 판매수량 카드를 만든다.</li>
+</ol>
+<p>카드는 큰 숫자를 자동으로 줄여서 <code>2십억</code>, <code>244천</code> 처럼 보여 준다(표시 단위 <strong>자동</strong>). 틀린 것이 아니다. 정확한 숫자는 아래 4-5 의 행렬에서 확인하고, 카드의 표시 단위는 6장에서 <strong>없음</strong> 으로 바꾼다.</p>
+<h2 id="4-5-같은-측정값-다른-값---필터-컨텍스트">4-5. 같은 측정값, 다른 값 - 필터 컨텍스트</h2>
+<p><strong>행렬</strong>을 하나 만들고 <strong>행</strong>에 매장 → 매장명, <strong>값</strong>에 측정값 4개를 넣는다.</p>
+<figure><a href="../images/pbi_04_측정값_p1.png" target="_blank"><img src="../images/pbi_04_측정값_p1.png" alt="4장 완성 - 카드와 매장별 측정값" loading="lazy"></a><figcaption>4장 완성 - 카드와 매장별 측정값</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>확인 (행렬 값)</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>총매출 (행렬 합계)</td>
+<td>2,116,506,700</td>
+</tr>
+<tr>
+<td>주문수</td>
+<td>244,138</td>
+</tr>
+<tr>
+<td>객단가</td>
+<td>8,669</td>
+</tr>
+<tr>
+<td>판매수량</td>
+<td>425,647</td>
+</tr>
+<tr>
+<td>강남역점 총매출</td>
+<td>865,535,200</td>
+</tr>
+</tbody>
+</table></div>
+<p>식은 <code>SUM('판매'[매출액])</code> 하나인데 행마다 값이 다르다. 행렬이 각 행을 계산할 때 <strong>"매장명 = 강남역점" 같은 조건(필터)</strong>을 걸고 측정값을 계산하기 때문이다. 이 조건을 <strong>필터 컨텍스트</strong>라고 한다.</p>
+<figure><a href="../images/fig_filter_context.png" target="_blank"><img src="../images/fig_filter_context.png" alt="필터 컨텍스트" loading="lazy"></a><figcaption>필터 컨텍스트</figcaption></figure>
+<p>카드에는 아무 조건이 없으니 전체 합계가 나온다. 5장의 차트, 6장의 슬라이서도 모두 이 원리로 움직인다. <strong>측정값은 한 번만 만들면 어디에 놓든 그 자리의 조건으로 다시 계산된다.</strong> 이것이 측정값의 가장 큰 장점이다.</p>
+<blockquote class="note">
+<p><strong>객단가 합계가 이상하다?</strong> 행렬 맨 아래 합계 줄의 객단가는 세 매장 객단가의 <strong>합</strong>이 아니라 전체 총매출 ÷ 전체 주문수로 다시 계산된다. 측정값이기 때문이다. 엑셀에서 평균을 더하는 실수를 Power BI 가 막아 준다.</p>
+</blockquote>
+<h2 id="정리">정리</h2>
+<ul>
+<li>측정값 = 보고서에서 보는 순간 그 자리의 조건(필터 컨텍스트)으로 계산되는 식. 저장 공간을 차지하지 않는다.</li>
+<li><strong>홈 → 새 측정값</strong>. 열은 <code>'테이블'[열]</code>, 측정값은 <code>[측정값]</code>.</li>
+<li><code>SUM</code>(합계), <code>DISTINCTCOUNT</code>(고유 개수), <code>DIVIDE</code>(안전한 나누기).</li>
+<li>서식은 <strong>측정값 도구</strong> 탭에서 정한다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제</h2>
+<ol>
+<li><code>주문수 = COUNT('판매'[주문번호])</code> 로 만들면 결과가 어떻게 달라지고, 왜 틀린지 설명하시오.</li>
+<li><code>원가합계</code> 측정값을 만들려면 메뉴 표의 원가가 필요하다. 지금 모델에서 바로 <code>SUM('메뉴'[원가])</code> 를 쓰면 왜 원하는 값이 나오지 않는가? (힌트: 메뉴 표는 메뉴마다 한 줄)</li>
+<li>새 측정값 <code>평균판매단가 = DIVIDE([총매출], [판매수량])</code> 을 만들고 값을 쓰시오. 객단가와 무엇이 다른가?</li>
+<li>4-5 의 행렬에서 판교점의 객단가와 강남역점의 객단가 중 어느 쪽이 큰가?</li>
+</ol>
+<nav class="pager"><a href="ch03.html"><small>← 이전</small>3장 관계와 날짜 테이블</a><a class="next" href="ch05.html"><small>다음 →</small>5장 차트 만들기</a></nav>
+</article></div>
+<footer>Power BI 기초 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

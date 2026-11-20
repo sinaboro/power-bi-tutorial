@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>7장. 대시보드 완성과 공유 - Power BI 기초</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="7장. 대시보드 완성과 공유 - Power BI 기초"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>기초</b></a><span class="sp"></span>
+<a class="btn hide-s" href="../index.html#chapters">목차</a>
+<a class="btn" href="../PowerBI_%EA%B8%B0%EC%B4%88_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF</a>
+<a class="btn" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><a href="ch00.html">0장 과정 안내</a><a href="ch01.html">1장 데이터 불러오기</a><a href="ch02.html">2장 Power Query 정리</a><a href="ch03.html">3장 관계와 날짜 테이블</a><a href="ch04.html">4장 측정값 (DAX)</a><a href="ch05.html">5장 차트 만들기</a><a href="ch06.html">6장 슬라이서와 서식</a><a href="ch07.html" class=on>7장 대시보드 완성</a><a href="ch08.html">8장 과제 - 편의점</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내</option><option value="ch01.html">1장 데이터 불러오기</option><option value="ch02.html">2장 Power Query 정리</option><option value="ch03.html">3장 관계와 날짜 테이블</option><option value="ch04.html">4장 측정값 (DAX)</option><option value="ch05.html">5장 차트 만들기</option><option value="ch06.html">6장 슬라이서와 서식</option><option value="ch07.html" selected>7장 대시보드 완성</option><option value="ch08.html">8장 과제 - 편의점</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="7장-대시보드-완성과-공유">7장. 대시보드 완성과 공유</h1>
+<h2 id="학습-목표">학습 목표</h2>
+<ul>
+<li>한눈에 읽히는 대시보드 배치 원칙을 안다.</li>
+<li>두 번째 분석 페이지(메뉴·시간)를 완성하고 페이지를 정리한다.</li>
+<li>보고서를 PDF 로 내보내고, Power BI 서비스 게시가 무엇인지 안다.</li>
+<li>대시보드에서 찾은 내용을 문장으로 정리할 수 있다.</li>
+</ul>
+<h2 id="7-1-좋은-대시보드-배치">7-1. 좋은 대시보드 배치</h2>
+<p>사람은 화면을 <strong>왼쪽 위 → 오른쪽 → 아래</strong> 순서(Z 모양)로 읽는다. 그래서 가장 중요한 것을 왼쪽 위에 둔다.</p>
+<figure><a href="../images/fig_layout.png" target="_blank"><img src="../images/fig_layout.png" alt="대시보드 배치" loading="lazy"></a><figcaption>대시보드 배치</figcaption></figure>
+<ol>
+<li><strong>제목</strong>: 무엇에 대한 보고서인지 한 줄로.</li>
+<li><strong>슬라이서</strong>: 오른쪽 위. 모든 차트에 영향을 주는 단추라는 것을 알 수 있게.</li>
+<li><strong>카드(핵심 숫자)</strong>: 제목 바로 아래 한 줄. "결론부터".</li>
+<li><strong>추세 → 비교 → 구성 → 자세한 숫자</strong> 순서로 아래로.</li>
+</ol>
+<blockquote class="note">
+<p><strong>한 페이지에 차트는 6~8개까지.</strong> 그보다 많으면 무엇을 봐야 할지 모르게 된다. 주제가 다르면 페이지를 나눈다.</p>
+</blockquote>
+<h2 id="7-2-매출-요약-페이지">7-2. 매출 요약 페이지</h2>
+<p>6장에서 정리한 페이지의 이름을 <strong>매출 요약</strong> 으로 바꾼다 (아래쪽 탭을 두 번 누르기).</p>
+<figure><a href="../images/pbi_07_대시보드완성_p1.png" target="_blank"><img src="../images/pbi_07_대시보드완성_p1.png" alt="매출 요약 페이지" loading="lazy"></a><figcaption>매출 요약 페이지</figcaption></figure>
+<h2 id="7-3-메뉴시간-분석-페이지">7-3. 메뉴·시간 분석 페이지</h2>
+<p>5장의 메뉴·시간 페이지를 같은 원칙으로 정리한다.</p>
+<ol>
+<li>페이지 이름을 <strong>메뉴·시간 분석</strong> 으로.</li>
+<li>제목 텍스트 상자 <code>메뉴 · 시간 분석</code>.</li>
+<li><strong>슬라이서 복사하기</strong>: 매출 요약 페이지의 연도·매장명 슬라이서를 <strong>Ctrl</strong> 로 함께 골라 <strong>Ctrl+C</strong>, 메뉴·시간 분석 페이지에서 <strong>Ctrl+V</strong>. "시각적 개체 동기화" 를 묻는 창이 나오면 <strong>동기화</strong> 를 고른다. 이제 한 페이지에서 2025년을 고르면 다른 페이지도 2025년이 된다.</li>
+<li><strong>분류</strong> 슬라이서(메뉴 → 분류, 드롭다운)를 하나 더 만든다.</li>
+<li>메뉴별 판매수량(가로 막대, 데이터 레이블 표시 단위 <strong>없음</strong>)을 왼쪽에 길게.</li>
+<li>시간대별 주문수(세로 막대)를 오른쪽 위에.</li>
+<li><strong>요일별 매출</strong>: 묶은 세로 막대형 → X축 날짜 → 요일, Y축 총매출, Y축 표시 단위 <strong>백만</strong>. 3장에서 요일 열을 요일번호로 정렬해 두었기 때문에 <strong>월 화 수 목 금 토 일</strong> 순서로 나온다. (차트 <strong>… → 축 정렬 → 요일</strong>, 오름차순)</li>
+<li><strong>결제수단별 주문 비중</strong>: 도넛형 → 범례 판매 → 결제수단, 값 주문수, 레이블 <strong>총 퍼센트</strong>. 2장에서 표기를 통일했기 때문에 조각이 세 개(카드·간편결제·현금)뿐이다.</li>
+</ol>
+<figure><a href="../images/pbi_07_대시보드완성_p2.png" target="_blank"><img src="../images/pbi_07_대시보드완성_p2.png" alt="메뉴·시간 분석 페이지" loading="lazy"></a><figcaption>메뉴·시간 분석 페이지</figcaption></figure>
+<h2 id="7-4-대시보드로-이야기하기">7-4. 대시보드로 이야기하기</h2>
+<p>대시보드는 "차트를 모은 것" 이 아니라 <strong>질문에 답하는 도구</strong>다. 완성한 대시보드에서 찾은 것을 문장으로 써 보자.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>질문</th>
+<th>대시보드에서 찾은 답</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>매출은 늘고 있나?</td>
+<td>2023년 5.2억 → 2024년 7.2억 → 2025년 8.7억 원. 판교점 개점(2024년 3월) 효과가 크다</td>
+</tr>
+<tr>
+<td>어느 매장이 가장 잘 되나?</td>
+<td>3년 합계는 강남역점(8.66억)이 1위. 판교점은 1년 9개월 만에 4.3억 원</td>
+</tr>
+<tr>
+<td>무엇이 잘 팔리나?</td>
+<td>아메리카노가 판매수량 9만 4천 잔으로 압도적. 커피 분류가 매출의 54.5%</td>
+</tr>
+<tr>
+<td>언제 바쁜가?</td>
+<td>13시가 가장 많고(2만 8천 건) 12시, 14시가 뒤를 잇는다. 출근 시간 9시도 붐빈다. 주말 하루 매출은 평일 하루보다 약 16% 적다</td>
+</tr>
+<tr>
+<td>어떻게 결제하나?</td>
+<td>카드 63.5%, 간편결제 28.0%, 현금 8.5%</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="note">
+<p>직접 슬라이서를 바꿔 가며 더 찾아보자. 예: 홍대점만 고르면 요일별 매출에서 주말이 오히려 높다. 상권(대학가)의 특징이다.</p>
+</blockquote>
+<h2 id="7-5-저장과-공유">7-5. 저장과 공유</h2>
+<p><strong>저장</strong> - <strong>Ctrl+S</strong>. .pbix 하나에 데이터와 보고서가 모두 들어 있으므로, Power BI Desktop 이 있는 사람에게는 이 파일을 보내면 된다.</p>
+<p><strong>PDF 로 내보내기</strong> - Power BI 가 없는 사람에게 보여 줄 때.</p>
+<ol>
+<li><strong>파일 → 내보내기 → PDF로 내보내기</strong>.</li>
+<li>페이지마다 한 장씩 PDF 가 만들어지고 바로 열린다. (슬라이서는 지금 고른 상태 그대로 찍힌다)</li>
+</ol>
+<p><strong>Power BI 서비스에 게시</strong> - 리본 <strong>홈 → 게시</strong> 를 누르면 웹(app.powerbi.com)에 올려 브라우저로 보고, 정해진 시간마다 자동으로 새로 고치게 할 수 있다. <strong>회사·학교 계정</strong>(Microsoft Entra ID)으로 로그인해야 하고, 다른 사람과 공유하려면 보통 <strong>Pro 라이선스</strong>가 필요하다. 이 과정에서는 다루지 않는다.</p>
+<blockquote class="note">
+<p><strong>새로 고침이 필요할 때</strong> 원본 CSV·엑셀에 새 데이터가 들어오면 <strong>홈 → 새로 고침</strong> 한 번으로 2장의 정리 단계부터 모든 차트까지 자동으로 다시 계산된다. 이것이 엑셀로 매달 보고서를 새로 만드는 것과 가장 크게 다른 점이다.</p>
+</blockquote>
+<h2 id="정리">정리</h2>
+<ul>
+<li>배치: 제목 → 슬라이서 → 카드 → 추세 → 비교 → 구성 → 자세한 숫자 (Z 순서).</li>
+<li>슬라이서는 복사해서 붙여 넣을 때 <strong>동기화</strong>로 여러 페이지를 함께 움직이게 할 수 있다.</li>
+<li>공유: .pbix 파일 / PDF 내보내기 / Power BI 서비스 게시(회사 계정 필요).</li>
+<li>대시보드에서 찾은 내용을 <strong>문장</strong>으로 정리해야 분석이 끝난다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제</h2>
+<ol>
+<li>홍대점만 골랐을 때 요일별 매출에서 가장 높은 요일은 무엇인가?</li>
+<li>2025년만 골랐을 때 결제수단 비중에서 간편결제는 몇 %인가? 2023년과 비교해 어떻게 변했나?</li>
+<li>메뉴·시간 분석 페이지에서 분류 슬라이서로 <strong>논커피</strong> 를 고르면 메뉴별 판매수량 1위는 무엇인가?</li>
+<li>이 대시보드에 "매장별 객단가" 를 보여 주는 차트를 하나 더 넣는다면 어떤 차트를, 어디에 두겠는가?</li>
+</ol>
+<nav class="pager"><a href="ch06.html"><small>← 이전</small>6장 슬라이서와 서식</a><a class="next" href="ch08.html"><small>다음 →</small>8장 과제 - 편의점</a></nav>
+</article></div>
+<footer>Power BI 기초 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

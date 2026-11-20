@@ -3,6 +3,7 @@
 Power BI 를 처음 배우는 학생이 **혼자서도 따라 할 수 있게** 만든 기초 과정(약 20시간)입니다.
 가상의 카페 **하루커피**의 3년치 매출 데이터를 정리하고 분석해 매출 대시보드를 완성합니다.
 
+- 웹 교안: https://sinaboro.github.io/power-bi-tutorial/
 - 교안 PDF: [docs/PowerBI_기초_학습교안.pdf](docs/PowerBI_기초_학습교안.pdf)
 - 실습 데이터: [data/](data/)
 - 장별 완성 파일: [pbix/](pbix/)
@@ -62,7 +63,7 @@ Power BI 를 처음 배우는 학생이 **혼자서도 따라 할 수 있게** �
 ## 교안 다시 만들기 (강사용)
 
 ```powershell
-pip install pandas openpyxl matplotlib reportlab pywinauto psutil
+pip install pandas openpyxl matplotlib reportlab pywinauto psutil markdown
 python tools\make_data.py          # 실습 데이터
 python tools\make_pbix.py all      # 장별 .pbix (Power BI Desktop 이 자동으로 열리고 닫힘)
 python tools\capture_ui.py         # 교안용 조작 화면 캡처

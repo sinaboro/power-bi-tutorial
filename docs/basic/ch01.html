@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>1장. Power BI 시작하기 - 화면과 데이터 불러오기 - Power BI 기초</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="1장. Power BI 시작하기 - 화면과 데이터 불러오기 - Power BI 기초"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>기초</b></a><span class="sp"></span>
+<a class="btn hide-s" href="../index.html#chapters">목차</a>
+<a class="btn" href="../PowerBI_%EA%B8%B0%EC%B4%88_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF</a>
+<a class="btn" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><a href="ch00.html">0장 과정 안내</a><a href="ch01.html" class=on>1장 데이터 불러오기</a><a href="ch02.html">2장 Power Query 정리</a><a href="ch03.html">3장 관계와 날짜 테이블</a><a href="ch04.html">4장 측정값 (DAX)</a><a href="ch05.html">5장 차트 만들기</a><a href="ch06.html">6장 슬라이서와 서식</a><a href="ch07.html">7장 대시보드 완성</a><a href="ch08.html">8장 과제 - 편의점</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내</option><option value="ch01.html" selected>1장 데이터 불러오기</option><option value="ch02.html">2장 Power Query 정리</option><option value="ch03.html">3장 관계와 날짜 테이블</option><option value="ch04.html">4장 측정값 (DAX)</option><option value="ch05.html">5장 차트 만들기</option><option value="ch06.html">6장 슬라이서와 서식</option><option value="ch07.html">7장 대시보드 완성</option><option value="ch08.html">8장 과제 - 편의점</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="1장-power-bi-시작하기---화면과-데이터-불러오기">1장. Power BI 시작하기 - 화면과 데이터 불러오기</h1>
+<h2 id="학습-목표">학습 목표</h2>
+<ul>
+<li>Power BI Desktop 화면의 각 부분(리본, 보기 단추, 캔버스, 오른쪽 창)의 이름과 역할을 안다.</li>
+<li>엑셀 파일과 CSV 파일을 불러온다.</li>
+<li>테이블 보기에서 불러온 데이터를 확인한다.</li>
+<li>첫 번째 시각적 개체(표)를 만들고 파일을 저장한다.</li>
+</ul>
+<h2 id="1-1-power-bi-는-무엇인가">1-1. Power BI 는 무엇인가</h2>
+<p><strong>Power BI</strong> 는 흩어진 데이터를 모아 정리하고, 차트로 된 <strong>보고서</strong>를 만드는 Microsoft 의 도구다. 엑셀로도 표와 차트를 만들 수 있지만, Power BI 는</p>
+<ul>
+<li>수십만~수백만 줄의 데이터를 빠르게 다루고,</li>
+<li>여러 파일을 <strong>관계</strong>로 이어 한 번에 분석하고,</li>
+<li>클릭 한 번으로 모든 차트가 함께 바뀌는 <strong>대화형 보고서</strong>를 만든다.</li>
+</ul>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>이름</th>
+<th>하는 일</th>
+<th>이 과정에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Power BI Desktop</strong></td>
+<td>내 PC 에서 보고서를 만드는 프로그램 (무료)</td>
+<td>모든 장</td>
+</tr>
+<tr>
+<td>Power BI 서비스</td>
+<td>만든 보고서를 웹에 올려 공유 (회사 계정 필요)</td>
+<td>7장에서 소개만</td>
+</tr>
+<tr>
+<td>Power BI 모바일</td>
+<td>휴대폰으로 보고서 보기</td>
+<td>다루지 않음</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="1-2-화면-둘러보기">1-2. 화면 둘러보기</h2>
+<p>Power BI Desktop 을 실행하면 시작 화면이 나온다.</p>
+<figure><a href="../images/ui_start.png" target="_blank"><img src="../images/ui_start.png" alt="Power BI Desktop 시작 화면" loading="lazy"></a><figcaption>Power BI Desktop 시작 화면</figcaption></figure>
+<p><strong>빈 보고서</strong> 를 누르면 작업 화면이 열린다. (Excel 통합 문서 단추로 바로 엑셀을 불러올 수도 있다)</p>
+<figure><a href="../images/ui_blank.png" target="_blank"><img src="../images/ui_blank.png" alt="빈 보고서 화면" loading="lazy"></a><figcaption>빈 보고서 화면</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>부분</th>
+<th>위치</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>리본</strong></td>
+<td>위쪽</td>
+<td>홈·삽입·모델링·보기 탭의 단추들. 데이터 가져오기, 새 측정값 등</td>
+</tr>
+<tr>
+<td><strong>보기 단추</strong></td>
+<td>왼쪽 세로 막대</td>
+<td>위에서부터 <strong>보고서 보기</strong>(차트 만들기) · <strong>테이블 보기</strong>(데이터 확인) · <strong>모델 보기</strong>(관계) · DAX 쿼리 보기 · TMDL 보기</td>
+</tr>
+<tr>
+<td><strong>캔버스</strong></td>
+<td>가운데</td>
+<td>차트를 올려놓는 도화지. 아래쪽에 <strong>페이지 탭</strong></td>
+</tr>
+<tr>
+<td><strong>필터 창</strong></td>
+<td>오른쪽</td>
+<td>이 페이지·모든 페이지에 거는 조건</td>
+</tr>
+<tr>
+<td><strong>시각화 창</strong></td>
+<td>오른쪽</td>
+<td>차트 종류 고르기, 필드 넣기, 서식 바꾸기</td>
+</tr>
+<tr>
+<td><strong>데이터 창</strong></td>
+<td>맨 오른쪽</td>
+<td>불러온 테이블과 열 목록</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="note">
+<p>오른쪽 창이 접혀서 안 보이면 창 위쪽의 <strong>«</strong> 단추를 누르거나, 리본 <strong>보기</strong> 탭에서 필터·시각화·데이터 창을 켠다.</p>
+</blockquote>
+<h2 id="1-3-엑셀-파일-불러오기---메뉴와-매장">1-3. 엑셀 파일 불러오기 - 메뉴와 매장</h2>
+<ol>
+<li>리본 <strong>홈 → Excel 통합 문서</strong> 를 누른다.</li>
+<li><code>C:\study\power-bi-tutorial\data\카페_메뉴.xlsx</code> 를 고르고 <strong>열기</strong>.</li>
+<li><strong>탐색 창</strong>이 열린다. 왼쪽 목록에서 시트 <strong>메뉴</strong> 의 체크 상자를 켜면 오른쪽에 미리 보기가 나온다.</li>
+</ol>
+<figure><a href="../images/ui_excel_navigator.png" target="_blank"><img src="../images/ui_excel_navigator.png" alt="탐색 창 - 엑셀 시트 고르기" loading="lazy"></a><figcaption>탐색 창 - 엑셀 시트 고르기</figcaption></figure>
+<ol start="4">
+<li>아래쪽 <strong>로드</strong> 를 누른다. (<strong>데이터 변환</strong> 은 2장에서 쓴다)</li>
+<li>같은 방법으로 <code>카페_매장.xlsx</code> 의 <strong>매장</strong> 시트도 불러온다.</li>
+</ol>
+<p>오른쪽 <strong>데이터</strong> 창에 <strong>메뉴</strong>, <strong>매장</strong> 테이블이 생겼다.</p>
+<h2 id="1-4-csv-파일-불러오기---판매">1-4. CSV 파일 불러오기 - 판매</h2>
+<p><strong>CSV</strong> 는 값을 쉼표(,)로 나눈 글자 파일이다. 프로그램끼리 데이터를 주고받을 때 가장 많이 쓴다.</p>
+<ol>
+<li>리본 <strong>홈 → 데이터 가져오기</strong> 의 아래쪽 ▾ 를 누르면 자주 쓰는 원본 목록이 나온다.</li>
+</ol>
+<figure><a href="../images/ui_getdata_menu.png" target="_blank"><img src="../images/ui_getdata_menu.png" alt="데이터 가져오기 목록" loading="lazy"></a><figcaption>데이터 가져오기 목록</figcaption></figure>
+<ol start="2">
+<li><strong>텍스트/CSV</strong> → <code>카페_판매.csv</code> → <strong>열기</strong>.</li>
+<li>미리 보기 창이 열린다. 세 가지를 확인한다.</li>
+</ol>
+<figure><a href="../images/ui_csv_preview.png" target="_blank"><img src="../images/ui_csv_preview.png" alt="CSV 미리 보기" loading="lazy"></a><figcaption>CSV 미리 보기</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>항목</th>
+<th>확인할 값</th>
+<th>틀리면</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>파일 원본</strong></td>
+<td><code>65001: 유니코드(UTF-8)</code></td>
+<td>한글이 <code>ì¹´íŽ˜</code> 처럼 깨진다 → 목록에서 UTF-8 로 바꾼다</td>
+</tr>
+<tr>
+<td><strong>구분 기호</strong></td>
+<td><code>쉼표</code></td>
+<td>모든 값이 한 열에 붙어 나온다</td>
+</tr>
+<tr>
+<td><strong>데이터 형식 검색</strong></td>
+<td><code>첫 200개 행 기준</code></td>
+<td>그대로 둔다</td>
+</tr>
+</tbody>
+</table></div>
+<ol start="4">
+<li><strong>로드</strong> 를 누른다. 36만 줄이라 몇 초~수십 초 걸린다.</li>
+</ol>
+<blockquote class="note">
+<p><strong>불러오기 = 복사하기</strong> Power BI 는 파일의 내용을 <code>.pbix</code> 안으로 <strong>복사</strong>해 온다(가져오기 모드). 그래서 원본 CSV 를 고쳐도 보고서는 바로 바뀌지 않고, 리본 <strong>홈 → 새로 고침</strong> 을 눌러야 다시 읽어 온다.</p>
+</blockquote>
+<h2 id="1-5-테이블-보기로-데이터-확인하기">1-5. 테이블 보기로 데이터 확인하기</h2>
+<p>왼쪽 보기 단추에서 두 번째 <strong>테이블 보기</strong>(표 모양 아이콘)를 누르고, 오른쪽 데이터 창에서 <strong>판매</strong> 를 고른다.</p>
+<figure><a href="../images/ui_tableview_raw.png" target="_blank"><img src="../images/ui_tableview_raw.png" alt="테이블 보기 - 불러온 판매 테이블" loading="lazy"></a><figcaption>테이블 보기 - 불러온 판매 테이블</figcaption></figure>
+<ul>
+<li>아래쪽 상태 표시줄에 <strong>행 수</strong>가 나온다. 판매는 <strong>360,470개 행</strong>이다.</li>
+<li>열 이름 옆의 아이콘이 <strong>데이터 형식</strong>이다. Power BI 가 처음 200줄을 보고 짐작한 것이다. (<code>123</code> 정수, <code>ABC</code> 텍스트, 달력 모양 날짜/시간)</li>
+<li>테이블 보기에서는 데이터를 <strong>보기만</strong> 한다. 값을 고치는 것은 2장의 Power Query 에서 한다.</li>
+</ul>
+<blockquote class="note">
+<p><strong>잠깐, 이상한 점이 보이나요?</strong> 열 머리글의 ▾ 를 눌러 <strong>결제수단</strong> 값을 펼쳐 보면 <code>카드</code>, <code>신용카드</code>, <code>CARD</code> 가 섞여 있다. <strong>수량</strong>에는 빈 값도 있다. 2장에서 정리한다.</p>
+</blockquote>
+<h2 id="1-6-첫-번째-시각적-개체---매장-목록-표">1-6. 첫 번째 시각적 개체 - 매장 목록 표</h2>
+<p>Power BI 에서는 차트·표·카드처럼 캔버스에 올리는 것을 모두 <strong>시각적 개체</strong>(visual)라고 부른다.</p>
+<ol>
+<li>왼쪽 맨 위 <strong>보고서 보기</strong> 로 돌아온다.</li>
+<li>시각화 창에서 <strong>테이블</strong> 아이콘(격자 모양)을 누른다. 캔버스에 빈 상자가 생긴다.</li>
+<li>데이터 창에서 <strong>매장</strong> 을 펼치고 매장코드·매장명·지역·오픈일·좌석수의 체크 상자를 차례로 켠다.</li>
+<li>상자의 모서리를 끌어 크기를 알맞게 키운다.</li>
+<li>리본 <strong>삽입 → 텍스트 상자</strong> 로 제목 <code>1장 - 데이터 불러오기</code> 를 적는다.</li>
+</ol>
+<figure><a href="../images/pbi_01_데이터불러오기_p1.png" target="_blank"><img src="../images/pbi_01_데이터불러오기_p1.png" alt="1장 완성 화면" loading="lazy"></a><figcaption>1장 완성 화면</figcaption></figure>
+<blockquote class="note">
+<p>시각적 개체가 선택된 상태에서 시각화 창의 다른 아이콘을 누르면 <strong>새로 만들어지지 않고 그 개체의 종류가 바뀐다.</strong> 새로 만들려면 캔버스의 빈 곳을 한 번 눌러 선택을 푼 다음 아이콘을 누른다.</p>
+</blockquote>
+<h2 id="1-7-저장하기">1-7. 저장하기</h2>
+<p>리본 위쪽의 디스켓 아이콘(또는 <strong>Ctrl+S</strong>)을 누르고, <code>C:\study\power-bi-tutorial</code> 에 <code>내카페.pbix</code> 로 저장한다. 2장부터는 이 파일을 열어 이어서 작업한다.</p>
+<blockquote class="note">
+<p><strong>.pbix 한 파일에 모두 들어 있다.</strong> 불러온 데이터, 정리 단계, 관계, 측정값, 보고서 화면이 모두 이 한 파일에 저장된다. 그래서 파일이 수 MB 가 된다.</p>
+</blockquote>
+<h2 id="정리">정리</h2>
+<ul>
+<li>Power BI Desktop = 데이터 불러오기 → 정리 → 모델 → 보고서를 한 프로그램에서 하는 무료 도구.</li>
+<li>보고서 보기(차트) · 테이블 보기(데이터 확인) · 모델 보기(관계) 를 오가며 작업한다.</li>
+<li>엑셀은 <strong>홈 → Excel 통합 문서</strong>, CSV 는 <strong>홈 → 데이터 가져오기 → 텍스트/CSV</strong>. CSV 는 <strong>파일 원본(UTF-8)</strong> 을 꼭 확인한다.</li>
+<li>불러온 데이터는 .pbix 안에 복사된다. 원본이 바뀌면 <strong>새로 고침</strong>.</li>
+</ul>
+<h2 id="확인-문제">확인 문제</h2>
+<ol>
+<li>테이블 보기에서 <strong>메뉴</strong> 테이블은 몇 개 행인가? 메뉴는 22개인데 왜 그 숫자가 나오는지 메뉴코드 열을 보고 설명하시오.</li>
+<li>CSV 미리 보기에서 파일 원본을 <code>949: 한국어</code> 로 바꾸면 어떻게 되는지 확인하고, 그 이유를 짐작해 보시오.</li>
+<li>1-6 의 표에 <strong>매장</strong> 의 <strong>좌석수</strong> 합계가 맨 아래 줄에 나온다. 좌석수 합계는 얼마인가?</li>
+<li>데이터 창에서 <strong>판매</strong> 를 펼쳤을 때 <strong>수량</strong> 옆에 Σ(시그마) 기호가 붙어 있다. 이 기호는 무슨 뜻일지 짐작해 보시오.</li>
+</ol>
+<nav class="pager"><a href="ch00.html"><small>← 이전</small>0장 과정 안내</a><a class="next" href="ch02.html"><small>다음 →</small>2장 Power Query 정리</a></nav>
+</article></div>
+<footer>Power BI 기초 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

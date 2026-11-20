@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>부록 C. 확인 문제 풀이 - Power BI 기초</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="부록 C. 확인 문제 풀이 - Power BI 기초"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>기초</b></a><span class="sp"></span>
+<a class="btn hide-s" href="../index.html#chapters">목차</a>
+<a class="btn" href="../PowerBI_%EA%B8%B0%EC%B4%88_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF</a>
+<a class="btn" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><a href="ch00.html">0장 과정 안내</a><a href="ch01.html">1장 데이터 불러오기</a><a href="ch02.html">2장 Power Query 정리</a><a href="ch03.html">3장 관계와 날짜 테이블</a><a href="ch04.html">4장 측정값 (DAX)</a><a href="ch05.html">5장 차트 만들기</a><a href="ch06.html">6장 슬라이서와 서식</a><a href="ch07.html">7장 대시보드 완성</a><a href="ch08.html">8장 과제 - 편의점</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html" class=on>부록 C 확인 문제 풀이</a></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내</option><option value="ch01.html">1장 데이터 불러오기</option><option value="ch02.html">2장 Power Query 정리</option><option value="ch03.html">3장 관계와 날짜 테이블</option><option value="ch04.html">4장 측정값 (DAX)</option><option value="ch05.html">5장 차트 만들기</option><option value="ch06.html">6장 슬라이서와 서식</option><option value="ch07.html">7장 대시보드 완성</option><option value="ch08.html">8장 과제 - 편의점</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html" selected>부록 C 확인 문제 풀이</option></select>
+<h1 id="부록-c-확인-문제-풀이">부록 C. 확인 문제 풀이</h1>
+<p>숫자는 이 교안의 데이터로 실제 계산한 값이다. 표시 단위나 반올림에 따라 끝자리가 조금 다르게 보일 수 있다.</p>
+<h2 id="1장">1장</h2>
+<ol>
+<li><strong>23개 행</strong>. 메뉴는 22개지만 메뉴코드 M05(콜드브루)가 두 줄 있다. 메뉴 표에 일부러 넣은 중복이며 2장에서 지운다.</li>
+<li>한글이 알아볼 수 없는 글자로 깨진다. 파일은 UTF-8 로 저장되어 있는데 949(한국어 완성형) 방식으로 읽었기 때문이다. 파일 원본은 파일을 저장한 방식과 같아야 한다.</li>
+<li><strong>144</strong> (48 + 40 + 56). 표의 숫자 열은 맨 아래에 합계가 나온다.</li>
+<li>Σ 는 "이 열을 시각적 개체에 넣으면 자동으로 합계(요약)한다" 는 표시다. 숫자 열에 붙는다. 4장의 암시적 측정값과 관련 있다.</li>
+</ol>
+<h2 id="2장">2장</h2>
+<ol>
+<li>주문번호가 같은 줄(주문 하나에 메뉴가 여러 개인 경우)이 첫 줄만 남고 지워진다. 진짜 중복이 아닌 판매 기록까지 사라져 매출이 줄어든다. 모든 열을 골라야 "완전히 똑같은 줄" 만 지운다.</li>
+<li><code>간편결제</code>, <code>카드</code>, <code>현금</code>, <strong><code>CARD</code></strong> 가 남아 있다. <code>바꾼 값</code> 단계는 신용카드만 바꿨고, CARD 는 다음 단계 <code>바꾼 값1</code> 에서 바꾸기 때문이다. 단계를 누르면 그 시점의 데이터가 보인다.</li>
+<li>적용된 단계에서 <code>추가된 사용자 지정 항목</code> 오른쪽의 <strong>톱니바퀴</strong>를 눌러 수식을 <code>[수량] * [단가]</code> 로 고친다. (수식 입력줄에서 직접 고쳐도 된다)</li>
+<li><strong>수량이 빈 행 거르기(필터링된 행)</strong>. 360,470 − 40(중복) = 360,430 이므로 빈 수량 30줄이 남아 있다는 뜻이다.</li>
+</ol>
+<h2 id="3장">3장</h2>
+<ol>
+<li>메뉴 표의 메뉴코드에 같은 값이 두 번 있으므로 일(1) 쪽이 될 수 없다. Power BI 가 관계를 <strong>다대다(*:*)</strong> 로 만들며 경고를 보여 주거나, 일대다로 만들 수 없다고 알린다. 다대다 관계는 결과를 헷갈리게 만들기 쉬우므로 먼저 중복을 지운다.</li>
+<li>가나다순 <strong>금 - 목 - 수 - 월 - 일 - 토 - 화</strong> 로 나온다.</li>
+<li>2023년 365일 + 2024년 366일(윤년) + 2025년 365일 = <strong>1,096일</strong>. 맞다.</li>
+<li>행렬의 각 매장명 왼쪽에 <strong>+</strong> 가 생기고, 누르면 그 매장 아래에 분류(커피, 논커피 …)별 매출이 펼쳐진다. 행을 여러 단계로 나누는 <strong>계층</strong>이다.</li>
+</ol>
+<h2 id="4장">4장</h2>
+<ol>
+<li><code>COUNT</code> 는 값이 있는 <strong>줄 수</strong>를 센다. 결과가 <strong>360,400</strong> 으로 실제 주문수 244,138 보다 크다. 주문 하나에 메뉴가 여러 개면 줄이 여러 개이므로, 주문 수는 <code>DISTINCTCOUNT</code> 로 <strong>서로 다른 주문번호</strong>를 세야 한다.</li>
+<li>메뉴 표는 메뉴마다 한 줄이라 <code>SUM('메뉴'[원가])</code> 는 메뉴 22개의 원가를 그냥 더한 값(33,400)이 된다. 몇 개를 팔았는지(판매 표의 수량)가 반영되지 않는다. 판매 줄마다 "수량 × 그 메뉴의 원가" 를 계산해 더해야 하는데, 이 방법(SUMX, RELATED)은 심화 과정에서 배운다.</li>
+<li><strong>4,972원</strong>. 객단가(8,669원)는 <strong>주문 한 번</strong>에 쓴 금액, 평균판매단가는 <strong>메뉴 하나</strong>의 평균 가격이다. 주문 하나에 평균 1.7개쯤 사기 때문에 객단가가 더 크다.</li>
+<li>판교점 <strong>8,716원</strong> &gt; 강남역점 <strong>8,668원</strong> &gt; 홍대점 8,646원. 차이는 크지 않다.</li>
+</ol>
+<h2 id="5장">5장</h2>
+<ol>
+<li><strong>13시</strong> (28,360건). 그다음은 12시(25,834건)다.</li>
+<li><strong>2024년 3월</strong>부터 그려진다. 판교점이 2024년 3월 15일에 문을 열어 그 전에는 판매가 없기 때문이다.</li>
+<li><strong>2개</strong> (서울, 경기). 서울에 매장 두 곳(강남역점, 홍대점), 경기에 한 곳(판교점)이 있다.</li>
+<li>그렇다. 총매출 기준으로도 <strong>아메리카노</strong>(405,125,100원)가 1위, 카페라떼(257,120,100원)가 2위다. 하지만 3위 이하는 순서가 조금 바뀔 수 있다. 수량과 금액은 단가 차이 때문에 순위가 다를 수 있다.</li>
+</ol>
+<h2 id="6장">6장</h2>
+<ol>
+<li><strong>724,347,900원</strong>.</li>
+<li>차트와 카드가 <strong>비어 있다</strong>(공백). 판교점은 2024년 3월에 열어 2023년에는 판매가 없기 때문이다. 슬라이서 조건은 "그리고(AND)" 로 함께 걸린다.</li>
+<li><code>2,116,507천</code> 처럼 천 단위로 줄여 보인다.</li>
+<li>차트에서 <strong>첫 번째 색</strong>을 쓰는 곳이 남색으로 바뀐다. 계열이 하나뿐인 막대·꺾은선 차트 전체, 도넛·범례의 첫 항목 등이다.</li>
+</ol>
+<h2 id="7장">7장</h2>
+<ol>
+<li><strong>일요일</strong> (154,672,600원). 토요일(153,685,400원)도 비슷하다. 홍대점은 주말 매출이 평일보다 약 50% 많다. 대학가·번화가 상권의 특징이다.</li>
+<li>2025년 간편결제는 <strong>29.96%</strong>. 2023년(22.19%)보다 약 8%p 늘었고, 그만큼 카드(67.84% → 61.98%)와 현금(9.97% → 8.06%)이 줄었다.</li>
+<li><strong>초코라떼</strong> (14,134개). 녹차라떼(14,080개)와 거의 같다.</li>
+<li>예시 답: <strong>묶은 세로 막대형</strong>(X축 매장명, Y축 객단가)을 매장별 매출 차트 옆이나 아래에 둔다. 매출(규모)과 객단가(손님 한 명의 지출)를 나란히 놓으면 "강남역점은 손님이 많고, 판교점은 손님당 지출이 크다" 를 비교할 수 있다. 숫자 차이가 작으므로 Y축을 0부터 시작하지 않으면 차이를 과장해 보이게 된다는 점에 주의한다.</li>
+</ol>
+<h2 id="8장-과제">8장 과제</h2>
+<ol>
+<li>가장 많은 카테고리는 <strong>음료</strong>(176,250,200원), 그다음 <strong>간편식사</strong>(167,817,300원). 가장 적은 카테고리는 <strong>생활용품</strong>(42,289,300원).</li>
+<li>매출 비중은 <strong>신촌대학점 34.56%</strong>, 역삼중앙점 34.54%, 일산주택점 30.91% 로 신촌과 역삼이 거의 같다. 바쁜 시간대는 상권마다 다르다.<ul>
+<li>역삼중앙점(오피스): <strong>12시</strong>, <strong>8시</strong> 가 가장 많다 (점심·출근), 저녁 18시도 많다.</li>
+<li>신촌대학점(대학가): <strong>18~20시</strong> 가 가장 많고, 밤늦게(22~1시)까지 손님이 이어진다.</li>
+<li>일산주택점(주거지): <strong>17~19시</strong> 퇴근 뒤 저녁 시간이 가장 많다.</li>
+</ul>
+</li>
+<li><strong>12월</strong>(48,955,900원). 1월(48,410,000원)도 높다. 12월에는 <strong>간편식사</strong>와 음료가 많이 팔렸고, 겨울철 라면·핫팩(생활용품)도 매출을 올렸다. 가장 낮은 2월은 날 수가 28일로 적기 때문이다. 월 매출을 비교할 때는 날 수 차이도 생각해야 한다.</li>
+<li><strong>아이스크림</strong>은 <strong>7월</strong>에 가장 높고 1월에 가장 낮다(여름 상품). <strong>생활용품</strong>은 반대로 <strong>1월</strong>에 가장 높고 7월에 가장 낮다. 생활용품에 들어 있는 <strong>핫팩</strong>이 겨울에 많이 팔리기 때문이다. 카테고리를 나눠 보면 전체 합계에서는 서로 상쇄되어 보이지 않던 계절 패턴이 드러난다.</li>
+</ol>
+<nav class="pager"><a href="appB.html"><small>← 이전</small>부록 B 용어 풀이</a><span></span></nav>
+</article></div>
+<footer>Power BI 기초 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

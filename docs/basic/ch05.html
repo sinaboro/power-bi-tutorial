@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>5장. 차트 만들기 - Power BI 기초</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="5장. 차트 만들기 - Power BI 기초"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>기초</b></a><span class="sp"></span>
+<a class="btn hide-s" href="../index.html#chapters">목차</a>
+<a class="btn" href="../PowerBI_%EA%B8%B0%EC%B4%88_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF</a>
+<a class="btn" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><a href="ch00.html">0장 과정 안내</a><a href="ch01.html">1장 데이터 불러오기</a><a href="ch02.html">2장 Power Query 정리</a><a href="ch03.html">3장 관계와 날짜 테이블</a><a href="ch04.html">4장 측정값 (DAX)</a><a href="ch05.html" class=on>5장 차트 만들기</a><a href="ch06.html">6장 슬라이서와 서식</a><a href="ch07.html">7장 대시보드 완성</a><a href="ch08.html">8장 과제 - 편의점</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내</option><option value="ch01.html">1장 데이터 불러오기</option><option value="ch02.html">2장 Power Query 정리</option><option value="ch03.html">3장 관계와 날짜 테이블</option><option value="ch04.html">4장 측정값 (DAX)</option><option value="ch05.html" selected>5장 차트 만들기</option><option value="ch06.html">6장 슬라이서와 서식</option><option value="ch07.html">7장 대시보드 완성</option><option value="ch08.html">8장 과제 - 편의점</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="5장-차트-만들기">5장. 차트 만들기</h1>
+<h2 id="학습-목표">학습 목표</h2>
+<ul>
+<li>하고 싶은 질문에 맞는 차트 종류를 고른다 (추세·비교·구성·자세한 숫자).</li>
+<li>꺾은선형, 묶은 세로/가로 막대형, 도넛형, 행렬 차트를 만든다.</li>
+<li>시각화 창의 필드 칸(X축, Y축, 범례, 값)에 열과 측정값을 넣는다.</li>
+<li>차트를 정렬하고, 차트끼리 서로 걸러 주는 상호 작용을 확인한다.</li>
+</ul>
+<h2 id="5-1-질문에-맞는-차트-고르기">5-1. 질문에 맞는 차트 고르기</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>질문</th>
+<th>차트</th>
+<th>이 장에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>시간에 따라 어떻게 <strong>변했나</strong>? (추세)</td>
+<td>꺾은선형 차트</td>
+<td>월별 매출 추이</td>
+</tr>
+<tr>
+<td>어느 쪽이 <strong>더 큰가</strong>? (비교)</td>
+<td>세로/가로 막대형 차트</td>
+<td>매장별 매출, 메뉴별 판매수량, 시간대별 주문수</td>
+</tr>
+<tr>
+<td>전체에서 무엇이 <strong>얼마나 차지</strong>하나? (구성)</td>
+<td>도넛형·원형 차트</td>
+<td>분류별 매출 비중</td>
+</tr>
+<tr>
+<td><strong>정확한 숫자</strong>가 필요하다</td>
+<td>테이블, 행렬</td>
+<td>매장 × 연도 매출</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="note">
+<p>원형·도넛형은 조각이 5개를 넘으면 읽기 어렵다. 조각이 많으면 막대형이 낫다.</p>
+</blockquote>
+<p>4장의 페이지 이름(아래쪽 탭)을 두 번 눌러 <strong>매출 분석</strong> 으로 바꾸고, 카드와 행렬은 지우거나 새 페이지(탭 옆 <strong>+</strong>)에서 시작한다.</p>
+<h2 id="5-2-시각화-창의-필드-칸">5-2. 시각화 창의 필드 칸</h2>
+<p>차트를 고르면 시각화 창 아래쪽에 <strong>필드 칸</strong>이 나온다. 데이터 창의 열·측정값을 여기로 끌어 놓는다.</p>
+<figure><a href="../images/ui_fields.png" target="_blank"><img src="../images/ui_fields.png" alt="시간대별 주문수 차트를 고른 화면 - 오른쪽 X축 칸에 주문시, Y축 칸에 주문수" loading="lazy"></a><figcaption>시간대별 주문수 차트를 고른 화면 - 오른쪽 X축 칸에 주문시, Y축 칸에 주문수</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>칸</th>
+<th>넣는 것</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>X축</strong> (막대·꺾은선)</td>
+<td>나눠 볼 기준이 되는 <strong>열</strong></td>
+<td>매장명, 월시작일, 주문시</td>
+</tr>
+<tr>
+<td><strong>Y축</strong></td>
+<td>크기를 나타낼 <strong>측정값</strong></td>
+<td>총매출, 주문수</td>
+</tr>
+<tr>
+<td><strong>범례</strong></td>
+<td>색으로 한 번 더 나눌 열</td>
+<td>(이 장에서는 쓰지 않음)</td>
+</tr>
+<tr>
+<td><strong>값</strong> (도넛·행렬)</td>
+<td>측정값</td>
+<td>총매출</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="note">
+<p>가로 막대형은 X축과 Y축이 반대다. <strong>Y축</strong>에 메뉴명(기준), <strong>X축</strong>에 판매수량(크기)을 넣는다.</p>
+</blockquote>
+<h2 id="5-3-월별-매출-추이---꺾은선형-차트">5-3. 월별 매출 추이 - 꺾은선형 차트</h2>
+<ol>
+<li>캔버스 빈 곳을 누르고 시각화 창의 <strong>꺾은선형 차트</strong> 아이콘을 누른다.</li>
+<li><strong>날짜 → 월시작일</strong> 을 <strong>X축</strong>, <strong>판매 → 총매출</strong> 을 <strong>Y축</strong> 에 넣는다.</li>
+<li>모서리를 끌어 페이지 왼쪽 위에 넓게 놓는다.</li>
+</ol>
+<p>3년 동안 매출이 늘었고, 2024년 3월부터 크게 뛴다. 판교점이 문을 연 때다. 해마다 여름에 조금 오르는 모양도 보인다.</p>
+<blockquote class="note">
+<p><strong>연월(글자) 대신 월시작일(날짜)을 쓰는 이유</strong> 글자 열 <code>2023-01</code> 을 X축에 넣으면 36개 칸이 모두 따로 그려져 이름이 잘린다. 날짜 형식 열을 넣으면 Power BI 가 <strong>연속 축</strong>으로 그려 <code>2023년 1월</code>, <code>2023년 7월</code> 처럼 알맞게 띄워 준다.</p>
+</blockquote>
+<h2 id="5-4-매장별-매출---묶은-세로-막대형-차트">5-4. 매장별 매출 - 묶은 세로 막대형 차트</h2>
+<ol>
+<li>빈 곳을 누르고 <strong>묶은 세로 막대형 차트</strong>.</li>
+<li><strong>매장 → 매장명</strong> 을 X축, <strong>총매출</strong> 을 Y축.</li>
+</ol>
+<h2 id="5-5-분류별-매출-비중---도넛형-차트">5-5. 분류별 매출 비중 - 도넛형 차트</h2>
+<ol>
+<li><strong>도넛형 차트</strong>.</li>
+<li><strong>메뉴 → 분류</strong> 를 <strong>범례</strong>, <strong>총매출</strong> 을 <strong>값</strong>.</li>
+</ol>
+<p>커피가 매출의 절반 이상(54.52%)을 차지한다.</p>
+<h2 id="5-6-매장-연도---행렬">5-6. 매장 × 연도 - 행렬</h2>
+<p>3장에서 만든 것과 같다. <strong>행</strong> 매장명, <strong>열</strong> 날짜 → 연도, <strong>값</strong> 총매출(측정값).</p>
+<figure><a href="../images/pbi_05_차트_p1.png" target="_blank"><img src="../images/pbi_05_차트_p1.png" alt="5장 완성 - 매출 분석 페이지" loading="lazy"></a><figcaption>5장 완성 - 매출 분석 페이지</figcaption></figure>
+<blockquote class="note">
+<p>지금은 숫자가 <code>0.87십억</code>, <code>2십억</code> 처럼 보인다. Power BI 가 큰 숫자에 단위(천, 백만, 십억)를 <strong>자동</strong>으로 붙이기 때문이다. 6장에서 "백만" 단위나 단위 없음으로 보기 좋게 바꾼다.</p>
+</blockquote>
+<h2 id="5-7-메뉴와-시간대---두-번째-페이지">5-7. 메뉴와 시간대 - 두 번째 페이지</h2>
+<p>아래쪽 <strong>+</strong> 로 새 페이지를 만들고 이름을 <strong>메뉴·시간</strong> 으로 바꾼다.</p>
+<p><strong>메뉴별 판매수량 (묶은 가로 막대형)</strong></p>
+<ol>
+<li><strong>묶은 가로 막대형 차트</strong> → <strong>Y축</strong> 메뉴 → 메뉴명, <strong>X축</strong> 판매수량.</li>
+<li>차트 오른쪽 위의 <strong>…</strong>(추가 옵션) → <strong>축 정렬</strong> → <strong>판매수량</strong>, 다시 <strong>…</strong> → <strong>축 정렬</strong> → <strong>내림차순 정렬</strong>. 많이 팔린 메뉴가 위로 온다.</li>
+</ol>
+<p><strong>시간대별 주문수 (묶은 세로 막대형)</strong></p>
+<ol>
+<li><strong>묶은 세로 막대형 차트</strong> → <strong>X축</strong> 판매 → 주문시, <strong>Y축</strong> 주문수.</li>
+<li><strong>…</strong> → <strong>축 정렬</strong> → <strong>주문시</strong>, <strong>오름차순 정렬</strong>. 8시부터 21시까지 순서대로 놓인다.</li>
+</ol>
+<figure><a href="../images/pbi_05_차트_p2.png" target="_blank"><img src="../images/pbi_05_차트_p2.png" alt="5장 완성 - 메뉴·시간 페이지" loading="lazy"></a><figcaption>5장 완성 - 메뉴·시간 페이지</figcaption></figure>
+<p>아메리카노가 압도적 1위이고, 주문은 출근 시간(8~9시)과 점심(12~13시)에 몰린다.</p>
+<h2 id="5-8-차트끼리-서로-거르기-상호-작용">5-8. 차트끼리 서로 거르기 (상호 작용)</h2>
+<p>매출 분석 페이지에서 <strong>매장별 매출</strong> 차트의 <strong>홍대점</strong> 막대를 한 번 눌러 보자.</p>
+<ul>
+<li>꺾은선은 홍대점의 월별 매출만 보여 준다.</li>
+<li>도넛은 홍대점의 분류별 비중으로 바뀐다.</li>
+<li>행렬은 홍대점 줄이 강조된다.</li>
+</ul>
+<p>차트 하나를 누르는 것이 다른 차트들에 "매장명 = 홍대점" 필터를 거는 것과 같다(4장의 필터 컨텍스트). 같은 막대를 한 번 더 누르면 원래대로 돌아온다.</p>
+<blockquote class="note">
+<p><strong>Ctrl 을 누른 채</strong> 여러 막대를 누르면 여러 개를 함께 고를 수 있다.</p>
+</blockquote>
+<h2 id="정리">정리</h2>
+<ul>
+<li>추세는 꺾은선, 비교는 막대, 구성은 도넛, 정확한 숫자는 테이블·행렬.</li>
+<li>차트를 고르고 필드 칸(X축·Y축·범례·값)에 열과 측정값을 끌어 넣는다.</li>
+<li>정렬은 차트의 <strong>… → 축 정렬</strong>.</li>
+<li>차트를 누르면 같은 페이지의 다른 차트가 함께 걸러진다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제</h2>
+<ol>
+<li>메뉴·시간 페이지의 시간대별 주문수에서 주문이 가장 많은 시간은 몇 시인가?</li>
+<li>매장별 매출 차트에서 <strong>판교점</strong>을 누르면 월별 매출 꺾은선은 언제부터 그려지는가? 그 이유는?</li>
+<li>도넛형 차트에 분류 대신 <strong>매장 → 지역</strong> 을 넣으면 조각이 몇 개가 되는가?</li>
+<li>메뉴별 판매수량 차트를 <strong>총매출</strong> 기준으로 바꾸면 1위는 여전히 아메리카노인가? 직접 바꿔 보고 쓰시오.</li>
+</ol>
+<nav class="pager"><a href="ch04.html"><small>← 이전</small>4장 측정값 (DAX)</a><a class="next" href="ch06.html"><small>다음 →</small>6장 슬라이서와 서식</a></nav>
+</article></div>
+<footer>Power BI 기초 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

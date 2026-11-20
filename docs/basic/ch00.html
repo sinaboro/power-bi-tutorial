@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>0장. 과정 안내와 실습 준비 - Power BI 기초</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="0장. 과정 안내와 실습 준비 - Power BI 기초"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>기초</b></a><span class="sp"></span>
+<a class="btn hide-s" href="../index.html#chapters">목차</a>
+<a class="btn" href="../PowerBI_%EA%B8%B0%EC%B4%88_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF</a>
+<a class="btn" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><a href="ch00.html" class=on>0장 과정 안내</a><a href="ch01.html">1장 데이터 불러오기</a><a href="ch02.html">2장 Power Query 정리</a><a href="ch03.html">3장 관계와 날짜 테이블</a><a href="ch04.html">4장 측정값 (DAX)</a><a href="ch05.html">5장 차트 만들기</a><a href="ch06.html">6장 슬라이서와 서식</a><a href="ch07.html">7장 대시보드 완성</a><a href="ch08.html">8장 과제 - 편의점</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html" selected>0장 과정 안내</option><option value="ch01.html">1장 데이터 불러오기</option><option value="ch02.html">2장 Power Query 정리</option><option value="ch03.html">3장 관계와 날짜 테이블</option><option value="ch04.html">4장 측정값 (DAX)</option><option value="ch05.html">5장 차트 만들기</option><option value="ch06.html">6장 슬라이서와 서식</option><option value="ch07.html">7장 대시보드 완성</option><option value="ch08.html">8장 과제 - 편의점</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="0장-과정-안내와-실습-준비">0장. 과정 안내와 실습 준비</h1>
+<h2 id="이-과정에서-만드는-것">이 과정에서 만드는 것</h2>
+<p><strong>Power BI</strong> 를 처음 배우는 사람이 혼자서도 따라 할 수 있게 만든 기초 과정이다. 가상의 카페 <strong>"하루커피"</strong> 의 3년치 매출 데이터를 정리하고 분석해서, 마지막 7장에서 아래와 같은 <strong>매출 대시보드</strong>를 완성한다.</p>
+<figure><a href="../images/pbi_07_대시보드완성_p1.png" target="_blank"><img src="../images/pbi_07_대시보드완성_p1.png" alt="7장에서 완성하는 하루커피 매출 대시보드" loading="lazy"></a><figcaption>7장에서 완성하는 하루커피 매출 대시보드</figcaption></figure>
+<p>Power BI 로 보고서를 만드는 일은 항상 같은 순서로 진행된다. 이 과정의 장도 이 순서를 그대로 따라간다.</p>
+<figure><a href="../images/fig_bi_flow.png" target="_blank"><img src="../images/fig_bi_flow.png" alt="Power BI 로 보고서를 만드는 순서" loading="lazy"></a><figcaption>Power BI 로 보고서를 만드는 순서</figcaption></figure>
+<blockquote class="note">
+<p>이 과정을 마치면 2단계 <strong>심화 과정</strong>(실제 전자상거래 데이터 Olist 분석)으로 이어진다.</p>
+</blockquote>
+<h2 id="진행-순서-약-20시간">진행 순서 (약 20시간)</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>장</th>
+<th>내용</th>
+<th>시간</th>
+<th>완성 파일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0장</td>
+<td>과정 안내, Power BI Desktop 설치, 실습 파일 받기</td>
+<td>1</td>
+<td>-</td>
+</tr>
+<tr>
+<td>1장</td>
+<td>Power BI 화면 둘러보기와 데이터 불러오기</td>
+<td>2</td>
+<td>01_데이터불러오기.pbix</td>
+</tr>
+<tr>
+<td>2장</td>
+<td>Power Query 로 데이터 정리하기</td>
+<td>3</td>
+<td>02_데이터정리.pbix</td>
+</tr>
+<tr>
+<td>3장</td>
+<td>관계와 날짜 테이블</td>
+<td>2</td>
+<td>03_관계와날짜.pbix</td>
+</tr>
+<tr>
+<td>4장</td>
+<td>측정값 만들기 (DAX 첫걸음)</td>
+<td>2.5</td>
+<td>04_측정값.pbix</td>
+</tr>
+<tr>
+<td>5장</td>
+<td>차트 만들기</td>
+<td>2.5</td>
+<td>05_차트.pbix</td>
+</tr>
+<tr>
+<td>6장</td>
+<td>슬라이서와 서식</td>
+<td>2</td>
+<td>06_슬라이서와서식.pbix</td>
+</tr>
+<tr>
+<td>7장</td>
+<td>대시보드 완성과 공유</td>
+<td>1.5</td>
+<td>07_대시보드완성.pbix</td>
+</tr>
+<tr>
+<td>8장</td>
+<td>과제 - 편의점 매출 대시보드 혼자 만들기</td>
+<td>4</td>
+<td>과제_편의점_풀이.pbix</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="공부하는-방법">공부하는 방법</h2>
+<ol>
+<li><strong>장 처음의 "학습 목표" 를 읽는다.</strong> 이 장이 끝나면 무엇을 할 수 있게 되는지 먼저 안다.</li>
+<li><strong>따라 하기 단계를 그대로 클릭한다.</strong> "홈 → 데이터 가져오기" 처럼 화살표(→)는 차례대로 누르라는 뜻이다. 단계마다 화면 그림이 있으니 내 화면과 비교하자.</li>
+<li><strong>장이 끝나면 내 파일을 저장한다.</strong> 파일 이름은 <code>내카페.pbix</code> 처럼 아무것이나 좋다. 다음 장은 그 파일을 이어서 쓴다.</li>
+<li><strong>확인 문제를 푼다.</strong> 풀이는 부록 C 에 있다.</li>
+</ol>
+<blockquote class="note">
+<p><strong>막히거나 수업을 빠졌다면</strong> 저장소의 <code>pbix</code> 폴더에 장마다 <strong>완성 파일</strong>이 있다. 예를 들어 4장을 시작하려는데 3장을 못 끝냈다면 <code>03_관계와날짜.pbix</code> 를 열어 이어서 하면 된다. 오류가 나면 <strong>부록 A 오류 해결</strong>을 먼저 찾아보자.</p>
+</blockquote>
+<h2 id="0-1-power-bi-desktop-설치">0-1. Power BI Desktop 설치</h2>
+<p><strong>Power BI Desktop</strong> 은 Microsoft 가 무료로 주는 Windows 프로그램이다. (macOS 에서는 실행되지 않는다.)</p>
+<ol>
+<li>시작 메뉴에서 <strong>Microsoft Store</strong> 를 연다.</li>
+<li>위쪽 검색 칸에 <code>Power BI Desktop</code> 을 치고, Microsoft Corporation 이 만든 <strong>Power BI Desktop</strong> 을 고른다.</li>
+<li><strong>설치</strong>(또는 <strong>받기</strong>)를 누른다. 설치가 끝나면 시작 메뉴에 Power BI Desktop 이 생긴다.</li>
+</ol>
+<blockquote class="note">
+<p>Store 를 쓸 수 없는 PC 라면 https://www.microsoft.com/download 에서 <code>Power BI Desktop</code> 을 검색해 설치 파일(PBIDesktopSetup_x64.exe)을 받아도 된다. Store 판은 매달 자동으로 업데이트되어 편하다.</p>
+</blockquote>
+<p>처음 실행하면 <strong>로그인</strong> 창이 뜰 수 있다. 이 과정은 내 PC 안에서만 작업하므로 <strong>로그인하지 않아도 된다.</strong> 창 오른쪽 위의 X 로 닫는다.</p>
+<blockquote class="note">
+<p>이 교안의 화면은 <strong>Power BI Desktop 2.159 (2026년 11월)</strong> 한국어판이다. Power BI 는 매달 조금씩 바뀌므로 단추 위치나 아이콘이 조금 다를 수 있다. 그럴 때는 <strong>메뉴 이름</strong>을 보고 찾아가자.</p>
+</blockquote>
+<h2 id="0-2-실습-파일-받기">0-2. 실습 파일 받기</h2>
+<p>모든 실습은 <code>C:\study\power-bi-tutorial</code> 폴더에서 한다. (바탕 화면이나 OneDrive 폴더는 경로에 한글·빈칸이 섞이거나 동기화 때문에 문제가 생기기 쉽다.)</p>
+<p><strong>방법 1. ZIP 으로 받기 (Git 을 모른다면 이 방법)</strong></p>
+<ol>
+<li>웹 브라우저에서 https://github.com/sinaboro/power-bi-tutorial 를 연다.</li>
+<li>초록색 <strong>Code</strong> 단추 → <strong>Download ZIP</strong> 을 누른다.</li>
+<li>받은 <code>power-bi-tutorial-main.zip</code> 을 오른쪽 클릭 → <strong>압축 풀기</strong> → 대상 폴더를 <code>C:\study</code> 로 정한다.</li>
+<li>풀린 폴더 이름 <code>power-bi-tutorial-main</code> 을 <strong><code>power-bi-tutorial</code></strong> 로 바꾼다.</li>
+</ol>
+<p><strong>방법 2. Git 으로 받기</strong></p>
+<p><strong>[PS]</strong></p>
+<pre><code class="language-powershell">mkdir C:\study
+cd C:\study
+git clone https://github.com/sinaboro/power-bi-tutorial.git
+</code></pre>
+<p>받은 폴더는 이렇게 생겼다.</p>
+<pre><code class="language-text">C:\study\power-bi-tutorial
+├─ data                     ← 실습 데이터 (이 과정에서 불러올 파일)
+│  ├─ 카페_판매.csv          하루커피 판매 내역 3년치 (약 36만 줄)
+│  ├─ 카페_메뉴.xlsx         메뉴 22개
+│  ├─ 카페_매장.xlsx         매장 3곳
+│  ├─ 하루커피_테마.json     6장에서 쓰는 색 테마
+│  └─ 편의점_*.csv/xlsx      8장 과제용 데이터
+├─ pbix                     ← 장별 완성 파일 (막혔을 때 열어 본다)
+└─ docs                     ← 이 교안 PDF
+</code></pre>
+<blockquote class="note">
+<p><strong>폴더 위치가 중요하다.</strong> 완성 파일(.pbix)은 <code>C:\study\power-bi-tutorial\data</code> 의 파일을 불러오도록 만들어져 있다. 다른 곳에 두면 완성 파일에서 <strong>새로 고침</strong>할 때 "파일을 찾을 수 없다" 는 오류가 난다. (화면은 그대로 열린다. 해결 방법은 부록 A)</p>
+</blockquote>
+<h2 id="0-3-실습-데이터-소개">0-3. 실습 데이터 소개</h2>
+<p>하루커피는 매장이 세 곳인 가상의 카페다. 2023년 1월 1일부터 2025년 12월 31일까지의 판매 기록이 있다.</p>
+<p><strong>카페_매장.xlsx</strong> - 매장 3곳</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>매장코드</th>
+<th>매장명</th>
+<th>지역</th>
+<th>오픈일</th>
+<th>좌석수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S01</td>
+<td>강남역점</td>
+<td>서울</td>
+<td>2021-05-01</td>
+<td>48</td>
+</tr>
+<tr>
+<td>S02</td>
+<td>홍대점</td>
+<td>서울</td>
+<td>2022-03-12</td>
+<td>40</td>
+</tr>
+<tr>
+<td>S03</td>
+<td>판교점</td>
+<td>경기</td>
+<td>2024-03-15</td>
+<td>56</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>카페_메뉴.xlsx</strong> - 메뉴 22개 (커피 7, 논커피 5, 티 3, 디저트 3, 베이커리 4)</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>메뉴코드</th>
+<th>메뉴명</th>
+<th>분류</th>
+<th>판매가</th>
+<th>원가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M01</td>
+<td>아메리카노</td>
+<td>커피</td>
+<td>4500</td>
+<td>900</td>
+</tr>
+<tr>
+<td>M02</td>
+<td>카페라떼</td>
+<td>커피</td>
+<td>5000</td>
+<td>1300</td>
+</tr>
+<tr>
+<td>M11</td>
+<td>자몽에이드</td>
+<td>논커피</td>
+<td>6000</td>
+<td>1800</td>
+</tr>
+<tr>
+<td>M16</td>
+<td>치즈케이크</td>
+<td>디저트</td>
+<td>6500</td>
+<td>2600</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>카페_판매.csv</strong> - 메뉴 하나를 판 기록이 한 줄이다. 한 번의 주문(주문번호)에 메뉴가 여러 개면 여러 줄이 된다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>열</th>
+<th>뜻</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>주문상세번호</td>
+<td>줄마다 붙은 번호</td>
+<td>37</td>
+</tr>
+<tr>
+<td>주문번호</td>
+<td>한 번의 주문(영수증) 번호</td>
+<td>S01-20230101-0023</td>
+</tr>
+<tr>
+<td>주문일시</td>
+<td>주문한 날짜와 시각</td>
+<td>2023-01-01 08:16:33</td>
+</tr>
+<tr>
+<td>매장코드</td>
+<td>어느 매장인가</td>
+<td>S01</td>
+</tr>
+<tr>
+<td>메뉴코드</td>
+<td>어떤 메뉴인가</td>
+<td>M02</td>
+</tr>
+<tr>
+<td>수량</td>
+<td>몇 개</td>
+<td>1</td>
+</tr>
+<tr>
+<td>단가</td>
+<td>그때 판 가격 (원)</td>
+<td>4700</td>
+</tr>
+<tr>
+<td>결제수단</td>
+<td>카드 / 간편결제 / 현금</td>
+<td>카드</td>
+</tr>
+<tr>
+<td>주문유형</td>
+<td>매장 / 포장</td>
+<td>매장</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="note">
+<p><strong>데이터 속 이야기</strong> 판교점은 2024년 3월에 문을 열었다. 커피 가격은 2025년 1월에 300원 올랐다(그래서 판매.csv 의 단가가 메뉴.xlsx 의 판매가와 다를 수 있다). 여름에는 에이드, 겨울에는 따뜻한 차가 잘 팔린다. 이런 이야기가 차트에서 어떻게 보이는지 찾아보는 것도 재미있다.</p>
+<p><strong>일부러 넣은 "지저분한" 값</strong> 실제 회사 데이터는 깨끗하지 않다. 그래서 이 데이터에도 중복된 줄, 수량이 빈 줄, <code>카드</code>·<code>신용카드</code>·<code>CARD</code> 처럼 표기가 섞인 값, 메뉴명 앞뒤의 빈칸을 일부러 넣어 두었다. 2장에서 Power Query 로 정리한다.</p>
+</blockquote>
+<nav class="pager"><span></span><a class="next" href="ch01.html"><small>다음 →</small>1장 데이터 불러오기</a></nav>
+</article></div>
+<footer>Power BI 기초 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>
