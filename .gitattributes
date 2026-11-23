@@ -1,0 +1,4 @@
+# 실습 데이터는 원본 그대로 두고 줄 끝(LF/CRLF)을 바꾸지 않는다
+data/** -text
+*.csv -text
+*.pbix binary
