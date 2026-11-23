@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>4장. DAX 심화 ① CALCULATE - 조건을 바꿔서 계산하기 - Power BI 2단계 심화</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="4장. DAX 심화 ① CALCULATE - 조건을 바꿔서 계산하기 - Power BI 2단계 심화"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side .cap{font-weight:800;margin:4px 10px 6px;color:var(--sub)}
+.side .other{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>교안</b></a><span class="sp"></span>
+<a class="btn" href="../basic/ch00.html">기초</a>
+<a class="btn" href="../advanced/ch00.html">심화</a>
+<a class="btn hide-s" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><div class="cap">Power BI 2단계 심화</div><a href="ch00.html">0장 과정 안내와 Olist 데이터</a><a href="ch01.html">1장 여러 파일과 매개 변수</a><a href="ch02.html">2장 병합과 조건 열</a><a href="ch03.html">3장 모델링 심화</a><a href="ch04.html" class=on>4장 DAX ① CALCULATE</a><a href="ch05.html">5장 DAX ② 시간 인텔리전스</a><a href="ch06.html">6장 배송과 만족도 분석</a><a href="ch07.html">7장 고급 보고서 기능</a><a href="ch08.html">8장 행 수준 보안과 성능</a><a href="ch09.html">9장 프로젝트 - 판매자 성과</a><a href="ch10.html">10장 (선택) PostgreSQL 연결</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a><div class="other"><a href="../PowerBI_%EC%8B%AC%ED%99%94_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF 교안</a><a href="../basic/ch00.html">→ 1단계 기초 과정</a></div></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내와 Olist 데이터</option><option value="ch01.html">1장 여러 파일과 매개 변수</option><option value="ch02.html">2장 병합과 조건 열</option><option value="ch03.html">3장 모델링 심화</option><option value="ch04.html" selected>4장 DAX ① CALCULATE</option><option value="ch05.html">5장 DAX ② 시간 인텔리전스</option><option value="ch06.html">6장 배송과 만족도 분석</option><option value="ch07.html">7장 고급 보고서 기능</option><option value="ch08.html">8장 행 수준 보안과 성능</option><option value="ch09.html">9장 프로젝트 - 판매자 성과</option><option value="ch10.html">10장 (선택) PostgreSQL 연결</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="4장-dax-심화-①-calculate---조건을-바꿔서-계산하기">4장. DAX 심화 ① CALCULATE - 조건을 바꿔서 계산하기</h1>
+<h2 id="학습-목표">학습 목표</h2>
+<ul>
+<li><strong>CALCULATE</strong> 로 측정값에 조건(필터)을 더하거나 없앤다.</li>
+<li><strong>REMOVEFILTERS</strong> 로 전체 대비 비중을 계산한다.</li>
+<li><strong>VAR / RETURN</strong> 으로 긴 식을 나눠 쓴다.</li>
+<li><strong>CROSSFILTER</strong>, <strong>USERELATIONSHIP</strong> 으로 그 측정값에서만 관계를 바꾼다.</li>
+</ul>
+<h2 id="4-1-calculate-는-무엇을-하는가">4-1. CALCULATE 는 무엇을 하는가</h2>
+<p>기초 과정에서 배운 <strong>필터 컨텍스트</strong>를 떠올리자. 측정값은 놓인 자리의 조건(필터)으로 계산된다. 행렬의 "남동부" 행에서 <code>[주문수]</code> 는 "지역 = 남동부" 인 주문만 센다.</p>
+<p><strong>CALCULATE</strong> 는 이 조건을 <strong>바꾼 다음</strong> 계산하는 함수다.</p>
+<pre><code class="language-dax">CALCULATE(계산할 식, 조건1, 조건2, …)
+</code></pre>
+<figure><a href="../images/fig_calculate.png" target="_blank"><img src="../images/fig_calculate.png" alt="CALCULATE - 원래 필터에 조건을 더하거나 바꾼 뒤 계산한다" loading="lazy"></a><figcaption>CALCULATE - 원래 필터에 조건을 더하거나 바꾼 뒤 계산한다</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>조건의 모양</th>
+<th>하는 일</th>
+<th>예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'테이블'[열] = 값</code></td>
+<td>그 열의 필터를 이 값으로 <strong>바꾼다</strong> (다른 열의 필터는 그대로)</td>
+<td><code>'주문'[주문상태] = "배송완료"</code></td>
+</tr>
+<tr>
+<td><code>REMOVEFILTERS('테이블')</code></td>
+<td>그 테이블에 걸린 필터를 <strong>없앤다</strong></td>
+<td>전체 대비 비중</td>
+</tr>
+<tr>
+<td><code>USERELATIONSHIP(…)</code></td>
+<td>비활성 관계를 <strong>켠다</strong></td>
+<td>배송완료일 기준</td>
+</tr>
+<tr>
+<td><code>CROSSFILTER(…)</code></td>
+<td>관계의 필터 방향을 <strong>바꾼다</strong></td>
+<td>카테고리별 평점</td>
+</tr>
+</tbody>
+</table></div>
+<p>3장 파일을 열고 <strong>_측정값</strong> 테이블에 측정값을 차례로 만든다. 서식은 측정값마다 리본 <strong>측정값 도구</strong> 탭에서 정한다.</p>
+<h2 id="4-2-조건-더하기---배송완료-주문수-지연-주문수">4-2. 조건 더하기 - 배송완료 주문수, 지연 주문수</h2>
+<pre><code class="language-dax">배송완료 주문수 = CALCULATE([주문수], '주문'[주문상태] = &quot;배송완료&quot;)
+</code></pre>
+<pre><code class="language-dax">지연 주문수 = CALCULATE([주문수], '주문'[배송상태] = &quot;지연&quot;)
+</code></pre>
+<p>카드로 확인하면 각각 <strong>96,478</strong>, <strong>6,535</strong> 다. 행렬에 지역을 넣으면 지역마다 "그 지역 + 배송완료" 인 주문 수가 나온다. 원래 조건(지역)은 그대로 두고, 조건(주문상태)을 <strong>하나 더한</strong> 것이다.</p>
+<blockquote class="note">
+<p><strong>이미 같은 열에 조건이 있으면?</strong> 주문상태 슬라이서에서 "취소" 를 골라도 <code>배송완료 주문수</code> 는 배송완료 주문을 센다. CALCULATE 의 조건이 같은 열의 바깥 조건을 <strong>덮어쓰기</strong> 때문이다. 바깥 조건을 지키면서 더하고 싶으면 <code>KEEPFILTERS('주문'[주문상태] = "배송완료")</code> 처럼 감싼다.</p>
+</blockquote>
+<h2 id="4-3-var-로-나눠-쓰기---지연율">4-3. VAR 로 나눠 쓰기 - 지연율</h2>
+<p>지연율 = 지연 주문수 ÷ <strong>배송이 끝난</strong> 주문수. 아직 도착하지 않은 주문은 늦었는지 알 수 없으니 분모에서 뺀다.</p>
+<pre><code class="language-dax">지연율 =
+VAR LateOrders = [지연 주문수]
+VAR ArrivedOrders = CALCULATE([주문수], '주문'[배송상태] &lt;&gt; &quot;미배송&quot;)
+RETURN DIVIDE(LateOrders, ArrivedOrders)
+</code></pre>
+<ul>
+<li><code>VAR 이름 = 식</code> 으로 중간 결과에 이름을 붙이고, <code>RETURN</code> 뒤에 최종 결과를 쓴다.</li>
+<li>식이 읽기 쉬워지고, 같은 값을 여러 번 쓸 때 한 번만 계산한다.</li>
+<li>수식 입력줄에서 <strong>Shift+Enter</strong> 로 줄을 바꾼다. (Enter 는 확정)</li>
+<li><strong>변수 이름은 영문자·숫자·_ 만</strong> 쓸 수 있다. <code>VAR 지연 = …</code> 처럼 한글로 쓰면 오류가 난다.</li>
+</ul>
+<p>서식을 <strong>백분율</strong>(소수 2자리)로 바꾸면 <strong>6.77%</strong> 다.</p>
+<figure><a href="../images/ui_a_measure_var.png" target="_blank"><img src="../images/ui_a_measure_var.png" alt="4장 - 지연율 측정값과 수식 입력줄" loading="lazy"></a><figcaption>4장 - 지연율 측정값과 수식 입력줄</figcaption></figure>
+<h2 id="4-4-조건-없애기---매출-비중">4-4. 조건 없애기 - 매출 비중</h2>
+<p>대분류별 "전체 매출 중 몇 %" 를 구해 보자. 분모는 대분류 필터가 <strong>없는</strong> 전체 매출이어야 한다.</p>
+<pre><code class="language-dax">매출 비중 = DIVIDE([상품매출], CALCULATE([상품매출], REMOVEFILTERS('상품')))
+</code></pre>
+<ul>
+<li>분자 <code>[상품매출]</code> : 지금 행의 대분류 매출 (예: 가구·인테리어 2,239,686)</li>
+<li>분모 : 상품 테이블의 필터를 없앤 매출 = 전체 13,591,644</li>
+<li>결과 16.48%</li>
+</ul>
+<blockquote class="note">
+<p>연도 슬라이서로 2018년을 고르면? REMOVEFILTERS('상품') 은 <strong>상품 테이블</strong>의 필터만 없앤다. 날짜 필터는 남아 있으므로 "2018년 전체 중 이 대분류의 비중" 이 된다. 무엇을 없애고 무엇을 남길지 고르는 것이 CALCULATE 의 핵심이다.</p>
+</blockquote>
+<h2 id="4-5-관계-방향-바꾸기---카테고리-평균-평점">4-5. 관계 방향 바꾸기 - 카테고리 평균 평점</h2>
+<p>3장에서 본 문제: 리뷰는 주문에 붙어 있고, 상품의 필터는 주문상품까지만 흐른다. 그래서 대분류별 <code>[평균 평점]</code> 은 모든 행이 전체 평균 4.07 로 같다.</p>
+<pre><code class="language-dax">카테고리 평균 평점 = CALCULATE([평균 평점], CROSSFILTER('주문상품'[주문ID], '주문'[주문ID], Both))
+</code></pre>
+<p><code>CROSSFILTER(다 쪽 열, 일 쪽 열, Both)</code> 는 <strong>이 측정값을 계산하는 동안만</strong> 주문상품 ↔ 주문 관계를 양방향으로 바꾼다. 필터가 <code>상품 → 주문상품 → 주문 → 리뷰</code> 로 흘러, 그 대분류 상품이 들어 있는 주문의 리뷰만 평균한다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>대분류</th>
+<th>평균 평점 (그냥)</th>
+<th>카테고리 평균 평점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>가구·인테리어</td>
+<td>4.07</td>
+<td>3.95</td>
+</tr>
+<tr>
+<td>도서·음반·문구</td>
+<td>4.07</td>
+<td>4.28</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="4-6-비활성-관계-켜기---배송완료일-기준-주문수">4-6. 비활성 관계 켜기 - 배송완료일 기준 주문수</h2>
+<p>3장에서 만든 점선 관계(주문[배송완료일] → 날짜[Date])를 쓴다.</p>
+<pre><code class="language-dax">배송완료 기준 주문수 = CALCULATE([주문수], USERELATIONSHIP('주문'[배송완료일], '날짜'[Date]))
+</code></pre>
+<p>꺾은선형 차트에 X축 날짜[월시작일], Y축 <code>주문수</code> 와 <code>배송완료 기준 주문수</code> 를 함께 넣으면, 배송완료 기준 선이 구매일 기준 선보다 <strong>조금 오른쪽(늦게)</strong> 에 그려진다. 주문하고 평균 12일 뒤에 도착하기 때문이다.</p>
+<figure><a href="../images/pbi_심화04_CALCULATE_p1.png" target="_blank"><img src="../images/pbi_심화04_CALCULATE_p1.png" alt="4장 완성 - CALCULATE 측정값들" loading="lazy"></a><figcaption>4장 완성 - CALCULATE 측정값들</figcaption></figure>
+<blockquote class="note">
+<p>4장 완성 화면의 꺾은선형 차트에는 <strong>시각적 개체 필터</strong>로 기간(2017-01 ~ 2018-08)을 걸었다. 이유는 5장에서 설명한다.</p>
+</blockquote>
+<h2 id="정리">정리</h2>
+<ul>
+<li><code>CALCULATE(식, 조건…)</code> = 조건을 바꾼 뒤 식을 계산한다. 조건은 같은 열의 바깥 필터를 덮어쓴다.</li>
+<li><code>REMOVEFILTERS(테이블)</code> 로 필터를 없애 <strong>전체 대비 비중</strong>을 구한다.</li>
+<li><code>VAR … RETURN</code> 으로 식을 나눠 쓴다. 변수 이름은 영문.</li>
+<li><code>CROSSFILTER(…, Both)</code>, <code>USERELATIONSHIP(…)</code> 은 <strong>그 측정값 안에서만</strong> 관계를 바꾼다. 모델은 그대로 둔다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제</h2>
+<ol>
+<li><code>취소 주문수 = CALCULATE([주문수], '주문'[주문상태] = "취소")</code> 를 만들어 보자. 전체 값은 얼마인가?</li>
+<li>행렬 행에 주[지역]을 넣고 <code>[매출 비중]</code> 을 넣으면 모든 행이 100% 가 된다. 왜일까? 지역별 비중을 구하려면 식을 어떻게 고쳐야 할까?</li>
+<li>대분류 중 <code>카테고리 평균 평점</code> 이 가장 낮은 것과 가장 높은 것은?</li>
+<li><code>배송완료 기준 주문수</code> 의 전체 합계는 <code>[주문수]</code> (99,441) 보다 적다. 얼마이고, 왜 적을까?</li>
+</ol>
+<nav class="pager"><a href="ch03.html"><small>← 이전</small>3장 모델링 심화</a><a class="next" href="ch05.html"><small>다음 →</small>5장 DAX ② 시간 인텔리전스</a></nav>
+</article></div>
+<footer>Power BI 2단계 심화 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

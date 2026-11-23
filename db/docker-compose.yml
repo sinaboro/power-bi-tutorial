@@ -1,0 +1,42 @@
+# ============================================================================
+# 심화 10장 (선택) - Olist 데이터를 PostgreSQL 데이터베이스로 띄우기
+#
+#   시작      : docker compose up -d          (이 파일이 있는 db 폴더에서)
+#   상태 확인  : docker compose ps             (STATUS 가 healthy 이면 준비 끝)
+#   멈추기     : docker compose stop
+#   완전히 지우기: docker compose down -v       (컨테이너 + 데이터베이스 볼륨 삭제)
+#
+# 처음 시작할 때 init/01_olist.sql 이 실행되어 ../data/olist 의 CSV 를 테이블로 불러온다 (1~2분).
+# 접속 정보 (Power BI 에서 쓴다)
+#   서버 localhost:5435 / 데이터베이스 olist / 사용자 postgres / 비밀번호 postgres
+#   ※ 5432 대신 5435 를 쓰는 것은 PC 에 다른 PostgreSQL 이 있어도 부딪치지 않게 하려는 것
+# ============================================================================
+
+# 프로젝트 이름 - 적지 않으면 폴더 이름(db)이 붙어 다른 과정의 컨테이너와 헷갈린다
+name: powerbi-olist
+
+services:
+  db:
+    image: postgres:18
+    container_name: powerbi-olist-db
+    restart: unless-stopped
+    ports:
+      - "5435:5432"                       # PC 의 5435 번 → 컨테이너의 5432 번
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres         # 실습용 비밀번호 (실제 서비스에서는 쓰지 말 것)
+      POSTGRES_DB: olist
+      TZ: Asia/Seoul
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d:ro   # 처음 시작할 때 한 번 실행할 SQL
+      - ../data/olist:/olist:ro                  # CSV 파일 (읽기 전용)
+      - olist-data:/var/lib/postgresql           # 데이터베이스 파일 (지워지지 않게 볼륨에 보관)
+    healthcheck:
+      # 마지막에 만드는 뷰(monthly_orders)가 보이면 CSV 불러오기까지 모두 끝난 것
+      test: ["CMD-SHELL", "psql -U postgres -d olist -tAc 'select 1 from monthly_orders limit 1' | grep -q 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  olist-data:

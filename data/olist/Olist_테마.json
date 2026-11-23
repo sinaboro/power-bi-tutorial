@@ -1,0 +1,15 @@
+{
+  "name": "Olist 심화",
+  "dataColors": ["#1F4E79", "#2E86C1", "#F39C12", "#27AE60", "#8E44AD", "#E74C3C", "#16A085", "#7F8C8D"],
+  "background": "#FFFFFF",
+  "foreground": "#1B2631",
+  "tableAccent": "#1F4E79",
+  "good": "#27AE60",
+  "bad": "#E74C3C",
+  "neutral": "#F39C12",
+  "textClasses": {
+    "title": { "fontFace": "Malgun Gothic", "color": "#1B2631", "fontSize": 13 },
+    "label": { "fontFace": "Malgun Gothic" },
+    "callout": { "fontFace": "Malgun Gothic", "color": "#1F4E79" }
+  }
+}

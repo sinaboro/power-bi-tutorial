@@ -112,6 +112,10 @@ def build(key, keep=False, shots=True):
     if key == "과제":
         import course_cvs as mod
         name, proj = "과제_편의점_풀이", mod.project()
+    elif key.startswith("a"):                      # 심화 과정: a1, a2, … (course_adv.py)
+        import course_adv as mod
+        stage = int(key[1:])
+        name, proj = mod.STAGES[stage], mod.project(stage)
     else:
         stage = int(key)
         name, proj = course.STAGES[stage], course.project(stage)
@@ -123,7 +127,8 @@ def build(key, keep=False, shots=True):
     w = pbi_ui.main_window()
     w.set_focus()
     dismiss_popups(w)
-    first = proj["tables"][0].name
+    names_ = [t.name for t in proj["tables"]]
+    first = "주문상품" if "주문상품" in names_ else names_[0]      # 심화: 가장 큰 테이블이 다 불러와졌는지 본다
     n = refresh_and_wait(w, first)
     print(f"[{name}] 불러온 행 수: {first} = {n:,}")
     dismiss_popups(w)
@@ -138,6 +143,8 @@ def build(key, keep=False, shots=True):
             out = ROOT / "docs" / "images" / f"pbi_{name}_p{i + 1}.png"
             pbi_ui.shot(str(out), w)
             print("  캡처:", out.name)
+        if len(proj["pages"]) > 1:                   # 학생이 파일을 열면 첫 페이지가 보이게 돌아가서 저장
+            goto_page(w, proj["pages"][0].display)
     if "--nosave" in sys.argv:
         return w
     tmp = ROOT / "pbix" / f"stage_{key}.pbix"          # 저장 대화 상자에는 영문 이름으로 저장한 뒤
@@ -157,6 +164,12 @@ def build(key, keep=False, shots=True):
 if __name__ == "__main__":
     keep = "--keep" in sys.argv
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    keys = [str(k) for k in course.STAGES] + ["과제"] if args == ["all"] else args
+    if args == ["all"]:
+        keys = [str(k) for k in course.STAGES] + ["과제"]
+    elif args == ["adv"]:                          # 심화 과정 전체
+        import course_adv
+        keys = [f"a{k}" for k in course_adv.STAGES]
+    else:
+        keys = args
     for k in keys:
         build(k, keep=keep)

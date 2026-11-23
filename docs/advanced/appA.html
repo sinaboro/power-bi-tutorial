@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>부록 A. 자주 만나는 오류와 해결 - Power BI 2단계 심화</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="부록 A. 자주 만나는 오류와 해결 - Power BI 2단계 심화"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side .cap{font-weight:800;margin:4px 10px 6px;color:var(--sub)}
+.side .other{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>교안</b></a><span class="sp"></span>
+<a class="btn" href="../basic/ch00.html">기초</a>
+<a class="btn" href="../advanced/ch00.html">심화</a>
+<a class="btn hide-s" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><div class="cap">Power BI 2단계 심화</div><a href="ch00.html">0장 과정 안내와 Olist 데이터</a><a href="ch01.html">1장 여러 파일과 매개 변수</a><a href="ch02.html">2장 병합과 조건 열</a><a href="ch03.html">3장 모델링 심화</a><a href="ch04.html">4장 DAX ① CALCULATE</a><a href="ch05.html">5장 DAX ② 시간 인텔리전스</a><a href="ch06.html">6장 배송과 만족도 분석</a><a href="ch07.html">7장 고급 보고서 기능</a><a href="ch08.html">8장 행 수준 보안과 성능</a><a href="ch09.html">9장 프로젝트 - 판매자 성과</a><a href="ch10.html">10장 (선택) PostgreSQL 연결</a><a href="appA.html" class=on>부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a><div class="other"><a href="../PowerBI_%EC%8B%AC%ED%99%94_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF 교안</a><a href="../basic/ch00.html">→ 1단계 기초 과정</a></div></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내와 Olist 데이터</option><option value="ch01.html">1장 여러 파일과 매개 변수</option><option value="ch02.html">2장 병합과 조건 열</option><option value="ch03.html">3장 모델링 심화</option><option value="ch04.html">4장 DAX ① CALCULATE</option><option value="ch05.html">5장 DAX ② 시간 인텔리전스</option><option value="ch06.html">6장 배송과 만족도 분석</option><option value="ch07.html">7장 고급 보고서 기능</option><option value="ch08.html">8장 행 수준 보안과 성능</option><option value="ch09.html">9장 프로젝트 - 판매자 성과</option><option value="ch10.html">10장 (선택) PostgreSQL 연결</option><option value="appA.html" selected>부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="부록-a-자주-만나는-오류와-해결">부록 A. 자주 만나는 오류와 해결</h1>
+<h2 id="power-query">Power Query</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>증상</th>
+<th>원인</th>
+<th>해결</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"DataPath 을(를) 찾을 수 없습니다"</td>
+<td>매개 변수 이름이 다르다 (대소문자, 빈칸)</td>
+<td>쿼리 목록의 매개 변수 이름과 식의 이름을 똑같이</td>
+</tr>
+<tr>
+<td>"파일을 찾을 수 없습니다" (매개 변수를 쓴 뒤)</td>
+<td>DataPath 값이 틀렸거나, <code>&amp;</code> 뒤 파일 이름 앞에 <code>\</code> 가 빠졌다</td>
+<td>홈 → 데이터 변환 ▾ → 매개 변수 편집 으로 값 확인. 식은 <code>DataPath &amp; "\파일이름.csv"</code></td>
+</tr>
+<tr>
+<td>다른 PC 에서 완성 파일을 열었더니 새로 고침 오류</td>
+<td>그 PC 의 폴더가 다르다</td>
+<td><strong>매개 변수 편집</strong> 에서 DataPath 를 그 PC 의 <code>…\data\olist</code> 경로로 바꾼다</td>
+</tr>
+<tr>
+<td>리뷰 행 수가 100,000 보다 많다, review_score 에 글자가 섞였다</td>
+<td>따옴표 안 줄 바꿈을 새 행으로 읽었다</td>
+<td>원본 단계 <code>QuoteStyle.None</code> → <code>QuoteStyle.Csv</code> (2-2)</td>
+</tr>
+<tr>
+<td>병합 후 확장한 열이 모두 null</td>
+<td>키 열의 값이 서로 다르다 (형식, 앞뒤 빈칸, 대소문자)</td>
+<td>두 테이블의 키 열 형식을 같게(텍스트), 공백 제거</td>
+</tr>
+<tr>
+<td>확장한 열 이름이 <code>고객.customer_state</code> 처럼 길다</td>
+<td><strong>원래 열 이름을 접두사로 사용</strong> 이 켜져 있었다</td>
+<td>이름 바꾸기, 또는 확장 단계 톱니바퀴에서 다시</td>
+</tr>
+<tr>
+<td>도우미 쿼리가 데이터 창에 나온다</td>
+<td>로드 사용이 켜져 있다</td>
+<td>쿼리 오른쪽 클릭 → <strong>로드 사용</strong> 끄기</td>
+</tr>
+<tr>
+<td>사용자 지정 열 결과가 Error</td>
+<td>null 에 계산을 했다 (예: null - 날짜)</td>
+<td><code>if [열] = null then null else …</code> 로 감싼다</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="모델과-관계">모델과 관계</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>증상</th>
+<th>원인</th>
+<th>해결</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>관계가 다대다(*:*)로 만들어진다</td>
+<td>일(1) 쪽 열에 중복 값이 있다</td>
+<td>차원 테이블의 키 중복을 Power Query 에서 제거</td>
+</tr>
+<tr>
+<td>관계를 만들었는데 점선이다</td>
+<td>같은 두 테이블 사이에 이미 활성 관계가 있다</td>
+<td>정상. USERELATIONSHIP 으로 쓴다 (3-4, 4-6)</td>
+</tr>
+<tr>
+<td>행렬의 측정값이 모든 행에서 같다</td>
+<td>행에 놓은 필드의 필터가 측정값 테이블까지 흐르지 않는다 (다 → 일 방향)</td>
+<td>필터가 닿는 테이블로 측정값을 만들거나 CROSSFILTER (3-6, 4-5)</td>
+</tr>
+<tr>
+<td>시간 인텔리전스 결과가 비거나 이상하다</td>
+<td>날짜 테이블로 표시를 안 했다, 날짜 테이블에 빠진 날이 있다</td>
+<td>날짜 테이블로 표시, CALENDAR 로 빠짐없이 만든다</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="dax">DAX</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>증상</th>
+<th>원인</th>
+<th>해결</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VAR 가 있는 측정값이 구문 오류</td>
+<td>변수 이름에 한글·빈칸을 썼다</td>
+<td>변수 이름은 영문자·숫자·_ 만 (<code>VAR LateOrders = …</code>)</td>
+</tr>
+<tr>
+<td>수식 입력줄에서 Enter 를 눌렀더니 식이 확정돼 버렸다</td>
+<td>줄 바꿈은 Shift+Enter</td>
+<td>Shift+Enter</td>
+</tr>
+<tr>
+<td>"열 … 에 대한 단일 값을 확인할 수 없습니다"</td>
+<td>측정값에서 열을 집계 없이 썼다</td>
+<td>SUM, MAX 같은 집계 함수로 감싸거나 반복 함수(SUMX) 안에서 쓴다</td>
+</tr>
+<tr>
+<td>비중 측정값이 100% 만 나온다</td>
+<td>REMOVEFILTERS 가 행에 놓은 필드의 테이블을 없애지 않는다</td>
+<td>행 필드의 테이블을 REMOVEFILTERS 에 넣는다 (4장 확인 문제 2)</td>
+</tr>
+<tr>
+<td>전년 대비 성장률이 수십만 %</td>
+<td>비교 기간(2016년)의 값이 아주 작다</td>
+<td>시각적 개체 필터로 분석 기간 제한 (5-4)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="보고서">보고서</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>증상</th>
+<th>원인</th>
+<th>해결</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>드릴다운 화살표가 안 보인다</td>
+<td>축에 필드가 하나뿐이다</td>
+<td>축에 계층(또는 열 2개 이상)을 넣는다</td>
+</tr>
+<tr>
+<td>드릴스루 메뉴가 안 나온다</td>
+<td>대상 페이지의 드릴스루 칸 필드가 이 차트에 없다</td>
+<td>같은 필드(상품[카테고리])를 쓰는 차트에서 오른쪽 클릭</td>
+</tr>
+<tr>
+<td>도구 설명 페이지 대신 기본 도구 설명이 뜬다</td>
+<td>페이지의 <strong>도구 설명으로 사용</strong> 이 꺼져 있거나, 차트의 도구 설명 형식이 기본값</td>
+<td>7-4 의 2번, 6번 확인</td>
+</tr>
+<tr>
+<td>상위 N 필터에서 "값" 칸이 비어 있다</td>
+<td>기준 측정값을 넣지 않았다</td>
+<td>데이터 창의 측정값을 값 칸에 끌어 놓는다</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="보안데이터베이스">보안·데이터베이스</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>증상</th>
+<th>원인</th>
+<th>해결</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>표시 방법(역할로 보기)에서 CROSSFILTER 측정값이 든 시각적 개체만 오류</td>
+<td>RLS 가 걸린 모델에서는 측정값 안의 CROSSFILTER·USERELATIONSHIP 을 쓸 수 없다</td>
+<td>그 관계를 양방향 + <strong>양방향으로 보안 필터 적용</strong> 으로 바꾸고 일반 측정값을 쓴다 (8-3)</td>
+</tr>
+<tr>
+<td>역할로 보기를 해도 숫자가 같다</td>
+<td>필터 식이 관계 방향상 측정값 테이블에 닿지 않는다</td>
+<td>차원 테이블(주)에 필터를 건다 (8장 확인 문제 3)</td>
+</tr>
+<tr>
+<td>PostgreSQL 연결에서 암호화 관련 오류</td>
+<td>실습용 데이터베이스는 SSL 을 쓰지 않는다</td>
+<td>"암호화된 연결 사용 안 함" 확인 창에서 확인</td>
+</tr>
+<tr>
+<td>암호를 고쳐 넣어도 같은 인증 오류가 계속 난다</td>
+<td>처음 입력한 (잘못된) 자격 증명이 저장되어 있다</td>
+<td>홈 → 데이터 변환 ▾ → <strong>데이터 원본 설정</strong> → 그 원본 선택 → <strong>권한 지우기</strong></td>
+</tr>
+<tr>
+<td><code>docker compose up</code> 후 Power BI 가 연결하지 못한다</td>
+<td>아직 CSV 를 불러오는 중이다</td>
+<td><code>docker compose ps</code> 가 healthy 일 때까지 기다린다</td>
+</tr>
+<tr>
+<td>포트 5435 를 이미 쓰고 있다는 오류</td>
+<td>다른 프로그램이 5435 를 쓴다</td>
+<td>docker-compose.yml 의 <code>"5435:5432"</code> 를 <code>"5436:5432"</code> 처럼 바꾸고 서버도 <code>localhost:5436</code> 으로</td>
+</tr>
+</tbody>
+</table></div>
+<nav class="pager"><a href="ch10.html"><small>← 이전</small>10장 (선택) PostgreSQL 연결</a><a class="next" href="appB.html"><small>다음 →</small>부록 B 용어 풀이</a></nav>
+</article></div>
+<footer>Power BI 2단계 심화 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

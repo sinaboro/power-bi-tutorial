@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>부록 C. 확인 문제 풀이 - Power BI 2단계 심화</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="부록 C. 확인 문제 풀이 - Power BI 2단계 심화"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side .cap{font-weight:800;margin:4px 10px 6px;color:var(--sub)}
+.side .other{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>교안</b></a><span class="sp"></span>
+<a class="btn" href="../basic/ch00.html">기초</a>
+<a class="btn" href="../advanced/ch00.html">심화</a>
+<a class="btn hide-s" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><div class="cap">Power BI 2단계 심화</div><a href="ch00.html">0장 과정 안내와 Olist 데이터</a><a href="ch01.html">1장 여러 파일과 매개 변수</a><a href="ch02.html">2장 병합과 조건 열</a><a href="ch03.html">3장 모델링 심화</a><a href="ch04.html">4장 DAX ① CALCULATE</a><a href="ch05.html">5장 DAX ② 시간 인텔리전스</a><a href="ch06.html">6장 배송과 만족도 분석</a><a href="ch07.html">7장 고급 보고서 기능</a><a href="ch08.html">8장 행 수준 보안과 성능</a><a href="ch09.html">9장 프로젝트 - 판매자 성과</a><a href="ch10.html">10장 (선택) PostgreSQL 연결</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html" class=on>부록 C 확인 문제 풀이</a><div class="other"><a href="../PowerBI_%EC%8B%AC%ED%99%94_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF 교안</a><a href="../basic/ch00.html">→ 1단계 기초 과정</a></div></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내와 Olist 데이터</option><option value="ch01.html">1장 여러 파일과 매개 변수</option><option value="ch02.html">2장 병합과 조건 열</option><option value="ch03.html">3장 모델링 심화</option><option value="ch04.html">4장 DAX ① CALCULATE</option><option value="ch05.html">5장 DAX ② 시간 인텔리전스</option><option value="ch06.html">6장 배송과 만족도 분석</option><option value="ch07.html">7장 고급 보고서 기능</option><option value="ch08.html">8장 행 수준 보안과 성능</option><option value="ch09.html">9장 프로젝트 - 판매자 성과</option><option value="ch10.html">10장 (선택) PostgreSQL 연결</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html" selected>부록 C 확인 문제 풀이</option></select>
+<h1 id="부록-c-확인-문제-풀이">부록 C. 확인 문제 풀이</h1>
+<p>숫자는 이 교안의 데이터로 실제 계산한 값이다. 표시 단위나 반올림에 따라 끝자리가 조금 다르게 보일 수 있다.</p>
+<h2 id="0장">0장</h2>
+<ol>
+<li>주문 <strong>1줄</strong>, 주문상품 <strong>3줄</strong>(상품 하나에 한 줄), 결제 <strong>2줄</strong>(신용카드, 바우처).</li>
+<li><strong>2줄</strong>. customer_id 는 주문마다 새로 만들어져 서로 다르고, <strong>customer_unique_id</strong> 가 같다.</li>
+<li><strong>5개</strong> - order_purchase_timestamp, order_approved_at, order_delivered_carrier_date, order_delivered_customer_date, order_estimated_delivery_date.</li>
+</ol>
+<h2 id="1장">1장</h2>
+<ol>
+<li>경로가 <code>…\olist\\olist_orders_dataset.csv</code> 처럼 <code>\</code> 가 두 번 들어간다. Windows 는 대개 그래도 파일을 찾지만, 헷갈리고 다른 프로그램에서는 오류가 날 수 있으니 매개 변수 값 끝에는 <code>\</code> 를 붙이지 않는 규칙을 정해 두자.</li>
+<li><strong>98,666</strong>. 개수는 112,650. 주문 하나에 상품이 여러 개면 같은 order_id 가 여러 줄에 나오므로, 서로 다른 값의 수(개수(고유))는 행 수보다 적다.</li>
+<li><strong>큰따옴표(")</strong> 로 감싸여 있다. 따옴표 안의 줄 바꿈은 값의 일부인데, 기본 설정(QuoteStyle.None)은 이것을 행의 끝으로 읽는다.</li>
+</ol>
+<h2 id="2장">2장</h2>
+<ol>
+<li>달라지지 않는다(<strong>99,441</strong>). 주문의 customer_id 는 모두 고객 파일에 있다. 왼쪽 앤티 조인으로 병합하면 <strong>0행</strong> 이 나온다.</li>
+<li><strong>늘어난다</strong> (6,535 → 7,827). 예상배송일 <strong>당일</strong>에 도착한 주문까지 지연으로 센다. "예상일까지 오면 정시" 라는 뜻으로 <code>&gt;</code> 를 쓴다. 이렇게 <strong>정의</strong>가 결과를 바꾸므로 보고서에 기준을 적어 두자.</li>
+<li><strong>3건</strong>. 원래 값은 <code>not_defined</code> (결제 방식이 기록되지 않음).</li>
+<li>카테고리번역과 병합·확장한 직후 <code>product_category_name_english</code> 열의 ▾ 에서 <strong>(null)</strong> 만 골라 보면 된다. 또는 상품과 카테고리번역을 <strong>왼쪽 앤티</strong> 로 병합하면 번역이 없는 상품만 남는다. (확인한 뒤 그 단계는 지운다)</li>
+</ol>
+<h2 id="3장">3장</h2>
+<ol>
+<li>주 → 주문 은 <strong>일(1) → 다(*)</strong> 방향이라 필터가 바로 흐른다. 주문수·고객수는 주문 테이블에서 세므로 지역마다 다르게 나온다. 대분류는 상품 → 주문상품 → (거꾸로) 주문 이어서 막혔다.</li>
+<li>모든 행이 <strong>96,096</strong> 으로 같다. 판매자 → 주문상품 까지만 필터가 흐르고, 고객ID 가 있는 주문 테이블은 걸러지지 않는다.</li>
+<li><strong>점선(비활성)</strong>. 날짜와 주문 사이에 이미 활성 관계(구매일)가 있기 때문이다.</li>
+<li><strong>68,266건, 68.65%</strong>. 주문 3건 중 2건이 남동부 고객이다.</li>
+</ol>
+<h2 id="4장">4장</h2>
+<ol>
+<li><strong>625</strong>.</li>
+<li>분모 <code>CALCULATE([상품매출], REMOVEFILTERS('상품'))</code> 는 <strong>상품</strong> 필터만 없앤다. 지역 필터(주 테이블)는 그대로 남아 분모도 그 지역 매출이 되므로 100%. 지역별 비중은 <code>REMOVEFILTERS('주')</code> 로 바꿔야 한다. 비중 측정값은 <strong>어떤 테이블의 필터를 없앨지</strong>를 행에 놓을 필드에 맞춰 정한다.</li>
+<li>가장 낮은 것은 <strong>기타 3.91</strong>, 그다음 가구·인테리어 3.95. 가장 높은 것은 <strong>도서·음반·문구 4.28</strong>.</li>
+<li><strong>96,476</strong>. 배송완료일이 빈(아직 배송되지 않은) 주문 2,965건은 날짜와 짝이 없어 어느 날짜에도 세어지지 않는다.</li>
+</ol>
+<h2 id="5장">5장</h2>
+<ol>
+<li>같다. 주문마다 배송비를 더한 뒤 평균하므로 전체 배송비 ÷ 주문 수와 같은 <strong>22.82</strong>. AVERAGEX 는 "무엇의 평균인지(주문 단위)" 를 식에 분명히 보여 준다.</li>
+<li>2018년 8월 <strong>854,686</strong>, 전년 동기(2017년 8월) <strong>573,972</strong>, 전년 대비 <strong>+48.9%</strong>.</li>
+<li><strong>7,385,906</strong>. 2018년 1~8월 매출을 모두 더한 값과 같다. (2018년 9월 이후 매출은 아주 적어 2018년 전체 7,386,051 과 거의 같다)</li>
+<li><strong>252명</strong>. <code>CALCULATE([주문수]) &gt; 1</code> 을 <code>&gt;= 3</code> 으로 바꾼다.</li>
+</ol>
+<h2 id="6장">6장</h2>
+<ol>
+<li>남동부 - 지연율 <strong>6.1%</strong>, 평균 배송일수 <strong>10.7일</strong>. 북부 - 지연율 <strong>8.6%</strong>, 평균 배송일수 <strong>22.5일</strong>.</li>
+<li><strong>줄었다</strong>. 2017년 13.0일 → 2018년 12.1일. 하지만 지연율은 2017년 5.7% → 2018년 7.7%로 <strong>늘었다</strong>. 배송이 빨라졌는데 지연이 늘었다는 것은 예상배송일을 더 짧게 약속했을 가능성이 있다 - 숫자 하나만 보면 안 되는 예다.</li>
+<li><strong>호라이마</strong> (평균 29.3일, 평점 3.61). 알라고아스(24.5일, 3.73), 마라냥(21.5일, 3.75)도 아래쪽에 있다.</li>
+<li>예 - 같은 상품·같은 판매자의 주문 중 지연된 것과 정시인 것의 평점 비교, 리뷰 글에 "배송" 관련 불만이 얼마나 있는지, 지연일수(1일 vs 10일)에 따라 평점이 계속 떨어지는지. 다른 조건을 같게 맞춘 비교가 원인을 말하는 근거가 된다.</li>
+</ol>
+<h2 id="7장">7장</h2>
+<ol>
+<li><strong>바이아</strong>(약 511,350), 그다음 페르남부쿠, 세아라.</li>
+<li>매출이 가장 적은 5개 - 보안 서비스(283), 아동 의류(570), CD·DVD·뮤지컬(730), 홈 편의용품2(760), 꽃(1,110).</li>
+<li><strong>가구·인테리어 7.42%</strong>. 그다음 뷰티·건강 7.25%, 유아·완구 7.10%. 부피가 큰 상품이 많은 대분류가 지연이 잦다.</li>
+<li><strong>62.4%</strong>.</li>
+</ol>
+<h2 id="8장">8장</h2>
+<ol>
+<li><strong>41,746건</strong>, 전체의 <strong>41.98%</strong>. 고객 10명 중 4명이 상파울루 주에 산다.</li>
+<li><code>남부 담당</code> - 테이블 <strong>주</strong>, 식 <code>[지역] = "남부"</code>. 상품매출 <strong>1,953,941</strong>.</li>
+<li><strong>주문수는 바뀌지 않고(99,441), 상품매출은 바뀐다(8,753,396).</strong> 판매자 → 주문상품 으로는 필터가 흐르지만 주문상품 → 주문 으로는 올라가지 않는다. RLS 필터도 관계 방향을 따른다. 판매자 기준 보안이 필요하면 측정값이 주문상품 쪽에서 계산되게 하거나, 관계의 <strong>양방향 보안 필터 적용</strong> 설정을 검토해야 한다.</li>
+<li>(PC 마다 다르다) 보통 <strong>재구매 고객수·재구매율</strong> 카드나 분산형 차트가 상대적으로 오래 걸린다. 재구매 고객수는 고객 9만여 명을 하나씩 돌며 주문 수를 센다.</li>
+</ol>
+<h2 id="9장-프로젝트">9장 프로젝트</h2>
+<ol>
+<li><strong>SP(상파울루) 1,849곳, 59.74%</strong>. 판매자의 60%가 상파울루에 있다. 6장에서 본 "남동부에서 먼 지역일수록 배송이 오래 걸린다" 의 배경이다.</li>
+<li>매출 1위 <code>4869f7 · guariba</code> - 상품매출 <strong>229,473</strong>, 평균 평점 <strong>4.12</strong>, 지연율 <strong>10.50%</strong>. 매출 상위 15 판매자 중 지연율 10% 초과는 이 판매자와 <code>7d13fc · ribeirao preto</code>(11.47%) 두 곳.</li>
+<li>SP 판매자 - 평균 평점 <strong>4.06</strong>, 지연율 <strong>7.31%</strong>. RJ 판매자 - <strong>4.14</strong>, <strong>7.12%</strong>. 큰 차이는 없다.</li>
+<li>예시 - "매출 1위 판매자(4869f7)는 지연율이 10.5%로 전체 평균(6.8%)보다 높다. 6장에서 지연 주문의 평점이 2점 낮았으므로, 상위 판매자의 배송 지연을 줄이면 평점 관리에 도움이 될 수 있다. 우선 상위 판매자 중 지연율 10% 이상인 2곳의 지연 주문을 살펴보고 원인(재고, 택배사, 지역)을 확인할 것을 제안한다."</li>
+</ol>
+<h2 id="10장">10장</h2>
+<ol>
+<li><strong>같다 (112,650)</strong>. 같은 CSV 를 데이터베이스에 넣었기 때문이다.</li>
+<li><strong>52,783건</strong>.</li>
+<li><strong>23,335건</strong>.</li>
+<li><strong>2017년 11월 (7,544건)</strong>. 블랙프라이데이가 있는 달이다. 그다음은 2018년 1월(7,269건).</li>
+</ol>
+<nav class="pager"><a href="appB.html"><small>← 이전</small>부록 B 용어 풀이</a><span></span></nav>
+</article></div>
+<footer>Power BI 2단계 심화 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

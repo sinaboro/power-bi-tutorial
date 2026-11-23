@@ -58,6 +58,32 @@ DOWNLOADS = [  # (보이는 이름, 저장소 안 경로, 설명)
 PBIX = ["01_데이터불러오기", "02_데이터정리", "03_관계와날짜", "04_측정값", "05_차트",
         "06_슬라이서와서식", "07_대시보드완성", "과제_편의점_풀이"]
 
+# ---------------------------------------------------------------- 2단계 심화 과정 (Olist)
+ADV_PDF = "PowerBI_심화_학습교안.pdf"
+ADV_CHAPTERS = [
+    ("00_과정안내.md", "ch00", "0장 과정 안내와 Olist 데이터", "1시간"),
+    ("01_여러파일과매개변수.md", "ch01", "1장 여러 파일과 매개 변수", "2시간"),
+    ("02_병합과조건열.md", "ch02", "2장 병합과 조건 열", "3시간"),
+    ("03_모델링.md", "ch03", "3장 모델링 심화", "2.5시간"),
+    ("04_CALCULATE.md", "ch04", "4장 DAX ① CALCULATE", "3시간"),
+    ("05_시간인텔리전스.md", "ch05", "5장 DAX ② 시간 인텔리전스", "3시간"),
+    ("06_배송과만족도분석.md", "ch06", "6장 배송과 만족도 분석", "2시간"),
+    ("07_고급보고서기능.md", "ch07", "7장 고급 보고서 기능", "3시간"),
+    ("08_행수준보안과성능.md", "ch08", "8장 행 수준 보안과 성능", "1.5시간"),
+    ("09_프로젝트_판매자성과.md", "ch09", "9장 프로젝트 - 판매자 성과", "3시간"),
+    ("10_선택_PostgreSQL연결.md", "ch10", "10장 (선택) PostgreSQL 연결", "2시간"),
+    ("A_오류해결.md", "appA", "부록 A 오류 해결", ""),
+    ("B_용어풀이.md", "appB", "부록 B 용어 풀이", ""),
+    ("C_확인문제풀이.md", "appC", "부록 C 확인 문제 풀이", ""),
+]
+ADV_THUMB = {"ch00": "fig_olist_tables.png", "ch01": "pbi_심화01_여러파일과매개변수_p1.png", "ch02": "ui_a_pq_orders.png",
+             "ch03": "fig_olist_model.png", "ch04": "pbi_심화04_CALCULATE_p1.png", "ch05": "pbi_심화05_시간인텔리전스_p1.png",
+             "ch06": "pbi_심화06_배송과만족도분석_p1.png", "ch07": "pbi_심화07_고급보고서기능_p1.png",
+             "ch08": "ui_a_roles.png", "ch09": "pbi_심화09_프로젝트_판매자성과_풀이_p1.png", "ch10": "ui_a_pg_navigator.png"}
+ADV_PBIX = ["심화01_여러파일과매개변수", "심화02_병합과조건열", "심화03_모델링", "심화04_CALCULATE", "심화05_시간인텔리전스",
+            "심화06_배송과만족도분석", "심화07_고급보고서기능", "심화08_행수준보안", "심화09_프로젝트_판매자성과_풀이"]
+COURSES = {"basic": ("1단계 기초", CHAPTERS, PDF), "advanced": ("2단계 심화", ADV_CHAPTERS, ADV_PDF)}
+
 
 def raw(path):
     """저장소 안 파일의 내려받기 주소 (한글 파일 이름은 % 로 바꾼다)"""
@@ -67,8 +93,15 @@ def raw(path):
 # ------------------------------------------------------------------ 마크다운 → HTML
 def prepare(md):
     """python-markdown 이 잘 읽도록 원고를 조금 다듬는다 (원고 파일은 바꾸지 않는다)"""
-    lines, out = md.split("\n"), []
+    lines, out, in_code = md.split("\n"), [], False
     for i, line in enumerate(lines):
+        if line.startswith("```"):                                       # 코드 상자 안은 건드리지 않는다
+            in_code = not in_code
+            out.append(line)
+            continue
+        if in_code:
+            out.append(line)
+            continue
         line = re.sub(r"^ {2,3}([-*] )", r"    \1", line)               # 2~3칸 들여 쓴 하위 목록 → 4칸
         is_item = re.match(r"^(\d+\.|[-*]) ", line)
         prev = out[-1] if out else ""
@@ -116,6 +149,8 @@ header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;
 .doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
 .side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
 .side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side .cap{font-weight:800;margin:4px 10px 6px;color:var(--sub)}
+.side .other{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
 .side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
 article{min-width:0}
 article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
@@ -182,23 +217,28 @@ def page(title, body, rel="", desc="Power BI 를 처음 배우는 학생을 위�
 {KAKAO}
 <style>{CSS}</style></head><body>
 <header class="top"><div class="in">
-<a class="logo" href="{rel}index.html">Power BI <b>기초</b></a><span class="sp"></span>
-<a class="btn hide-s" href="{rel}index.html#chapters">목차</a>
-<a class="btn" href="{rel}{quote(PDF)}" target="_blank">PDF</a>
-<a class="btn" href="{rel}index.html#download">내려받기</a>
+<a class="logo" href="{rel}index.html">Power BI <b>교안</b></a><span class="sp"></span>
+<a class="btn" href="{rel}basic/ch00.html">기초</a>
+<a class="btn" href="{rel}advanced/ch00.html">심화</a>
+<a class="btn hide-s" href="{rel}index.html#download">내려받기</a>
 </div></header>
 {body}
 </body></html>"""
 
 
 # ------------------------------------------------------------------ 장별 화면
-def build_chapters():
+def build_chapters(course):
+    label, CHAPTERS, pdf = COURSES[course]
+    src_dir = DOCS / course
+    other = "advanced" if course == "basic" else "basic"
     for i, (src, name, short, _) in enumerate(CHAPTERS):
-        md = (SRC / src).read_text(encoding="utf-8")
+        md = (src_dir / src).read_text(encoding="utf-8")
         body, _toc = to_html(md)
         title = re.search(r"^# (.+)$", md, re.M)[1]
-        side = "".join(f'<a href="{n}.html"{" class=on" if n == name else ""}>{html.escape(s)}</a>'
-                       for _, n, s, _ in CHAPTERS)
+        side = f'<div class="cap">Power BI {label}</div>' + "".join(
+            f'<a href="{n}.html"{" class=on" if n == name else ""}>{html.escape(s)}</a>' for _, n, s, _ in CHAPTERS)
+        side += (f'<div class="other"><a href="../{quote(pdf)}" target="_blank">PDF 교안</a>'
+                 f'<a href="../{other}/ch00.html">→ {COURSES[other][0]} 과정</a></div>')
         jump = "".join(f'<option value="{n}.html"{" selected" if n == name else ""}>{html.escape(s)}</option>'
                        for _, n, s, _ in CHAPTERS)
         prev = CHAPTERS[i - 1] if i > 0 else None
@@ -214,9 +254,9 @@ def build_chapters():
 {body}
 {pager}
 </article></div>
-<footer>Power BI 기초 학습 교안 · 강사 김대철 · <a href="https://github.com/{REPO}">GitHub</a></footer>"""
-        (SRC / f"{name}.html").write_text(page(f"{title} - Power BI 기초", html_body, "../"), encoding="utf-8")
-        print("  장:", f"basic/{name}.html")
+<footer>Power BI {label} 학습 교안 · 강사 김대철 · <a href="https://github.com/{REPO}">GitHub</a></footer>"""
+        (src_dir / f"{name}.html").write_text(page(f"{title} - Power BI {label}", html_body, "../"), encoding="utf-8")
+    print(f"  {course}: {len(CHAPTERS)}개 장")
 
 
 # ------------------------------------------------------------------ 첫 화면
@@ -232,6 +272,15 @@ def build_index():
     pbix = "".join(f'<a href="{raw("pbix/" + n + ".pbix")}"><b>{html.escape(n)}.pbix</b>'
                    f'<small>{"8장 과제 풀이" if n.startswith("과제") else n[:2] + "장 완성 파일"}</small></a>' for n in PBIX)
     hero = quote("pbi_07_대시보드완성_p1.png")
+    # 심화 과정 카드·내려받기
+    adv_cards = "".join(
+        f'<a class="card" href="advanced/{n}.html"><div class="im"><img src="images/{quote(ADV_THUMB[n])}" alt="" loading="lazy">'
+        f'</div><div class="tx"><b>{html.escape(t)}</b><small>{h}</small></div></a>' for _, n, t, h in ADV_CHAPTERS[:11])
+    adv_apps = "".join(f'<a class="card" href="advanced/{n}.html"><div class="tx"><b>{html.escape(t)}</b></div></a>'
+                       for _, n, t, _ in ADV_CHAPTERS[11:])
+    adv_pbix = "".join(f'<a href="{raw("pbix/" + n + ".pbix")}"><b>{html.escape(n)}.pbix</b>'
+                       f'<small>{"9장 프로젝트 풀이" if "풀이" in n else "심화 " + n[2:4] + "장 완성 파일"}</small></a>'
+                       for n in ADV_PBIX)
     body = f"""<div class="hero"><div class="wrap">
 <h1>Power BI <b>기초</b></h1>
 <p>가상의 카페 <b>하루커피</b>의 3년치 매출 데이터를 정리하고 분석해 매출 대시보드를 완성하는 약 20시간 과정입니다.
@@ -239,6 +288,7 @@ def build_index():
 <div class="cta">
 <a class="main" href="basic/ch00.html">교안 읽기 시작 →</a>
 <a class="sub" href="{quote(PDF)}" target="_blank">PDF 교안 (49쪽)</a>
+<a class="sub" href="advanced/ch00.html">2단계 심화 (Olist) →</a>
 <a class="sub" href="{ZIP}">실습 파일 전체 받기 (ZIP)</a>
 </div>
 <img class="shot" src="images/{hero}" alt="7장에서 완성하는 하루커피 매출 대시보드">
@@ -257,18 +307,30 @@ def build_index():
 <div class="grid">{cards}</div>
 <div class="grid" style="margin-top:16px">{apps}</div></section>
 
+<section id="advanced"><h2>2단계 심화 과정 - Olist 전자상거래 (약 24시간)</h2>
+<p class="lead">브라질 쇼핑몰 Olist 의 실제 주문 10만 건으로 매개 변수, 쿼리 병합, CALCULATE, 시간 인텔리전스, 드릴스루, 행 수준 보안,
+PostgreSQL 연결까지 배웁니다. 기초 과정을 마친 뒤 시작하세요. ·
+<a href="{quote(ADV_PDF)}" target="_blank">심화 PDF 교안</a></p>
+<div class="grid">{adv_cards}</div>
+<div class="grid" style="margin-top:16px">{adv_apps}</div></section>
+
 <section id="download"><h2>내려받기</h2>
 <p class="lead">한 번에 받으려면 <a href="{ZIP}">전체 ZIP</a> 이 편합니다. 파일을 하나씩 받을 수도 있습니다.</p>
 <h3>실습 데이터</h3><div class="dl">{data}</div>
 <h3>장별 완성 파일 (.pbix)</h3><p class="lead">막히면 그 장의 완성 파일을 열어 비교해 보세요.</p><div class="dl">{pbix}</div>
+<h3>심화 과정 데이터와 완성 파일</h3><p class="lead">Olist 데이터는 저장소의 <code>data/olist</code> 폴더에 있습니다 (전체 ZIP 에 들어 있다).
+출처: Olist, Brazilian E-Commerce Public Dataset (Kaggle, CC BY-NC-SA 4.0).</p><div class="dl">{adv_pbix}</div>
+<h3>PDF 교안</h3><div class="dl"><a href="{quote(PDF)}" target="_blank"><b>{PDF}</b><small>1단계 기초 (49쪽)</small></a>
+<a href="{quote(ADV_PDF)}" target="_blank"><b>{ADV_PDF}</b><small>2단계 심화 (56쪽)</small></a></div>
 </section>
 </div>
-<footer>데이터는 모두 교육용으로 만든 가상 데이터입니다 · 강사 김대철 · <a href="https://github.com/{REPO}">GitHub 저장소</a></footer>"""
-    (DOCS / "index.html").write_text(page("Power BI 기초 학습 교안", body), encoding="utf-8")
+<footer>기초 과정 데이터는 교육용 가상 데이터, 심화 과정은 Olist 공개 데이터입니다 · 강사 김대철 · <a href="https://github.com/{REPO}">GitHub 저장소</a></footer>"""
+    (DOCS / "index.html").write_text(page("Power BI 학습 교안 - 기초·심화", body), encoding="utf-8")
     print("  첫 화면: index.html")
 
 
 if __name__ == "__main__":
-    build_chapters()
+    build_chapters("basic")
+    build_chapters("advanced")
     build_index()
     (DOCS / ".nojekyll").write_text("", encoding="utf-8")    # Jekyll 변환 끄기 (파일을 있는 그대로 공개)

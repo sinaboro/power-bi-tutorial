@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>1장. 여러 파일 불러오기와 매개 변수 - Power BI 2단계 심화</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="1장. 여러 파일 불러오기와 매개 변수 - Power BI 2단계 심화"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side .cap{font-weight:800;margin:4px 10px 6px;color:var(--sub)}
+.side .other{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>교안</b></a><span class="sp"></span>
+<a class="btn" href="../basic/ch00.html">기초</a>
+<a class="btn" href="../advanced/ch00.html">심화</a>
+<a class="btn hide-s" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><div class="cap">Power BI 2단계 심화</div><a href="ch00.html">0장 과정 안내와 Olist 데이터</a><a href="ch01.html" class=on>1장 여러 파일과 매개 변수</a><a href="ch02.html">2장 병합과 조건 열</a><a href="ch03.html">3장 모델링 심화</a><a href="ch04.html">4장 DAX ① CALCULATE</a><a href="ch05.html">5장 DAX ② 시간 인텔리전스</a><a href="ch06.html">6장 배송과 만족도 분석</a><a href="ch07.html">7장 고급 보고서 기능</a><a href="ch08.html">8장 행 수준 보안과 성능</a><a href="ch09.html">9장 프로젝트 - 판매자 성과</a><a href="ch10.html">10장 (선택) PostgreSQL 연결</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a><div class="other"><a href="../PowerBI_%EC%8B%AC%ED%99%94_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF 교안</a><a href="../basic/ch00.html">→ 1단계 기초 과정</a></div></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내와 Olist 데이터</option><option value="ch01.html" selected>1장 여러 파일과 매개 변수</option><option value="ch02.html">2장 병합과 조건 열</option><option value="ch03.html">3장 모델링 심화</option><option value="ch04.html">4장 DAX ① CALCULATE</option><option value="ch05.html">5장 DAX ② 시간 인텔리전스</option><option value="ch06.html">6장 배송과 만족도 분석</option><option value="ch07.html">7장 고급 보고서 기능</option><option value="ch08.html">8장 행 수준 보안과 성능</option><option value="ch09.html">9장 프로젝트 - 판매자 성과</option><option value="ch10.html">10장 (선택) PostgreSQL 연결</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="1장-여러-파일-불러오기와-매개-변수">1장. 여러 파일 불러오기와 매개 변수</h1>
+<h2 id="학습-목표">학습 목표</h2>
+<ul>
+<li>파일 위치를 <strong>매개 변수</strong> 하나에 담고, 모든 쿼리가 그 매개 변수를 쓰게 만든다.</li>
+<li>수식 입력줄에서 Power Query 식(M)을 직접 고친다.</li>
+<li>CSV 7개를 불러오고 행 수를 확인해 이상한 테이블을 찾아낸다.</li>
+</ul>
+<h2 id="1-1-왜-매개-변수가-필요할까">1-1. 왜 매개 변수가 필요할까</h2>
+<p>기초 과정의 완성 파일은 <code>C:\study\power-bi-tutorial\data</code> 에 있는 파일을 읽도록 만들어져 있었다. 폴더를 다른 곳에 두면 새로 고침할 때 "파일을 찾을 수 없습니다" 오류가 났다. 쿼리마다 경로가 따로 적혀 있어서 하나하나 고쳐야 했다.</p>
+<p>이번에는 파일이 10개다. 경로를 <strong>한 곳</strong>에만 적어 두고 모든 쿼리가 그것을 가져다 쓰게 하자. 이렇게 이름을 붙여 여러 곳에서 쓰는 값을 <strong>매개 변수</strong>(parameter)라고 한다.</p>
+<pre><code class="language-text">(기초 과정)  주문 쿼리: File.Contents(&quot;C:\study\...\olist\olist_orders_dataset.csv&quot;)
+            결제 쿼리: File.Contents(&quot;C:\study\...\olist\olist_order_payments_dataset.csv&quot;)   ← 폴더가 바뀌면 모두 고쳐야 한다
+
+(심화 과정)  DataPath = &quot;C:\study\power-bi-tutorial\data\olist&quot;     ← 여기 한 곳만 고친다
+            주문 쿼리: File.Contents(DataPath &amp; &quot;\olist_orders_dataset.csv&quot;)
+            결제 쿼리: File.Contents(DataPath &amp; &quot;\olist_order_payments_dataset.csv&quot;)
+</code></pre>
+<p><code>&amp;</code> 는 글자를 이어 붙이는 연산자다. <code>DataPath &amp; "\olist_orders_dataset.csv"</code> 는 <code>C:\study\power-bi-tutorial\data\olist\olist_orders_dataset.csv</code> 가 된다.</p>
+<h2 id="1-2-첫-번째-파일-불러오기---주문">1-2. 첫 번째 파일 불러오기 - 주문</h2>
+<ol>
+<li>Power BI Desktop 을 열고 <strong>빈 보고서</strong> 를 고른다.</li>
+<li><strong>홈 → 데이터 가져오기 ▾ → 텍스트/CSV</strong> → <code>C:\study\power-bi-tutorial\data\olist\olist_orders_dataset.csv</code> → <strong>열기</strong>.</li>
+<li>미리 보기에서 파일 원본이 <code>65001: 유니코드(UTF-8)</code> 인지 확인하고, 이번에는 <strong>로드가 아니라 데이터 변환</strong> 을 누른다. Power Query 편집기가 열린다.</li>
+<li>왼쪽 쿼리 목록에서 <code>olist_orders_dataset</code> 을 두 번 클릭해 이름을 <strong>주문</strong> 으로 바꾼다.</li>
+</ol>
+<h2 id="1-3-매개-변수-만들기">1-3. 매개 변수 만들기</h2>
+<ol>
+<li>Power Query 편집기에서 <strong>홈 → 매개 변수 관리 ▾ → 새 매개 변수</strong>.</li>
+<li>아래처럼 채우고 <strong>확인</strong>.</li>
+</ol>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>항목</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>이름</td>
+<td><code>DataPath</code></td>
+</tr>
+<tr>
+<td>필수</td>
+<td>체크</td>
+</tr>
+<tr>
+<td>형식</td>
+<td>텍스트</td>
+</tr>
+<tr>
+<td>제안 값</td>
+<td>모든 값</td>
+</tr>
+<tr>
+<td>현재 값</td>
+<td><code>C:\study\power-bi-tutorial\data\olist</code> (끝에 <code>\</code> 를 붙이지 않는다)</td>
+</tr>
+</tbody>
+</table></div>
+<figure><a href="../images/ui_a_param.png" target="_blank"><img src="../images/ui_a_param.png" alt="Power Query 편집기 - 쿼리 목록의 DataPath 매개 변수" loading="lazy"></a><figcaption>Power Query 편집기 - 쿼리 목록의 DataPath 매개 변수</figcaption></figure>
+<p>왼쪽 쿼리 목록에 <strong>DataPath</strong> 가 생겼다. 아이콘이 표가 아니라 매개 변수 모양이다.</p>
+<h2 id="1-4-쿼리가-매개-변수를-쓰게-고치기">1-4. 쿼리가 매개 변수를 쓰게 고치기</h2>
+<ol>
+<li>쿼리 목록에서 <strong>주문</strong> 을 누르고, 오른쪽 <strong>적용된 단계</strong> 에서 맨 위 <strong>원본</strong> 을 누른다.</li>
+<li>위쪽 수식 입력줄에 아래와 같은 식이 보인다. (수식 입력줄이 안 보이면 <strong>보기 → 수식 입력줄</strong> 체크)</li>
+</ol>
+<pre><code class="language-text">= Csv.Document(File.Contents(&quot;C:\study\power-bi-tutorial\data\olist\olist_orders_dataset.csv&quot;),[Delimiter=&quot;,&quot;, Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.None])
+</code></pre>
+<ol start="3">
+<li>따옴표로 감싼 경로 부분을 아래처럼 바꾸고 <strong>Enter</strong>.</li>
+</ol>
+<pre><code class="language-text">= Csv.Document(File.Contents(DataPath &amp; &quot;\olist_orders_dataset.csv&quot;),[Delimiter=&quot;,&quot;, Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.None])
+</code></pre>
+<ol start="4">
+<li>미리 보기가 그대로 나오면 성공이다. 경로 글자를 잘못 치면 노란 경고와 함께 "파일을 찾을 수 없습니다" 가 나온다. 경로와 <code>\</code> 를 다시 확인하자.</li>
+</ol>
+<blockquote class="note">
+<p><strong>수식 입력줄 = 단계의 진짜 모습.</strong> Power Query 에서 단추를 누르면 그 작업이 M 식으로 기록된다. 단추로 할 수 없는 일(매개 변수 끼워 넣기 같은)은 식을 직접 고치면 된다. 식 전체를 외울 필요는 없고, <strong>어디를 바꾸면 되는지</strong>만 알면 된다.</p>
+</blockquote>
+<h2 id="1-5-나머지-파일-불러오기">1-5. 나머지 파일 불러오기</h2>
+<p>Power Query 편집기에서 <strong>홈 → 새 원본 ▾ → 텍스트/CSV</strong> 로 아래 파일을 하나씩 불러온다. 파일마다 <strong>확인</strong>(편집기 안에서는 로드 대신 확인)을 누른 뒤, 1-4 처럼 <strong>원본</strong> 단계의 경로를 <code>DataPath &amp; "\파일이름"</code> 으로 바꾸고 쿼리 이름을 바꾼다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>파일</th>
+<th>쿼리 이름</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>olist_order_items_dataset.csv</td>
+<td><strong>주문상품</strong></td>
+</tr>
+<tr>
+<td>olist_order_payments_dataset.csv</td>
+<td><strong>결제</strong></td>
+</tr>
+<tr>
+<td>olist_order_reviews_dataset.csv</td>
+<td><strong>리뷰</strong></td>
+</tr>
+<tr>
+<td>olist_products_dataset.csv</td>
+<td><strong>상품</strong></td>
+</tr>
+<tr>
+<td>olist_sellers_dataset.csv</td>
+<td><strong>판매자</strong></td>
+</tr>
+<tr>
+<td>브라질_주.csv</td>
+<td><strong>주</strong></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="note">
+<p><strong>반복 작업이 귀찮다면?</strong> 원본 단계의 식을 복사해 두었다가 붙여 넣고 파일 이름만 바꾸는 방법도 있다. 단, <code>Columns=8</code> 처럼 <strong>열 개수</strong>는 파일마다 다르니 함께 고쳐야 한다. (Columns 부분을 아예 지워도 된다. 그러면 Power BI 가 열 개수를 스스로 센다)</p>
+</blockquote>
+<p>다 했으면 <strong>홈 → 닫기 및 적용</strong>. 7개 테이블을 불러오는 데 수십 초 걸린다.</p>
+<h2 id="1-6-행-수-확인---이상한-테이블-찾기">1-6. 행 수 확인 - 이상한 테이블 찾기</h2>
+<p>실제 데이터를 받으면 먼저 <strong>행 수</strong>를 확인하는 습관을 들이자. 원래 파일의 건수와 다르면 불러오는 과정에서 문제가 생긴 것이다.</p>
+<ol>
+<li>캔버스에 <strong>카드</strong> 를 하나 놓고, 데이터 창에서 <strong>주문</strong> 의 <code>order_id</code> 를 끌어 놓는다.</li>
+<li>카드 값 칸의 <code>order_id</code> 오른쪽 ▾ 를 눌러 <strong>개수</strong> 를 고른다. (<strong>개수(고유)</strong> 는 서로 다른 값의 수라서 행 수가 아니다)</li>
+<li>같은 방법으로 테이블마다 카드를 만든다. 아래는 완성 파일의 화면이다.</li>
+</ol>
+<figure><a href="../images/pbi_심화01_여러파일과매개변수_p1.png" target="_blank"><img src="../images/pbi_심화01_여러파일과매개변수_p1.png" alt="1장 완성 - 테이블별 행 수" loading="lazy"></a><figcaption>1장 완성 - 테이블별 행 수</figcaption></figure>
+<p>0장의 파일 설명과 비교해 보자. <strong>리뷰</strong> 만 105,764 로 100,000 보다 많다. 리뷰 파일에는 고객이 쓴 글이 들어 있는데, 글 안에서 줄을 바꾼 곳이 있다. Power BI 가 그 줄 바꿈을 <strong>새 행의 시작</strong>으로 읽어서, 리뷰 하나가 여러 행으로 쪼개진 것이다. 2장에서 고친다.</p>
+<h2 id="1-7-매개-변수-값-바꿔-보기">1-7. 매개 변수 값 바꿔 보기</h2>
+<p>나중에 폴더를 옮기면 이렇게 한다.</p>
+<ol>
+<li><strong>홈 → 데이터 변환 ▾ → 매개 변수 편집</strong>.</li>
+<li>DataPath 값을 새 폴더 경로로 바꾸고 <strong>확인</strong> → <strong>변경 내용 적용</strong>.</li>
+</ol>
+<p>모든 쿼리가 새 폴더에서 파일을 읽는다. 지금은 바꾸지 말고 창만 열어 보고 <strong>취소</strong> 하자. 저장은 <code>내Olist.pbix</code> 로 한다.</p>
+<h2 id="정리">정리</h2>
+<ul>
+<li><strong>매개 변수</strong>는 여러 쿼리가 함께 쓰는 값이다. 파일 경로를 매개 변수로 만들면 폴더가 바뀌어도 한 곳만 고친다.</li>
+<li>Power Query 의 단계는 M 식이다. 수식 입력줄에서 식을 직접 고칠 수 있다. 글자 잇기는 <code>&amp;</code>.</li>
+<li>데이터를 불러온 뒤에는 <strong>행 수</strong>를 원래 건수와 비교한다. 카드의 집계는 <strong>개수</strong>(행 수)와 <strong>개수(고유)</strong>(서로 다른 값 수)를 구별한다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제</h2>
+<ol>
+<li>DataPath 의 현재 값 끝에 <code>\</code> 를 붙여 <code>...\olist\</code> 로 만들면 주문 쿼리의 경로는 어떻게 될까? 그래도 파일을 찾을까?</li>
+<li>1-6 의 카드에서 <strong>주문상품</strong> 의 <code>order_id</code> 를 <strong>개수(고유)</strong> 로 바꾸면 얼마가 나오는가? <strong>개수</strong> 와 다른 이유는?</li>
+<li>리뷰 파일을 메모장으로 열어 <code>review_comment_message</code> 열에 줄 바꿈이 들어간 리뷰를 하나 찾아보자. 그 값은 무엇으로 감싸여 있는가?</li>
+</ol>
+<nav class="pager"><a href="ch00.html"><small>← 이전</small>0장 과정 안내와 Olist 데이터</a><a class="next" href="ch02.html"><small>다음 →</small>2장 병합과 조건 열</a></nav>
+</article></div>
+<footer>Power BI 2단계 심화 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>부록 C. 확인 문제 풀이 - Power BI 기초</title>
+<title>부록 C. 확인 문제 풀이 - Power BI 1단계 기초</title>
 <meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
-<meta property="og:title" content="부록 C. 확인 문제 풀이 - Power BI 기초"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="부록 C. 확인 문제 풀이 - Power BI 1단계 기초"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
 <meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
 <script>
@@ -26,6 +26,8 @@ header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;
 .doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
 .side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
 .side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side .cap{font-weight:800;margin:4px 10px 6px;color:var(--sub)}
+.side .other{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
 .side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
 article{min-width:0}
 article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
@@ -72,13 +74,13 @@ footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
 @media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
 </style></head><body>
 <header class="top"><div class="in">
-<a class="logo" href="../index.html">Power BI <b>기초</b></a><span class="sp"></span>
-<a class="btn hide-s" href="../index.html#chapters">목차</a>
-<a class="btn" href="../PowerBI_%EA%B8%B0%EC%B4%88_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF</a>
-<a class="btn" href="../index.html#download">내려받기</a>
+<a class="logo" href="../index.html">Power BI <b>교안</b></a><span class="sp"></span>
+<a class="btn" href="../basic/ch00.html">기초</a>
+<a class="btn" href="../advanced/ch00.html">심화</a>
+<a class="btn hide-s" href="../index.html#download">내려받기</a>
 </div></header>
 <div class="doc">
-<nav class="side"><a href="ch00.html">0장 과정 안내</a><a href="ch01.html">1장 데이터 불러오기</a><a href="ch02.html">2장 Power Query 정리</a><a href="ch03.html">3장 관계와 날짜 테이블</a><a href="ch04.html">4장 측정값 (DAX)</a><a href="ch05.html">5장 차트 만들기</a><a href="ch06.html">6장 슬라이서와 서식</a><a href="ch07.html">7장 대시보드 완성</a><a href="ch08.html">8장 과제 - 편의점</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html" class=on>부록 C 확인 문제 풀이</a></nav>
+<nav class="side"><div class="cap">Power BI 1단계 기초</div><a href="ch00.html">0장 과정 안내</a><a href="ch01.html">1장 데이터 불러오기</a><a href="ch02.html">2장 Power Query 정리</a><a href="ch03.html">3장 관계와 날짜 테이블</a><a href="ch04.html">4장 측정값 (DAX)</a><a href="ch05.html">5장 차트 만들기</a><a href="ch06.html">6장 슬라이서와 서식</a><a href="ch07.html">7장 대시보드 완성</a><a href="ch08.html">8장 과제 - 편의점</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html" class=on>부록 C 확인 문제 풀이</a><div class="other"><a href="../PowerBI_%EA%B8%B0%EC%B4%88_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF 교안</a><a href="../advanced/ch00.html">→ 2단계 심화 과정</a></div></nav>
 <article>
 <select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내</option><option value="ch01.html">1장 데이터 불러오기</option><option value="ch02.html">2장 Power Query 정리</option><option value="ch03.html">3장 관계와 날짜 테이블</option><option value="ch04.html">4장 측정값 (DAX)</option><option value="ch05.html">5장 차트 만들기</option><option value="ch06.html">6장 슬라이서와 서식</option><option value="ch07.html">7장 대시보드 완성</option><option value="ch08.html">8장 과제 - 편의점</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html" selected>부록 C 확인 문제 풀이</option></select>
 <h1 id="부록-c-확인-문제-풀이">부록 C. 확인 문제 풀이</h1>
@@ -146,5 +148,5 @@ footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
 </ol>
 <nav class="pager"><a href="appB.html"><small>← 이전</small>부록 B 용어 풀이</a><span></span></nav>
 </article></div>
-<footer>Power BI 기초 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+<footer>Power BI 1단계 기초 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
 </body></html>

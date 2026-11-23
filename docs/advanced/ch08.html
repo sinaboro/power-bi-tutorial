@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>8장. 행 수준 보안(RLS)과 성능 점검 - Power BI 2단계 심화</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="8장. 행 수준 보안(RLS)과 성능 점검 - Power BI 2단계 심화"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side .cap{font-weight:800;margin:4px 10px 6px;color:var(--sub)}
+.side .other{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>교안</b></a><span class="sp"></span>
+<a class="btn" href="../basic/ch00.html">기초</a>
+<a class="btn" href="../advanced/ch00.html">심화</a>
+<a class="btn hide-s" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><div class="cap">Power BI 2단계 심화</div><a href="ch00.html">0장 과정 안내와 Olist 데이터</a><a href="ch01.html">1장 여러 파일과 매개 변수</a><a href="ch02.html">2장 병합과 조건 열</a><a href="ch03.html">3장 모델링 심화</a><a href="ch04.html">4장 DAX ① CALCULATE</a><a href="ch05.html">5장 DAX ② 시간 인텔리전스</a><a href="ch06.html">6장 배송과 만족도 분석</a><a href="ch07.html">7장 고급 보고서 기능</a><a href="ch08.html" class=on>8장 행 수준 보안과 성능</a><a href="ch09.html">9장 프로젝트 - 판매자 성과</a><a href="ch10.html">10장 (선택) PostgreSQL 연결</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a><div class="other"><a href="../PowerBI_%EC%8B%AC%ED%99%94_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF 교안</a><a href="../basic/ch00.html">→ 1단계 기초 과정</a></div></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내와 Olist 데이터</option><option value="ch01.html">1장 여러 파일과 매개 변수</option><option value="ch02.html">2장 병합과 조건 열</option><option value="ch03.html">3장 모델링 심화</option><option value="ch04.html">4장 DAX ① CALCULATE</option><option value="ch05.html">5장 DAX ② 시간 인텔리전스</option><option value="ch06.html">6장 배송과 만족도 분석</option><option value="ch07.html">7장 고급 보고서 기능</option><option value="ch08.html" selected>8장 행 수준 보안과 성능</option><option value="ch09.html">9장 프로젝트 - 판매자 성과</option><option value="ch10.html">10장 (선택) PostgreSQL 연결</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="8장-행-수준-보안rls과-성능-점검">8장. 행 수준 보안(RLS)과 성능 점검</h1>
+<h2 id="학습-목표">학습 목표</h2>
+<ul>
+<li><strong>행 수준 보안(RLS)</strong> 으로 보는 사람에 따라 다른 데이터를 보여 주는 <strong>역할</strong>을 만든다.</li>
+<li><strong>표시 방법</strong>(역할로 보기)으로 역할이 제대로 걸리는지 시험한다.</li>
+<li><strong>성능 분석기</strong>로 느린 시각적 개체를 찾는다.</li>
+<li>보고서를 넘기기 전에 확인할 목록을 안다.</li>
+</ul>
+<h2 id="8-1-행-수준-보안이란">8-1. 행 수준 보안이란</h2>
+<p>회사에서 보고서 하나를 여러 사람이 본다. 그런데 남동부 담당자는 남동부 데이터만, 상파울루 담당자는 상파울루 데이터만 봐야 한다면? 지역마다 보고서를 따로 만들면 고칠 때마다 여러 개를 고쳐야 한다.</p>
+<p><strong>행 수준 보안(Row-Level Security, RLS)</strong> 은 보고서는 하나로 두고, <strong>역할</strong>마다 볼 수 있는 <strong>행</strong>을 제한한다.</p>
+<pre><code class="language-text">역할 &quot;남동부 담당&quot; : 주 테이블에서 [지역] = &quot;남동부&quot; 인 행만 보인다
+   → 관계를 따라 필터가 흐른다: 주 → 주문 → 주문상품·결제·리뷰
+   → 이 역할의 사람에게는 남동부 고객의 주문만 계산된다
+</code></pre>
+<h2 id="8-2-역할-만들기">8-2. 역할 만들기</h2>
+<p>7장 파일을 연다.</p>
+<ol>
+<li><strong>모델링 → 역할 관리</strong>. <strong>보안 역할 관리</strong> 창이 열린다.</li>
+<li><strong>역할 → + 새로 만들기</strong> → 역할 이름을 <code>남동부 담당</code> 으로 바꾼다 (이름 오른쪽 … → 이름 바꾸기).</li>
+<li>가운데 <strong>테이블</strong> 목록에서 <strong>주</strong> 를 고른다.</li>
+<li>오른쪽 <strong>규칙 → + 새로 만들기</strong> → 열 <code>지역</code>, 조건 <code>같음</code>, 값 <code>남동부</code>.</li>
+<li>다시 <strong>+ 새로 만들기</strong> → <code>상파울루 담당</code> 역할, 테이블 <strong>주</strong>, 규칙 열 <code>주코드</code> 같음 <code>SP</code>.</li>
+<li><strong>저장</strong> → <strong>닫기</strong>.</li>
+</ol>
+<blockquote class="note">
+<p>위쪽 <strong>DAX 편집기로 전환</strong> 을 누르면 같은 규칙이 DAX 식으로 보인다. 규칙 편집기로 만들기 어려운 조건(여러 열, 함수)은 DAX 로 직접 쓴다.</p>
+</blockquote>
+<pre><code class="language-dax">[지역] = &quot;남동부&quot;
+</code></pre>
+<figure><a href="../images/ui_a_roles.png" target="_blank"><img src="../images/ui_a_roles.png" alt="보안 역할 관리 - 테이블 '주' 의 규칙" loading="lazy"></a><figcaption>보안 역할 관리 - 테이블 '주' 의 규칙</figcaption></figure>
+<blockquote class="note">
+<p>필터 식은 그 테이블의 <strong>각 행</strong>에 대해 참/거짓을 판단한다. 참인 행만 보인다. 그리고 그 테이블에서 관계를 따라 다(*) 쪽 테이블들도 함께 걸러진다. 그래서 <strong>차원 테이블</strong>(주, 판매자 등)에 거는 것이 보통이다.</p>
+</blockquote>
+<h2 id="8-3-역할로-보기">8-3. 역할로 보기</h2>
+<ol>
+<li><strong>모델링 → 표시 방법</strong> (영어판 View as) → <code>남동부 담당</code> 체크 → <strong>확인</strong>.</li>
+<li>보고서 위쪽에 "지금 보고 있는 역할: 남동부 담당" 표시줄이 생긴다.</li>
+</ol>
+<figure><a href="../images/ui_a_viewas.png" target="_blank"><img src="../images/ui_a_viewas.png" alt="역할로 보기 - 남동부 담당" loading="lazy"></a><figcaption>역할로 보기 - 남동부 담당</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>측정값</th>
+<th>전체</th>
+<th>남동부 담당</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>주문수</td>
+<td>99,441</td>
+<td>68,266</td>
+</tr>
+<tr>
+<td>상품매출</td>
+<td>13,591,644</td>
+<td>8,887,393</td>
+</tr>
+</tbody>
+</table></div>
+<p>슬라이서에서 다른 지역을 고르려 해도 남동부만 남아 있다. 위쪽 표시줄의 <strong>보기 중지</strong> 를 눌러 돌아온다.</p>
+<h3 id="대분류-행렬이-오류가-나는-이유">대분류 행렬이 오류가 나는 이유</h3>
+<p>표시 방법으로 보면 아래쪽 <strong>대분류별 성과</strong> 행렬에 "데이터를 가져오는 동안 오류가 발생했습니다" 가 뜬다. 행렬에 들어 있는 <code>카테고리 지연율</code>, <code>카테고리 평균 평점</code> 이 <strong>CROSSFILTER</strong> 를 쓰기 때문이다.</p>
+<p>Power BI 는 행 수준 보안이 걸린 모델에서 측정값이 관계 방향을 마음대로 바꾸는 것(<code>CROSSFILTER</code>, <code>USERELATIONSHIP</code>)을 막는다. 방향을 바꾸면 보안 필터를 돌아 나가는 길이 생길 수 있기 때문이다. 해결 방법은 두 가지다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>방법</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>관계 자체를 양방향으로</td>
+<td>주문상품 ↔ 주문 관계를 열고 크로스 필터 방향 <strong>모두</strong>, <strong>양방향으로 보안 필터 적용</strong> 체크. 측정값은 CROSSFILTER 없이 <code>[지연율]</code>, <code>[평균 평점]</code> 을 그대로 쓴다</td>
+</tr>
+<tr>
+<td>보안용 보고서에서는 빼기</td>
+<td>보안이 필요한 사람이 보는 페이지에는 CROSSFILTER·USERELATIONSHIP 측정값을 넣지 않는다</td>
+</tr>
+</tbody>
+</table></div>
+<p>3장에서 "양방향 관계는 조심해서 쓴다" 고 했다. 보안이 필요한 모델에서는 측정값 안의 방향 바꾸기를 쓸 수 없으니, <strong>꼭 필요한 관계 하나만</strong> 양방향(+ 보안 필터 적용)으로 바꾸는 것이 실무에서 쓰는 방법이다.</p>
+<blockquote class="note">
+<p><strong>실제 공유에서는?</strong> 보고서를 Power BI 서비스(웹)에 게시한 뒤, 의미 체계 모델의 <strong>보안</strong> 설정에서 역할에 사람(이메일 계정)을 넣는다. Desktop 에서는 역할을 만들고 시험하는 데까지 할 수 있다. 사람마다 자기 지역을 자동으로 보게 하려면 <code>USERPRINCIPALNAME()</code> 함수(로그인한 사람의 이메일)를 쓰는 <strong>동적 RLS</strong> 를 쓴다.</p>
+</blockquote>
+<h2 id="8-4-성능-분석기">8-4. 성능 분석기</h2>
+<p>보고서가 느리면 어떤 시각적 개체가 시간을 잡아먹는지 찾아야 한다.</p>
+<ol>
+<li><strong>보기 → 성능 분석기</strong>. 오른쪽에 창이 열린다.</li>
+<li><strong>기록 시작</strong> → <strong>시각적 개체 새로 고침</strong>.</li>
+<li>시각적 개체마다 걸린 시간(밀리초)이 나온다. 펼치면 <strong>DAX 쿼리</strong>(모델 계산) · <strong>시각적 개체 표시</strong>(그리기) · <strong>기타</strong> 로 나뉜다.</li>
+</ol>
+<figure><a href="../images/ui_a_perf.png" target="_blank"><img src="../images/ui_a_perf.png" alt="성능 분석기 - 시각적 개체별 시간" loading="lazy"></a><figcaption>성능 분석기 - 시각적 개체별 시간</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>오래 걸리는 곳</th>
+<th>흔한 원인</th>
+<th>고치는 방법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DAX 쿼리</td>
+<td>행이 많은 표에서 FILTER, 반복 함수를 겹쳐 쓴 측정값</td>
+<td>계산을 단순하게, 필요한 열만 FILTER</td>
+</tr>
+<tr>
+<td>시각적 개체 표시</td>
+<td>점·행이 수만 개인 표, 분산형 차트</td>
+<td>상위 N, 요약된 축 사용</td>
+</tr>
+<tr>
+<td>페이지 전체</td>
+<td>한 페이지에 시각적 개체가 너무 많다</td>
+<td>페이지 나누기, 드릴스루로 옮기기</td>
+</tr>
+</tbody>
+</table></div>
+<p>Olist 정도의 데이터(10만 행)에서는 보통 수백 밀리초 안에 끝난다. 재구매 고객수처럼 고객 9만 명을 하나씩 도는 측정값이 상대적으로 오래 걸리는 것을 볼 수 있다.</p>
+<h2 id="8-5-보고서를-넘기기-전-확인-목록">8-5. 보고서를 넘기기 전 확인 목록</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>확인</th>
+<th>방법</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>숫자가 맞는가</td>
+<td>핵심 측정값을 원본(엑셀, SQL)과 한두 개 비교</td>
+</tr>
+<tr>
+<td>필요 없는 열·쿼리를 뺐나</td>
+<td>로드 사용 안 함, 열 제거 → 파일이 작고 빠르다</td>
+</tr>
+<tr>
+<td>이름이 읽기 쉬운가</td>
+<td>테이블·열·측정값 이름, 차트 제목</td>
+</tr>
+<tr>
+<td>측정값에 설명이 있나</td>
+<td>모델 보기에서 측정값을 고르고 속성 창 <strong>설명</strong> 에 계산 방법을 적는다</td>
+</tr>
+<tr>
+<td>숨길 것을 숨겼나</td>
+<td>키 열(주문ID 등), 임시 열은 <strong>숨기기</strong></td>
+</tr>
+<tr>
+<td>역할을 시험했나</td>
+<td>역할로 보기</td>
+</tr>
+<tr>
+<td>기간이 맞는가</td>
+<td>불완전한 달(2016년, 2018년 9~10월)을 어떻게 처리했는지 보고서에 적어 둔다</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="정리">정리</h2>
+<ul>
+<li><strong>RLS</strong> = 역할마다 볼 수 있는 행을 DAX 필터 식으로 제한. 차원 테이블에 걸면 관계를 따라 퍼진다.</li>
+<li><strong>역할로 보기</strong>로 시험한다. 실제 사람 배정은 Power BI 서비스에서.</li>
+<li><strong>성능 분석기</strong>로 시각적 개체별 DAX 쿼리·표시 시간을 잰다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제</h2>
+<ol>
+<li><code>상파울루 담당</code> 으로 표시 방법을 바꾸면 주문수는 얼마인가? 전체의 몇 %인가?</li>
+<li>역할 <code>남부 담당</code> 을 만들어 보자. 상품매출은 얼마인가?</li>
+<li>판매자[판매자주] = "SP" 로 필터하는 역할 <code>상파울루 판매자</code> 를 만들면, 주문수(주문 테이블)는 바뀔까? 상품매출은? 필터가 흐르는 방향으로 설명하시오.</li>
+<li>성능 분석기에서 가장 오래 걸린 시각적 개체는 무엇이었는가? 그 개체에는 어떤 측정값이 들어 있나?</li>
+</ol>
+<nav class="pager"><a href="ch07.html"><small>← 이전</small>7장 고급 보고서 기능</a><a class="next" href="ch09.html"><small>다음 →</small>9장 프로젝트 - 판매자 성과</a></nav>
+</article></div>
+<footer>Power BI 2단계 심화 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

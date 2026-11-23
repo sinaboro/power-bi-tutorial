@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3장. 데이터 모델링 심화 - 여러 사실 테이블과 비활성 관계 - Power BI 2단계 심화</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="3장. 데이터 모델링 심화 - 여러 사실 테이블과 비활성 관계 - Power BI 2단계 심화"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side .cap{font-weight:800;margin:4px 10px 6px;color:var(--sub)}
+.side .other{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>교안</b></a><span class="sp"></span>
+<a class="btn" href="../basic/ch00.html">기초</a>
+<a class="btn" href="../advanced/ch00.html">심화</a>
+<a class="btn hide-s" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><div class="cap">Power BI 2단계 심화</div><a href="ch00.html">0장 과정 안내와 Olist 데이터</a><a href="ch01.html">1장 여러 파일과 매개 변수</a><a href="ch02.html">2장 병합과 조건 열</a><a href="ch03.html" class=on>3장 모델링 심화</a><a href="ch04.html">4장 DAX ① CALCULATE</a><a href="ch05.html">5장 DAX ② 시간 인텔리전스</a><a href="ch06.html">6장 배송과 만족도 분석</a><a href="ch07.html">7장 고급 보고서 기능</a><a href="ch08.html">8장 행 수준 보안과 성능</a><a href="ch09.html">9장 프로젝트 - 판매자 성과</a><a href="ch10.html">10장 (선택) PostgreSQL 연결</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a><div class="other"><a href="../PowerBI_%EC%8B%AC%ED%99%94_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF 교안</a><a href="../basic/ch00.html">→ 1단계 기초 과정</a></div></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내와 Olist 데이터</option><option value="ch01.html">1장 여러 파일과 매개 변수</option><option value="ch02.html">2장 병합과 조건 열</option><option value="ch03.html" selected>3장 모델링 심화</option><option value="ch04.html">4장 DAX ① CALCULATE</option><option value="ch05.html">5장 DAX ② 시간 인텔리전스</option><option value="ch06.html">6장 배송과 만족도 분석</option><option value="ch07.html">7장 고급 보고서 기능</option><option value="ch08.html">8장 행 수준 보안과 성능</option><option value="ch09.html">9장 프로젝트 - 판매자 성과</option><option value="ch10.html">10장 (선택) PostgreSQL 연결</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="3장-데이터-모델링-심화---여러-사실-테이블과-비활성-관계">3장. 데이터 모델링 심화 - 여러 사실 테이블과 비활성 관계</h1>
+<h2 id="학습-목표">학습 목표</h2>
+<ul>
+<li>사실 테이블이 여러 개인 모델을 설계하고 관계 8개를 만든다.</li>
+<li><strong>필터는 관계의 일(1) 쪽에서 다(*) 쪽으로만 흐른다</strong>는 것을 실험으로 확인한다.</li>
+<li>같은 두 테이블 사이의 두 번째 관계가 <strong>비활성</strong>이 되는 이유를 안다.</li>
+<li>측정값 전용 테이블과 <strong>계층</strong>을 만든다.</li>
+</ul>
+<h2 id="3-1-olist-모델의-모양">3-1. Olist 모델의 모양</h2>
+<p>기초 과정의 모델은 사실 테이블(판매) 하나를 차원 테이블(메뉴·매장·날짜)이 둘러싼 별 모양이었다. Olist 는 사실 테이블이 여럿이다.</p>
+<figure><a href="../images/fig_olist_model.png" target="_blank"><img src="../images/fig_olist_model.png" alt="Olist 모델 - 주문을 가운데 두고 사실 테이블이 이어진다" loading="lazy"></a><figcaption>Olist 모델 - 주문을 가운데 두고 사실 테이블이 이어진다</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>테이블</th>
+<th>종류</th>
+<th>한 행</th>
+<th>일(1) 쪽으로 연결되는 테이블</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>주문</strong></td>
+<td>사실 (주문 단위)</td>
+<td>주문 하나</td>
+<td>날짜, 주</td>
+</tr>
+<tr>
+<td><strong>주문상품</strong></td>
+<td>사실 (상품 단위)</td>
+<td>주문 안의 상품 하나</td>
+<td>주문, 상품, 판매자</td>
+</tr>
+<tr>
+<td><strong>결제</strong></td>
+<td>사실</td>
+<td>결제 하나</td>
+<td>주문</td>
+</tr>
+<tr>
+<td><strong>리뷰</strong></td>
+<td>사실</td>
+<td>리뷰 하나</td>
+<td>주문</td>
+</tr>
+<tr>
+<td>상품 · 판매자 · 주 · 날짜</td>
+<td>차원</td>
+<td>상품 · 판매자 · 주 · 날 하나</td>
+<td>-</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>주문</strong>은 자기도 사실 테이블이면서, 주문상품·결제·리뷰에게는 일(1) 쪽 테이블(차원 역할)이다. 날짜 슬라이서로 연도를 고르면 필터가 <code>날짜 → 주문 → 주문상품</code> 으로 이어져 흐른다.</p>
+<h2 id="3-2-관계-만들기">3-2. 관계 만들기</h2>
+<p>2장 파일을 열고 왼쪽 <strong>모델 보기</strong> 로 간다. 불러올 때 Power BI 가 이름이 같은 열(주문ID 등)을 보고 관계를 <strong>자동으로</strong> 몇 개 만들었을 수 있다. 아래 표와 같은지 확인하고, 없는 것은 열을 끌어다 놓아 만든다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>다(*) 쪽</th>
+<th>일(1) 쪽</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>주문상품[주문ID]</td>
+<td>주문[주문ID]</td>
+</tr>
+<tr>
+<td>결제[주문ID]</td>
+<td>주문[주문ID]</td>
+</tr>
+<tr>
+<td>리뷰[주문ID]</td>
+<td>주문[주문ID]</td>
+</tr>
+<tr>
+<td>주문상품[상품ID]</td>
+<td>상품[상품ID]</td>
+</tr>
+<tr>
+<td>주문상품[판매자ID]</td>
+<td>판매자[판매자ID]</td>
+</tr>
+<tr>
+<td>주문[고객주]</td>
+<td>주[주코드]</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="note">
+<p>잘못 만들어진 관계(예: 다대다 *:*)가 있으면 선을 오른쪽 클릭 → <strong>삭제</strong> 하고 다시 만든다. 관계 선을 두 번 클릭하면 <strong>관계 편집</strong> 창에서 카디널리티와 필터 방향(단일)을 확인할 수 있다.</p>
+</blockquote>
+<h2 id="3-3-날짜-테이블">3-3. 날짜 테이블</h2>
+<p>기초 3장과 같은 방법이다. <strong>모델링 → 새 테이블</strong>.</p>
+<pre><code class="language-dax">날짜 = CALENDAR(DATE(2016, 1, 1), DATE(2018, 12, 31))
+</code></pre>
+<p>새 열을 만든다. 이번에는 <strong>분기</strong>를 더한다.</p>
+<pre><code class="language-dax">연도 = YEAR('날짜'[Date])
+</code></pre>
+<pre><code class="language-dax">분기 = &quot;Q&quot; &amp; QUARTER('날짜'[Date])
+</code></pre>
+<pre><code class="language-dax">월 = MONTH('날짜'[Date])
+</code></pre>
+<pre><code class="language-dax">연월 = FORMAT('날짜'[Date], &quot;yyyy-mm&quot;)
+</code></pre>
+<pre><code class="language-dax">월시작일 = DATE(YEAR('날짜'[Date]), MONTH('날짜'[Date]), 1)
+</code></pre>
+<pre><code class="language-dax">요일 = FORMAT('날짜'[Date], &quot;aaa&quot;)
+</code></pre>
+<pre><code class="language-dax">요일번호 = WEEKDAY('날짜'[Date], 2)
+</code></pre>
+<p><strong>날짜 테이블로 표시</strong> (Date 열), 요일은 <strong>열 기준 정렬 → 요일번호</strong>. 그리고 관계를 만든다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>다(*) 쪽</th>
+<th>일(1) 쪽</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>주문[구매일]</td>
+<td>날짜[Date]</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="3-4-두-번째-날짜-관계---비활성-관계">3-4. 두 번째 날짜 관계 - 비활성 관계</h2>
+<p>"이번 달에 <strong>배송이 끝난</strong> 주문은 몇 건인가?" 를 보려면 배송완료일로도 날짜와 이어야 한다.</p>
+<ol>
+<li>주문[배송완료일] 을 날짜[Date] 위로 끌어다 놓는다.</li>
+<li>새 관계가 <strong>점선</strong>으로 그려진다.</li>
+</ol>
+<figure><a href="../images/ui_a_model.png" target="_blank"><img src="../images/ui_a_model.png" alt="모델 보기 - 배송완료일 관계는 점선(비활성)" loading="lazy"></a><figcaption>모델 보기 - 배송완료일 관계는 점선(비활성)</figcaption></figure>
+<p>두 테이블 사이에 길이 두 개 있으면, 날짜 슬라이서가 어느 길로 필터를 보낼지 정할 수 없다. 그래서 Power BI 는 하나만 <strong>활성</strong>(실선)으로 두고 나머지는 <strong>비활성</strong>(점선)으로 만든다. 비활성 관계는 평소에는 쓰이지 않고, 측정값 안에서 <code>USERELATIONSHIP</code> 으로 <strong>그때만 켜서</strong> 쓴다 (4장).</p>
+<h2 id="3-5-측정값-테이블과-기본-측정값">3-5. 측정값 테이블과 기본 측정값</h2>
+<p>측정값이 많아지면 여러 테이블에 흩어져 찾기 어렵다. 측정값만 모아 두는 테이블을 만들자.</p>
+<ol>
+<li><strong>모델링 → 새 테이블</strong> → <code>_측정값 = ROW("임시", 0)</code> → Enter. (이름 앞의 <code>_</code> 는 데이터 창 맨 위에 오게 하려는 것)</li>
+<li>데이터 창에서 <strong>_측정값</strong> 을 고른 상태로 <strong>새 측정값</strong> 을 눌러 아래 7개를 만든다. 측정값마다 <strong>측정값 도구</strong> 탭(리본)의 서식을 정수 또는 소수 2자리로 맞춘다.</li>
+</ol>
+<pre><code class="language-dax">상품매출 = SUM('주문상품'[가격])
+</code></pre>
+<pre><code class="language-dax">배송비 = SUM('주문상품'[배송비])
+</code></pre>
+<pre><code class="language-dax">주문수 = COUNTROWS('주문')
+</code></pre>
+<pre><code class="language-dax">상품주문수 = DISTINCTCOUNT('주문상품'[주문ID])
+</code></pre>
+<pre><code class="language-dax">객단가 = DIVIDE([상품매출], [상품주문수])
+</code></pre>
+<pre><code class="language-dax">고객수 = DISTINCTCOUNT('주문'[고객ID])
+</code></pre>
+<pre><code class="language-dax">평균 평점 = AVERAGE('리뷰'[평점])
+</code></pre>
+<ol start="3">
+<li><strong>_측정값</strong> 의 <code>임시</code> 열을 오른쪽 클릭 → <strong>숨기기</strong>. 열이 모두 숨겨지고 측정값만 남으면 테이블 아이콘이 계산기 모양으로 바뀐다.</li>
+<li>(선택) 측정값을 고르고 <strong>속성 창</strong>(모델 보기 오른쪽)의 <strong>표시 폴더</strong> 에 <code>1 기본</code> 을 적으면 폴더로 묶인다. 완성 파일은 장마다 폴더를 나눴다.</li>
+</ol>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>측정값</th>
+<th>전체 값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>상품매출</td>
+<td>13,591,644</td>
+</tr>
+<tr>
+<td>주문수</td>
+<td>99,441</td>
+</tr>
+<tr>
+<td>상품주문수</td>
+<td>98,666</td>
+</tr>
+<tr>
+<td>객단가</td>
+<td>137.75</td>
+</tr>
+<tr>
+<td>고객수</td>
+<td>96,096</td>
+</tr>
+<tr>
+<td>평균 평점</td>
+<td>4.07</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="note">
+<p>주문수(99,441)와 상품주문수(98,666)가 다르다. 취소·품절 등으로 <strong>상품 줄이 없는 주문</strong>이 775건 있기 때문이다.</p>
+</blockquote>
+<h2 id="3-6-실험---필터는-한-방향으로-흐른다">3-6. 실험 - 필터는 한 방향으로 흐른다</h2>
+<p>보고서 보기에서 <strong>행렬</strong>을 만들어 행에 상품[대분류], 값에 상품매출·주문수·상품주문수를 넣는다.</p>
+<figure><a href="../images/pbi_심화03_모델링_p1.png" target="_blank"><img src="../images/pbi_심화03_모델링_p1.png" alt="3장 완성 - 대분류마다 주문수가 모두 같다" loading="lazy"></a><figcaption>3장 완성 - 대분류마다 주문수가 모두 같다</figcaption></figure>
+<p><strong>주문수가 모든 대분류에서 99,441 로 같다.</strong> 상품매출과 상품주문수는 대분류마다 다른데 왜일까?</p>
+<figure><a href="../images/fig_filter_direction.png" target="_blank"><img src="../images/fig_filter_direction.png" alt="필터는 관계의 일 쪽에서 다 쪽으로만 흐른다" loading="lazy"></a><figcaption>필터는 관계의 일 쪽에서 다 쪽으로만 흐른다</figcaption></figure>
+<ul>
+<li>행렬의 "가구·인테리어" 행은 <strong>상품</strong> 테이블을 걸러낸다.</li>
+<li>상품 → 주문상품 은 일(1) → 다(*) 방향이라 필터가 흐른다. 그래서 주문상품 기준 측정값(상품매출, 상품주문수)은 값이 바뀐다.</li>
+<li>주문상품 → 주문 은 다(*) → 일(1) 방향이라 <strong>필터가 거꾸로 올라가지 않는다.</strong> 주문 테이블은 걸러지지 않고, <code>COUNTROWS('주문')</code> 은 항상 전체 99,441 이다.</li>
+</ul>
+<p>해결 방법은 두 가지다.</p>
+<ol>
+<li><strong>필터가 닿는 테이블로 측정값을 만든다.</strong> 카테고리별 주문 수는 <code>상품주문수 = DISTINCTCOUNT('주문상품'[주문ID])</code> 를 쓴다. ← 이 과정의 기본 방법</li>
+<li>측정값 안에서만 필터 방향을 바꾼다 (<code>CROSSFILTER</code>, 4장).</li>
+</ol>
+<blockquote class="note">
+<p>관계 편집 창에서 <strong>크로스 필터 방향</strong> 을 <strong>모두</strong>(양방향)로 바꾸면 이 표는 바로 맞게 나온다. 하지만 양방향 관계가 여러 개 생기면 필터가 엉뚱한 길로 돌아 결과를 예측하기 어려워지고 보고서도 느려진다. 모델 전체의 방향은 <strong>단일</strong>로 두고, 필요한 측정값에서만 바꾸는 것이 좋다.</p>
+</blockquote>
+<h2 id="3-7-계층-만들기">3-7. 계층 만들기</h2>
+<p>지역(남동부 등) 아래에 주(상파울루 등)가 있다. 이런 위아래 관계를 <strong>계층</strong>으로 묶어 두면, 차트에서 지역 → 주로 파고드는 <strong>드릴다운</strong>을 할 수 있다 (7장).</p>
+<ol>
+<li>데이터 창에서 <strong>주</strong> 의 <code>지역</code> 을 오른쪽 클릭 → <strong>계층 만들기</strong>. <code>지역 계층</code> 이 생긴다.</li>
+<li><code>주이름</code> 을 <code>지역 계층</code> 위로 끌어다 놓는다.</li>
+<li>같은 방법으로 상품에 <code>대분류 → 카테고리</code> 계층을, 날짜에 <code>연도 → 분기 → 월</code> 계층을 만든다.</li>
+</ol>
+<h2 id="정리">정리</h2>
+<ul>
+<li>사실 테이블이 여러 개여도 원칙은 같다. <strong>필터는 관계의 일 쪽에서 다 쪽으로</strong> 흐른다. 다 쪽에서 일 쪽으로는 흐르지 않는다.</li>
+<li>측정값은 <strong>필터가 닿는 테이블</strong>로 만든다. 카테고리별 주문 수는 주문상품에서 센다.</li>
+<li>같은 두 테이블 사이의 두 번째 관계는 <strong>비활성</strong>(점선)이다. USERELATIONSHIP 으로 켜서 쓴다.</li>
+<li>측정값 전용 테이블, 계층으로 모델을 정리한다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제</h2>
+<ol>
+<li>지역별로 행렬을 만들면 주문수는 지역마다 다르게 나온다(3장 완성 화면 오른쪽 표). 대분류와 달리 지역에서는 왜 제대로 나올까? 필터가 흐르는 길로 설명하시오.</li>
+<li>행에 판매자[판매자주]를 넣고 값에 고객수를 넣으면 어떻게 나올까? 예상한 뒤 확인해 보자.</li>
+<li>날짜[Date] 와 주문[예상배송일] 사이에 관계를 하나 더 만들면 실선일까 점선일까?</li>
+<li>남동부 지역의 주문수는 얼마인가? 전체 주문의 몇 %인가?</li>
+</ol>
+<nav class="pager"><a href="ch02.html"><small>← 이전</small>2장 병합과 조건 열</a><a class="next" href="ch04.html"><small>다음 →</small>4장 DAX ① CALCULATE</a></nav>
+</article></div>
+<footer>Power BI 2단계 심화 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

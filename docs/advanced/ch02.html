@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2장. Power Query 심화 - 병합과 조건 열 - Power BI 2단계 심화</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="2장. Power Query 심화 - 병합과 조건 열 - Power BI 2단계 심화"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side .cap{font-weight:800;margin:4px 10px 6px;color:var(--sub)}
+.side .other{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>교안</b></a><span class="sp"></span>
+<a class="btn" href="../basic/ch00.html">기초</a>
+<a class="btn" href="../advanced/ch00.html">심화</a>
+<a class="btn hide-s" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><div class="cap">Power BI 2단계 심화</div><a href="ch00.html">0장 과정 안내와 Olist 데이터</a><a href="ch01.html">1장 여러 파일과 매개 변수</a><a href="ch02.html" class=on>2장 병합과 조건 열</a><a href="ch03.html">3장 모델링 심화</a><a href="ch04.html">4장 DAX ① CALCULATE</a><a href="ch05.html">5장 DAX ② 시간 인텔리전스</a><a href="ch06.html">6장 배송과 만족도 분석</a><a href="ch07.html">7장 고급 보고서 기능</a><a href="ch08.html">8장 행 수준 보안과 성능</a><a href="ch09.html">9장 프로젝트 - 판매자 성과</a><a href="ch10.html">10장 (선택) PostgreSQL 연결</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a><div class="other"><a href="../PowerBI_%EC%8B%AC%ED%99%94_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF 교안</a><a href="../basic/ch00.html">→ 1단계 기초 과정</a></div></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내와 Olist 데이터</option><option value="ch01.html">1장 여러 파일과 매개 변수</option><option value="ch02.html" selected>2장 병합과 조건 열</option><option value="ch03.html">3장 모델링 심화</option><option value="ch04.html">4장 DAX ① CALCULATE</option><option value="ch05.html">5장 DAX ② 시간 인텔리전스</option><option value="ch06.html">6장 배송과 만족도 분석</option><option value="ch07.html">7장 고급 보고서 기능</option><option value="ch08.html">8장 행 수준 보안과 성능</option><option value="ch09.html">9장 프로젝트 - 판매자 성과</option><option value="ch10.html">10장 (선택) PostgreSQL 연결</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="2장-power-query-심화---병합과-조건-열">2장. Power Query 심화 - 병합과 조건 열</h1>
+<h2 id="학습-목표">학습 목표</h2>
+<ul>
+<li>따옴표 안의 줄 바꿈 때문에 쪼개진 행을 바로잡는다.</li>
+<li><strong>로드하지 않는 도우미 쿼리</strong>를 만들고, <strong>쿼리 병합</strong>으로 다른 테이블의 열을 붙인다.</li>
+<li><strong>사용자 지정 열</strong>(if … then … else)과 <strong>조건 열</strong>로 분석에 쓸 새 열을 만든다.</li>
+</ul>
+<h2 id="2-1-이-장에서-할-일">2-1. 이 장에서 할 일</h2>
+<p>1장에서 불러온 데이터는 아직 분석하기 불편하다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>문제</th>
+<th>해결</th>
+<th>절</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>리뷰가 여러 행으로 쪼개졌다</td>
+<td>CSV 를 읽는 방식 바꾸기</td>
+<td>2-2</td>
+</tr>
+<tr>
+<td>주문에 고객 정보(같은 사람인지, 어느 주인지)가 없다</td>
+<td>고객 쿼리를 <strong>병합</strong></td>
+<td>2-3, 2-4</td>
+</tr>
+<tr>
+<td>주문에 날짜/시간 열만 있고 "배송이 늦었나?" 가 없다</td>
+<td><strong>사용자 지정 열</strong>, <strong>조건 열</strong></td>
+<td>2-5, 2-6</td>
+</tr>
+<tr>
+<td>카테고리 이름이 포르투갈어다</td>
+<td>번역 쿼리를 <strong>두 번 병합</strong></td>
+<td>2-8</td>
+</tr>
+<tr>
+<td>열 이름이 영어다, 필요 없는 열이 많다</td>
+<td>열 제거, 이름 바꾸기</td>
+<td>2-7</td>
+</tr>
+</tbody>
+</table></div>
+<p>1장의 <code>내Olist.pbix</code> 를 열고 <strong>홈 → 데이터 변환</strong> 으로 Power Query 편집기를 연다.</p>
+<h2 id="2-2-리뷰---따옴표-안의-줄-바꿈">2-2. 리뷰 - 따옴표 안의 줄 바꿈</h2>
+<p>CSV 에서 쉼표나 줄 바꿈이 들어간 값은 큰따옴표(<code>"</code>)로 감싼다. 그런데 기본 설정(<code>QuoteStyle.None</code>)은 따옴표 안이라도 줄 바꿈을 만나면 새 행으로 읽는다.</p>
+<ol>
+<li><strong>리뷰</strong> 쿼리의 <strong>원본</strong> 단계를 누른다.</li>
+<li>
+<p>수식 입력줄 끝의 <code>QuoteStyle=QuoteStyle.None</code> 을 <code>QuoteStyle=QuoteStyle.Csv</code> 로 바꾸고 <strong>Enter</strong>.
+   (원본 단계 오른쪽 톱니바퀴를 눌러 <strong>줄 바꿈</strong> 설정을 바꿔도 같은 식이 된다)</p>
+</li>
+<li>
+<p>맨 아래 <strong>변경된 유형</strong> 단계를 다시 누른다. 이상한 값이 섞여 있던 <code>review_score</code> 열이 1~5 숫자만 남는다.</p>
+</li>
+<li><code>review_id</code>, <code>order_id</code>, <code>review_score</code>, <code>review_creation_date</code> 네 열을 <strong>Ctrl</strong> 을 누른 채 고르고 <strong>홈 → 열 제거 ▾ → 다른 열 제거</strong>. 리뷰 글 열은 크고 이 과정에서 쓰지 않으니 뺀다.</li>
+<li>열 이름을 <strong>리뷰ID, 주문ID, 평점, 리뷰작성일</strong> 로 바꾼다. (머리글 두 번 클릭)</li>
+<li>리뷰작성일 머리글의 형식 아이콘을 눌러 <strong>날짜</strong> 로 바꾼다.</li>
+</ol>
+<p>이제 리뷰는 정확히 <strong>100,000행</strong>이다. (리뷰ID 가 같은 줄이 조금 있지만 원본 데이터 그대로이므로 두자)</p>
+<h2 id="2-3-도우미-쿼리-만들기---로드-사용-안-함">2-3. 도우미 쿼리 만들기 - 로드 사용 안 함</h2>
+<p>병합에 쓸 재료 쿼리 세 개를 불러온다. 1장처럼 <strong>새 원본 → 텍스트/CSV</strong> 로 불러오고 원본 경로를 <code>DataPath &amp; "\…"</code> 로 바꾼다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>파일</th>
+<th>쿼리 이름</th>
+<th>쓰는 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>olist_customers_dataset.csv</td>
+<td><strong>고객</strong></td>
+<td>주문에 고객 정보 붙이기</td>
+</tr>
+<tr>
+<td>product_category_name_translation.csv</td>
+<td><strong>카테고리번역</strong></td>
+<td>포르투갈어 → 영어</td>
+</tr>
+<tr>
+<td>카테고리_한글.csv</td>
+<td><strong>카테고리한글</strong></td>
+<td>영어 → 한글, 대분류</td>
+</tr>
+</tbody>
+</table></div>
+<p>이 세 쿼리는 다른 쿼리를 만드는 재료일 뿐, 보고서에 테이블로 넣을 필요는 없다.</p>
+<ol>
+<li>쿼리 목록에서 <strong>고객</strong> 을 오른쪽 클릭 → <strong>로드 사용</strong> 을 눌러 체크를 끈다.</li>
+<li>경고 창이 나오면 <strong>계속</strong>. 쿼리 이름이 기울임꼴로 바뀐다.</li>
+<li>카테고리번역, 카테고리한글도 똑같이 한다.</li>
+</ol>
+<blockquote class="note">
+<p><strong>로드 사용 안 함</strong> 쿼리는 Power Query 안에서만 쓰이고 모델(데이터 창)에는 나타나지 않는다. 파일이 작아지고 데이터 창이 깔끔해진다.</p>
+</blockquote>
+<h2 id="2-4-쿼리-병합---주문에-고객-정보-붙이기">2-4. 쿼리 병합 - 주문에 고객 정보 붙이기</h2>
+<p><strong>병합</strong>은 엑셀의 VLOOKUP 과 비슷하다. 두 테이블에서 같은 값을 가진 열(키)을 짝지어, 한쪽 테이블에 다른 쪽의 열을 붙인다.</p>
+<ol>
+<li><strong>주문</strong> 쿼리를 고르고 <strong>홈 → 쿼리 병합</strong>.</li>
+<li>위쪽 표(주문)에서 <code>customer_id</code> 머리글을 누른다.</li>
+<li>아래 목록에서 <strong>고객</strong> 을 고르고, 아래쪽 표에서도 <code>customer_id</code> 를 누른다.</li>
+<li>조인 종류는 <strong>왼쪽 외부(첫 번째의 모두, 두 번째의 일치하는 행)</strong> 그대로 두고 <strong>확인</strong>.</li>
+</ol>
+<figure><a href="../images/ui_a_merge.png" target="_blank"><img src="../images/ui_a_merge.png" alt="쿼리 병합 대화 상자" loading="lazy"></a><figcaption>쿼리 병합 대화 상자</figcaption></figure>
+<p>맨 오른쪽에 <strong>고객</strong> 이라는 열이 생기고 값이 모두 <code>Table</code> 이다. 행마다 짝이 맞는 고객 행이 표 모양으로 들어 있다는 뜻이다.</p>
+<ol start="5">
+<li><strong>고객</strong> 머리글 오른쪽의 확장 단추(⇆)를 누른다.</li>
+<li><code>customer_unique_id</code>, <code>customer_state</code> 만 체크하고, 아래 <strong>원래 열 이름을 접두사로 사용</strong> 의 체크를 끈 뒤 <strong>확인</strong>.</li>
+</ol>
+<p>단계 <code>병합된 쿼리</code>, <code>확장된 고객</code> 이 생기고, 주문마다 고객 고유 ID 와 주(state)가 붙었다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>조인 종류</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>왼쪽 외부</strong></td>
+<td>첫 번째 테이블의 모든 행 + 짝이 있으면 그 값 (없으면 null) ← 가장 많이 쓴다</td>
+</tr>
+<tr>
+<td>내부</td>
+<td>양쪽에 짝이 있는 행만</td>
+</tr>
+<tr>
+<td>왼쪽 앤티</td>
+<td>첫 번째 테이블에서 짝이 <strong>없는</strong> 행만 (빠진 데이터 찾기에 쓴다)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="2-5-사용자-지정-열---날짜와-배송일수">2-5. 사용자 지정 열 - 날짜와 배송일수</h2>
+<p>주문에는 날짜/시간 열이 5개 있다. 분석에는 날짜만 있으면 된다.</p>
+<ol>
+<li><strong>열 추가 → 사용자 지정 열</strong>.</li>
+<li>새 열 이름 <code>구매일</code>, 식 <code>DateTime.Date([order_purchase_timestamp])</code>, 아래 <strong>데이터 형식</strong> 을 <strong>날짜</strong> 로 고르고 <strong>확인</strong>.</li>
+<li>같은 방법으로 두 열을 더 만든다.</li>
+</ol>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>새 열 이름</th>
+<th>식</th>
+<th>형식</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>구매일</td>
+<td><code>DateTime.Date([order_purchase_timestamp])</code></td>
+<td>날짜</td>
+</tr>
+<tr>
+<td>배송완료일</td>
+<td><code>DateTime.Date([order_delivered_customer_date])</code></td>
+<td>날짜</td>
+</tr>
+<tr>
+<td>예상배송일</td>
+<td><code>DateTime.Date([order_estimated_delivery_date])</code></td>
+<td>날짜</td>
+</tr>
+</tbody>
+</table></div>
+<ol start="4">
+<li>배송에 걸린 날 수를 계산한다. 새 열 이름 <code>배송일수</code>, 형식 <strong>정수</strong>, 식은</li>
+</ol>
+<pre><code class="language-text">if [배송완료일] = null then null else Duration.Days([배송완료일] - [구매일])
+</code></pre>
+<p>날짜에서 날짜를 빼면 <strong>기간</strong>(duration)이 되고, <code>Duration.Days</code> 가 그 기간의 날 수를 꺼낸다. 아직 배송되지 않은 주문은 배송완료일이 비어 있으므로(null) 계산하지 않고 null 로 둔다.</p>
+<ol start="5">
+<li>배송이 늦었는지 표시하는 열을 하나 더 만든다. 새 열 이름 <code>배송상태</code>, 형식 <strong>텍스트</strong>.</li>
+</ol>
+<pre><code class="language-text">if [배송완료일] = null then &quot;미배송&quot;
+else if [배송완료일] &gt; [예상배송일] then &quot;지연&quot;
+else &quot;정시&quot;
+</code></pre>
+<blockquote class="note">
+<p><strong>if 식 읽는 법</strong> - 위에서부터 차례로 조건을 본다. 첫 조건이 맞으면 "미배송", 아니면 다음 조건을 보고, 모두 아니면 마지막 else 의 값. 식 안에서 줄을 바꿔도 된다.</p>
+</blockquote>
+<h2 id="2-6-조건-열---주문상태를-한글로">2-6. 조건 열 - 주문상태를 한글로</h2>
+<p>같은 if 식을 대화 상자로 만들 수도 있다. <strong>열 추가 → 조건 열</strong>.</p>
+<figure><a href="../images/ui_a_conditional.png" target="_blank"><img src="../images/ui_a_conditional.png" alt="조건 열 추가 대화 상자" loading="lazy"></a><figcaption>조건 열 추가 대화 상자</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>칸</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>새 열 이름</td>
+<td>주문상태</td>
+</tr>
+<tr>
+<td>첫 줄(If)</td>
+<td>열 <code>order_status</code> · 연산자 <code>같음</code> · 값 <code>delivered</code> · 출력 <code>배송완료</code></td>
+</tr>
+<tr>
+<td>절 추가 → Else If</td>
+<td><code>order_status</code> 같음 <code>shipped</code> → <code>배송중</code></td>
+</tr>
+<tr>
+<td>절 추가 → Else If</td>
+<td><code>order_status</code> 같음 <code>canceled</code> → <code>취소</code></td>
+</tr>
+<tr>
+<td>기타(Else)</td>
+<td><code>기타</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>확인</strong> 하면 단계 <code>추가된 조건 열</code> 이 생긴다. 수식 입력줄을 보면 2-5 에서 직접 쓴 것과 같은 모양의 if 식이다.</p>
+<h2 id="2-7-열-정리">2-7. 열 정리</h2>
+<p><strong>주문</strong> 에서</p>
+<ol>
+<li><code>customer_id</code>, <code>order_status</code> 와 날짜/시간 열 5개(<code>order_purchase_timestamp</code> ~ <code>order_estimated_delivery_date</code>)를 고르고 <strong>열 제거</strong>.</li>
+<li>이름 바꾸기: <code>order_id</code> → <strong>주문ID</strong>, <code>customer_unique_id</code> → <strong>고객ID</strong>, <code>customer_state</code> → <strong>고객주</strong>.</li>
+</ol>
+<figure><a href="../images/ui_a_pq_orders.png" target="_blank"><img src="../images/ui_a_pq_orders.png" alt="정리를 마친 주문 쿼리와 적용된 단계" loading="lazy"></a><figcaption>정리를 마친 주문 쿼리와 적용된 단계</figcaption></figure>
+<p>나머지 쿼리도 정리한다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>쿼리</th>
+<th>할 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>주문상품</strong></td>
+<td><code>shipping_limit_date</code> 제거. 이름: order_id→<strong>주문ID</strong>, order_item_id→<strong>순번</strong>, product_id→<strong>상품ID</strong>, seller_id→<strong>판매자ID</strong>, price→<strong>가격</strong>, freight_value→<strong>배송비</strong></td>
+</tr>
+<tr>
+<td><strong>결제</strong></td>
+<td>조건 열 <code>결제수단</code> (credit_card→신용카드, boleto→볼레토, voucher→바우처, debit_card→체크카드, 기타) 추가 후 <code>payment_type</code> 제거. 이름: order_id→<strong>주문ID</strong>, payment_sequential→<strong>결제순번</strong>, payment_installments→<strong>할부개월</strong>, payment_value→<strong>결제금액</strong></td>
+</tr>
+<tr>
+<td><strong>판매자</strong></td>
+<td><code>seller_zip_code_prefix</code> 제거. 이름: seller_id→<strong>판매자ID</strong>, seller_city→<strong>판매자도시</strong>, seller_state→<strong>판매자주</strong></td>
+</tr>
+<tr>
+<td><strong>주</strong></td>
+<td>state → <strong>주코드</strong></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="note">
+<p><strong>볼레토(boleto)</strong> 는 브라질에서 많이 쓰는 결제 방식으로, 고지서를 받아 은행이나 편의점에서 내는 현금 결제다.</p>
+</blockquote>
+<h2 id="2-8-상품---두-번-병합하기">2-8. 상품 - 두 번 병합하기</h2>
+<p>상품의 카테고리는 포르투갈어(<code>beleza_saude</code>)다. 카테고리번역으로 영어(<code>health_beauty</code>)를 붙이고, 다시 카테고리한글로 한글(<code>건강·뷰티</code>)과 대분류를 붙인다.</p>
+<ol>
+<li><strong>상품</strong> 쿼리 → <strong>홈 → 쿼리 병합</strong>. 상품 <code>product_category_name</code> ↔ 카테고리번역 <code>product_category_name</code> · 왼쪽 외부 → <strong>확인</strong>.</li>
+<li>확장: <code>product_category_name_english</code> 만, 접두사 끄기.</li>
+<li>다시 <strong>쿼리 병합</strong>. 상품 <code>product_category_name_english</code> ↔ 카테고리한글 <code>category_english</code> → <strong>확인</strong>.</li>
+<li>확장: <code>카테고리</code>, <code>대분류</code>, 접두사 끄기.</li>
+<li>카테고리 열을 내려 보면 <code>null</code> 이 있다. 원본에 카테고리가 비어 있는 상품(610개)과 번역 파일에 없는 카테고리 2개다.<ul>
+<li><strong>카테고리</strong> 머리글 오른쪽 클릭 → <strong>값 바꾸기</strong> → 찾을 값 <code>null</code>, 바꿀 항목 <code>(분류 없음)</code>.</li>
+<li><strong>대분류</strong> 도 같은 방법으로 <code>null</code> → <code>기타</code>.</li>
+</ul>
+</li>
+<li><code>product_id</code>, <code>카테고리</code>, <code>대분류</code> 만 고르고 <strong>다른 열 제거</strong>. product_id 이름을 <strong>상품ID</strong> 로.</li>
+</ol>
+<h2 id="2-9-닫기-및-적용-결과-확인">2-9. 닫기 및 적용, 결과 확인</h2>
+<p><strong>홈 → 닫기 및 적용</strong>. 데이터 창에 고객·카테고리번역·카테고리한글은 보이지 않고, 7개 테이블만 있다. 표로 결과를 확인해 보자.</p>
+<figure><a href="../images/pbi_심화02_병합과조건열_p1.png" target="_blank"><img src="../images/pbi_심화02_병합과조건열_p1.png" alt="2장 완성 - 병합과 조건 열로 만든 열" loading="lazy"></a><figcaption>2장 완성 - 병합과 조건 열로 만든 열</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>확인</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>리뷰 행 수</td>
+<td>100,000</td>
+</tr>
+<tr>
+<td>배송상태 - 정시 / 지연 / 미배송</td>
+<td>89,941 / 6,535 / 2,965</td>
+</tr>
+<tr>
+<td>카테고리 <code>(분류 없음)</code> 상품 수</td>
+<td>623 (빈 카테고리 610 + 번역 없음 13)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="정리">정리</h2>
+<ul>
+<li>따옴표 안의 줄 바꿈이 있는 CSV 는 <code>QuoteStyle.Csv</code> 로 읽는다.</li>
+<li><strong>병합</strong> = 키 열로 짝을 지어 다른 테이블의 열을 붙인다. 보통 <strong>왼쪽 외부</strong> 조인을 쓰고, 확장 단추로 필요한 열만 꺼낸다.</li>
+<li>재료로만 쓰는 쿼리는 <strong>로드 사용</strong> 을 끈다.</li>
+<li>계산이 필요한 열은 <strong>사용자 지정 열</strong>(식), 값에 따라 나누는 열은 <strong>조건 열</strong>(대화 상자). 둘 다 결과는 if 식이다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제</h2>
+<ol>
+<li>2-4 에서 조인 종류를 <strong>내부</strong> 로 골랐다면 주문 행 수는 달라질까? 고객 파일에 없는 customer_id 가 있는지 <strong>왼쪽 앤티</strong> 조인으로 확인해 보자.</li>
+<li>배송상태 식에서 <code>[배송완료일] &gt; [예상배송일]</code> 을 <code>&gt;=</code> 로 바꾸면 지연 주문이 늘까 줄까? 왜 그럴까?</li>
+<li>결제수단 조건 열을 만든 뒤 <code>기타</code> 로 분류된 결제는 몇 건인가? 원래 <code>payment_type</code> 값은 무엇이었을까?</li>
+<li>카테고리 <code>(분류 없음)</code> 이 될 상품을 2-8 의 5번 전에 미리 찾으려면 어떻게 할 수 있을까?</li>
+</ol>
+<nav class="pager"><a href="ch01.html"><small>← 이전</small>1장 여러 파일과 매개 변수</a><a class="next" href="ch03.html"><small>다음 →</small>3장 모델링 심화</a></nav>
+</article></div>
+<footer>Power BI 2단계 심화 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

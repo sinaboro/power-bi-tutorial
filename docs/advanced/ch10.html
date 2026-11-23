@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10장. (선택) PostgreSQL 데이터베이스에 연결하기 - Power BI 2단계 심화</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="10장. (선택) PostgreSQL 데이터베이스에 연결하기 - Power BI 2단계 심화"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side .cap{font-weight:800;margin:4px 10px 6px;color:var(--sub)}
+.side .other{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>교안</b></a><span class="sp"></span>
+<a class="btn" href="../basic/ch00.html">기초</a>
+<a class="btn" href="../advanced/ch00.html">심화</a>
+<a class="btn hide-s" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><div class="cap">Power BI 2단계 심화</div><a href="ch00.html">0장 과정 안내와 Olist 데이터</a><a href="ch01.html">1장 여러 파일과 매개 변수</a><a href="ch02.html">2장 병합과 조건 열</a><a href="ch03.html">3장 모델링 심화</a><a href="ch04.html">4장 DAX ① CALCULATE</a><a href="ch05.html">5장 DAX ② 시간 인텔리전스</a><a href="ch06.html">6장 배송과 만족도 분석</a><a href="ch07.html">7장 고급 보고서 기능</a><a href="ch08.html">8장 행 수준 보안과 성능</a><a href="ch09.html">9장 프로젝트 - 판매자 성과</a><a href="ch10.html" class=on>10장 (선택) PostgreSQL 연결</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a><div class="other"><a href="../PowerBI_%EC%8B%AC%ED%99%94_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF 교안</a><a href="../basic/ch00.html">→ 1단계 기초 과정</a></div></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내와 Olist 데이터</option><option value="ch01.html">1장 여러 파일과 매개 변수</option><option value="ch02.html">2장 병합과 조건 열</option><option value="ch03.html">3장 모델링 심화</option><option value="ch04.html">4장 DAX ① CALCULATE</option><option value="ch05.html">5장 DAX ② 시간 인텔리전스</option><option value="ch06.html">6장 배송과 만족도 분석</option><option value="ch07.html">7장 고급 보고서 기능</option><option value="ch08.html">8장 행 수준 보안과 성능</option><option value="ch09.html">9장 프로젝트 - 판매자 성과</option><option value="ch10.html" selected>10장 (선택) PostgreSQL 연결</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="10장-선택-postgresql-데이터베이스에-연결하기">10장. (선택) PostgreSQL 데이터베이스에 연결하기</h1>
+<h2 id="학습-목표">학습 목표</h2>
+<ul>
+<li>Docker 로 Olist 데이터가 들어 있는 PostgreSQL 데이터베이스를 띄운다.</li>
+<li>Power BI 에서 데이터베이스에 연결해 테이블을 불러온다.</li>
+<li><strong>SQL 문</strong>으로 필요한 데이터만 불러오고, <strong>가져오기</strong>와 <strong>DirectQuery</strong> 의 차이를 안다.</li>
+</ul>
+<blockquote class="note">
+<p>이 장은 <strong>선택</strong>이다. Docker Desktop 이 없거나 설치할 수 없으면 읽기만 해도 된다. 회사에서는 CSV 보다 데이터베이스에 직접 연결하는 경우가 훨씬 많으므로, 할 수 있다면 꼭 해 보자.</p>
+</blockquote>
+<h2 id="10-1-데이터베이스-띄우기">10-1. 데이터베이스 띄우기</h2>
+<p><strong>Docker Desktop</strong> 이 설치되어 있고 실행 중이어야 한다. (설치 방법은 Docker 공식 사이트 또는 Git·Docker 입문 교안을 참고)</p>
+<ol>
+<li>PowerShell 을 열고 저장소의 <code>db</code> 폴더로 이동해 컨테이너를 시작한다.</li>
+</ol>
+<pre><code class="language-powershell">cd C:\study\power-bi-tutorial\db
+docker compose up -d
+</code></pre>
+<ol start="2">
+<li>처음에는 PostgreSQL 이미지를 내려받고 CSV 를 테이블로 불러오느라 1~2분 걸린다. 상태를 확인한다.</li>
+</ol>
+<pre><code class="language-powershell">docker compose ps
+</code></pre>
+<p>STATUS 가 <code>healthy</code> 이면 준비가 끝난 것이다. (<code>starting</code> 이면 잠시 뒤 다시 확인)</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>접속 정보</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>서버</td>
+<td><code>localhost:5435</code></td>
+</tr>
+<tr>
+<td>데이터베이스</td>
+<td><code>olist</code></td>
+</tr>
+<tr>
+<td>사용자 / 비밀번호</td>
+<td><code>postgres</code> / <code>postgres</code> (실습용)</td>
+</tr>
+<tr>
+<td>테이블</td>
+<td>orders, order_items, order_payments, order_reviews, customers, products, sellers, category_translation</td>
+</tr>
+<tr>
+<td>뷰</td>
+<td>monthly_orders (월별 주문 요약)</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>db\init\01_olist.sql</code> 을 열어 보면 테이블을 만들고(<code>CREATE TABLE</code>) CSV 를 불러오는(<code>COPY</code>) SQL 이 주석과 함께 들어 있다.</p>
+<h2 id="10-2-power-bi-에서-연결하기">10-2. Power BI 에서 연결하기</h2>
+<ol>
+<li>새 보고서에서 <strong>홈 → 데이터 가져오기 ▾ → 자세히…</strong> → 검색 칸에 <code>PostgreSQL</code> → <strong>PostgreSQL 데이터베이스</strong> → <strong>연결</strong>.</li>
+<li>서버 <code>localhost:5435</code>, 데이터베이스 <code>olist</code>, 데이터 연결 모드 <strong>가져오기</strong> → <strong>확인</strong>.</li>
+</ol>
+<figure><a href="../images/ui_a_pg_connect.png" target="_blank"><img src="../images/ui_a_pg_connect.png" alt="PostgreSQL 데이터베이스 연결 창" loading="lazy"></a><figcaption>PostgreSQL 데이터베이스 연결 창</figcaption></figure>
+<ol start="3">
+<li>자격 증명 창이 열린다. 왼쪽 <strong>데이터베이스</strong> 가 골라진 상태에서 사용자 이름 <code>postgres</code>, 암호 <code>postgres</code> 를 <strong>직접 입력</strong>하고 <strong>연결</strong>.</li>
+<li><strong>암호화 지원</strong> 창("암호화된 연결을 사용하여 데이터 원본에 연결할 수 없습니다…")이 나오면 <strong>확인</strong> 을 누른다. 실습용 데이터베이스는 내 PC 안에서만 쓰므로 암호화하지 않은 연결로 접속해도 된다. (회사 데이터베이스라면 관리자에게 암호화 설정을 물어보자)</li>
+</ol>
+<blockquote class="note">
+<p><strong>암호를 잘못 넣었다면?</strong> 입력한 자격 증명은 PC 에 저장되어 다음 연결에도 그대로 쓰인다. "No password has been provided" 나 "password authentication failed" 오류가 계속 나면 <strong>홈 → 데이터 변환 ▾ → 데이터 원본 설정</strong> 에서 <code>localhost:5435</code> 를 고르고 <strong>권한 지우기 → 삭제</strong> 한 뒤 다시 연결한다.</p>
+</blockquote>
+<ol start="5">
+<li><strong>탐색 창</strong>에 <code>public.orders</code> 같은 테이블 목록이 나온다.</li>
+</ol>
+<figure><a href="../images/ui_a_pg_navigator.png" target="_blank"><img src="../images/ui_a_pg_navigator.png" alt="탐색 창 - 데이터베이스의 테이블 목록" loading="lazy"></a><figcaption>탐색 창 - 데이터베이스의 테이블 목록</figcaption></figure>
+<ol start="6">
+<li><code>public.orders</code>, <code>public.order_items</code> 를 체크하고 <strong>로드</strong>.</li>
+</ol>
+<p>CSV 와 달리 <strong>열 형식</strong>(날짜/시간, 숫자)이 데이터베이스에 정해져 있어서 Power BI 가 짐작할 필요가 없다. 리뷰 글의 줄 바꿈 문제도 없다.</p>
+<h2 id="10-3-sql-문으로-필요한-것만-불러오기">10-3. SQL 문으로 필요한 것만 불러오기</h2>
+<p>데이터베이스가 크면 테이블을 통째로 불러오지 말고 <strong>필요한 행과 열만</strong> 가져오는 것이 좋다.</p>
+<ol>
+<li><strong>데이터 가져오기 → PostgreSQL 데이터베이스</strong> → 같은 서버·데이터베이스 → <strong>고급 옵션</strong> 을 펼친다.</li>
+<li><strong>SQL 문</strong> 칸에 아래를 붙여 넣고 <strong>확인</strong>.</li>
+</ol>
+<pre><code class="language-sql">-- 2018년 배송완료 주문만, 고객의 주(state)를 붙여서
+SELECT o.order_id,
+       c.customer_unique_id,
+       c.customer_state,
+       o.order_purchase_timestamp::date        AS purchase_date,
+       o.order_delivered_customer_date::date   AS delivered_date,
+       o.order_estimated_delivery_date::date   AS estimated_date
+FROM orders o
+JOIN customers c ON c.customer_id = o.customer_id
+WHERE o.order_status = 'delivered'
+  AND o.order_purchase_timestamp &gt;= '2018-01-01'
+</code></pre>
+<ol start="3">
+<li>미리 보기에서 <strong>로드</strong>. 2장에서 Power Query 병합으로 했던 일(주문 + 고객)을 데이터베이스가 SQL 의 <code>JOIN</code> 으로 대신 해 준다.</li>
+</ol>
+<blockquote class="note">
+<p><strong>쿼리 폴딩</strong> - SQL 문을 직접 쓰지 않고 테이블을 고른 뒤 Power Query 에서 행 필터·열 제거를 해도, Power BI 는 그 단계를 <strong>SQL 로 바꿔</strong> 데이터베이스에 보낸다. 단계를 오른쪽 클릭했을 때 <strong>네이티브 쿼리 보기</strong> 가 켜져 있으면 그 단계까지 SQL 로 바뀐(폴딩된) 것이다. 데이터베이스가 계산하고 결과만 받아 오므로 빠르다.</p>
+</blockquote>
+<h2 id="10-4-뷰-불러오기">10-4. 뷰 불러오기</h2>
+<p>데이터베이스 담당자가 자주 쓰는 계산을 <strong>뷰</strong>(view, 저장된 SELECT 문)로 만들어 두기도 한다. 탐색 창에서 <code>public.monthly_orders</code> 를 체크해 불러오면 월별 주문수·배송완료 주문수가 이미 계산된 표가 들어온다.</p>
+<h2 id="10-5-가져오기와-directquery">10-5. 가져오기와 DirectQuery</h2>
+<p>연결 창의 <strong>데이터 연결 모드</strong>에는 두 가지가 있다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th></th>
+<th>가져오기 (Import)</th>
+<th>DirectQuery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>데이터 위치</td>
+<td>.pbix 안에 <strong>복사</strong></td>
+<td>데이터베이스에 그대로, 볼 때마다 질의</td>
+</tr>
+<tr>
+<td>최신 데이터</td>
+<td><strong>새로 고침</strong> 해야 바뀐다</td>
+<td>차트를 볼 때마다 최신</td>
+</tr>
+<tr>
+<td>속도</td>
+<td>빠르다</td>
+<td>데이터베이스 속도에 달렸다</td>
+</tr>
+<tr>
+<td>쓸 수 있는 기능</td>
+<td>모든 Power Query·DAX</td>
+<td>일부 Power Query 단계·DAX 함수 제한</td>
+</tr>
+<tr>
+<td>이럴 때</td>
+<td>대부분의 경우 (이 과정 전체)</td>
+<td>데이터가 아주 크거나 실시간이 꼭 필요할 때</td>
+</tr>
+</tbody>
+</table></div>
+<p>처음에는 <strong>가져오기</strong>로 시작하고, 꼭 필요할 때만 DirectQuery 를 검토한다.</p>
+<h2 id="10-6-끝내기">10-6. 끝내기</h2>
+<p>실습이 끝나면 컨테이너를 멈춘다. 데이터베이스 내용은 볼륨에 남아 있어서 다음에 <code>docker compose up -d</code> 하면 바로 쓸 수 있다.</p>
+<pre><code class="language-powershell">docker compose stop
+</code></pre>
+<p>완전히 지우려면(다음 시작 때 CSV 를 다시 불러온다) <code>docker compose down -v</code>.</p>
+<h2 id="정리">정리</h2>
+<ul>
+<li><code>db</code> 폴더의 <code>docker compose up -d</code> 로 Olist 데이터가 든 PostgreSQL(localhost:5435)을 띄운다.</li>
+<li>Power BI 의 <strong>PostgreSQL 데이터베이스</strong> 커넥터로 서버·데이터베이스·자격 증명을 넣어 연결한다.</li>
+<li><strong>SQL 문</strong>이나 <strong>뷰</strong>로 필요한 데이터만 불러온다. Power Query 단계도 SQL 로 바뀌어(쿼리 폴딩) 데이터베이스에서 계산된다.</li>
+<li>기본은 <strong>가져오기</strong>, 실시간이 꼭 필요할 때 <strong>DirectQuery</strong>.</li>
+</ul>
+<h2 id="확인-문제">확인 문제</h2>
+<ol>
+<li>10-2 에서 불러온 <code>public.order_items</code> 의 행 수는 CSV 로 불러온 주문상품(112,650)과 같은가?</li>
+<li>10-3 의 SQL 문으로 불러온 2018년 배송완료 주문은 몇 건인가?</li>
+<li>10-3 의 SQL 에 <code>AND c.customer_state = 'SP'</code> 를 더하면 몇 건이 되는가?</li>
+<li><code>public.monthly_orders</code> 뷰에서 주문이 가장 많은 달은 언제인가?</li>
+</ol>
+<nav class="pager"><a href="ch09.html"><small>← 이전</small>9장 프로젝트 - 판매자 성과</a><a class="next" href="appA.html"><small>다음 →</small>부록 A 오류 해결</a></nav>
+</article></div>
+<footer>Power BI 2단계 심화 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

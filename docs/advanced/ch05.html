@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>5장. DAX 심화 ② 반복 함수와 시간 인텔리전스 - Power BI 2단계 심화</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="5장. DAX 심화 ② 반복 함수와 시간 인텔리전스 - Power BI 2단계 심화"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side .cap{font-weight:800;margin:4px 10px 6px;color:var(--sub)}
+.side .other{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>교안</b></a><span class="sp"></span>
+<a class="btn" href="../basic/ch00.html">기초</a>
+<a class="btn" href="../advanced/ch00.html">심화</a>
+<a class="btn hide-s" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><div class="cap">Power BI 2단계 심화</div><a href="ch00.html">0장 과정 안내와 Olist 데이터</a><a href="ch01.html">1장 여러 파일과 매개 변수</a><a href="ch02.html">2장 병합과 조건 열</a><a href="ch03.html">3장 모델링 심화</a><a href="ch04.html">4장 DAX ① CALCULATE</a><a href="ch05.html" class=on>5장 DAX ② 시간 인텔리전스</a><a href="ch06.html">6장 배송과 만족도 분석</a><a href="ch07.html">7장 고급 보고서 기능</a><a href="ch08.html">8장 행 수준 보안과 성능</a><a href="ch09.html">9장 프로젝트 - 판매자 성과</a><a href="ch10.html">10장 (선택) PostgreSQL 연결</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a><div class="other"><a href="../PowerBI_%EC%8B%AC%ED%99%94_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF 교안</a><a href="../basic/ch00.html">→ 1단계 기초 과정</a></div></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내와 Olist 데이터</option><option value="ch01.html">1장 여러 파일과 매개 변수</option><option value="ch02.html">2장 병합과 조건 열</option><option value="ch03.html">3장 모델링 심화</option><option value="ch04.html">4장 DAX ① CALCULATE</option><option value="ch05.html" selected>5장 DAX ② 시간 인텔리전스</option><option value="ch06.html">6장 배송과 만족도 분석</option><option value="ch07.html">7장 고급 보고서 기능</option><option value="ch08.html">8장 행 수준 보안과 성능</option><option value="ch09.html">9장 프로젝트 - 판매자 성과</option><option value="ch10.html">10장 (선택) PostgreSQL 연결</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="5장-dax-심화-②-반복-함수와-시간-인텔리전스">5장. DAX 심화 ② 반복 함수와 시간 인텔리전스</h1>
+<h2 id="학습-목표">학습 목표</h2>
+<ul>
+<li><strong>SUMX</strong> 같은 반복 함수로 행마다 계산한 뒤 더한다.</li>
+<li><strong>FILTER</strong> 와 <strong>VALUES</strong> 로 "조건에 맞는 고객" 을 세어 재구매 고객을 찾는다.</li>
+<li><strong>시간 인텔리전스</strong> 함수로 누계, 전년 동기, 전월 대비, 최근 3개월을 계산한다.</li>
+<li>시각적 개체 필터로 <strong>분석 기간</strong>을 정한다.</li>
+</ul>
+<h2 id="5-1-반복-함수---sumx">5-1. 반복 함수 - SUMX</h2>
+<p><code>SUM</code> 은 열 하나를 더한다. 그런데 "가격 + 배송비" 처럼 <strong>행마다 계산한 값</strong>을 더하려면?</p>
+<pre><code class="language-dax">총매출(배송비 포함) = SUMX('주문상품', '주문상품'[가격] + '주문상품'[배송비])
+</code></pre>
+<p><code>SUMX(테이블, 식)</code> 은 테이블의 <strong>행을 하나씩 돌면서</strong> 식을 계산하고, 그 결과를 모두 더한다. 이름 끝의 X 는 반복(iterate)한다는 표시다. 같은 무리에 <code>AVERAGEX</code>, <code>COUNTX</code>, <code>MAXX</code> 등이 있다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>방법</th>
+<th>장점</th>
+<th>단점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Power Query 에서 열 추가 후 SUM</td>
+<td>단순하다</td>
+<td>열이 모델에 저장돼 파일이 커진다</td>
+</tr>
+<tr>
+<td>계산 열 후 SUM</td>
+<td>DAX 로 바로 만든다</td>
+<td>역시 저장 공간을 쓴다</td>
+</tr>
+<tr>
+<td><strong>SUMX 측정값</strong></td>
+<td>저장하지 않는다, 필터에 맞게 계산</td>
+<td>아주 큰 표에서는 느릴 수 있다</td>
+</tr>
+</tbody>
+</table></div>
+<p>결과는 <strong>15,843,553</strong> (상품매출 13,591,644 + 배송비 2,251,910).</p>
+<pre><code class="language-dax">평균 배송일수 = AVERAGE('주문'[배송일수])
+</code></pre>
+<p>배송일수는 2장에서 만든 열이다. 빈 값(미배송)은 AVERAGE 가 알아서 빼므로 <strong>12.5일</strong>이 된다.</p>
+<h2 id="5-2-filter-와-values---재구매-고객">5-2. FILTER 와 VALUES - 재구매 고객</h2>
+<p>"두 번 이상 주문한 고객은 몇 명인가?" 는 고객마다 주문 수를 세 본 뒤 조건에 맞는 고객을 세야 한다.</p>
+<pre><code class="language-dax">재구매 고객수 = COUNTROWS(FILTER(VALUES('주문'[고객ID]), CALCULATE([주문수]) &gt; 1))
+</code></pre>
+<p>안쪽부터 읽는다.</p>
+<ol>
+<li><code>VALUES('주문'[고객ID])</code> - 지금 필터에서 보이는 <strong>고객ID 목록</strong> (중복 없이). 표 하나가 된다.</li>
+<li><code>FILTER(표, 조건)</code> - 그 목록을 한 줄씩 돌며 조건이 참인 줄만 남긴다. FILTER 도 반복 함수다.</li>
+<li><code>CALCULATE([주문수]) &gt; 1</code> - <strong>지금 돌고 있는 고객</strong>의 주문 수가 1보다 큰가?</li>
+<li><code>COUNTROWS(…)</code> - 남은 고객 수.</li>
+</ol>
+<blockquote class="note">
+<p><strong>CALCULATE 를 왜 감쌌을까?</strong> FILTER 가 한 줄씩 돌 때 "지금 고객" 은 행 하나일 뿐, 필터가 아니다. <code>[주문수]</code> 측정값은 필터를 보고 계산하므로, 그대로 쓰면 모든 줄에서 전체 주문수가 나온다. <code>CALCULATE</code> 로 감싸면 <strong>지금 행의 값(이 고객ID)을 필터로 바꿔서</strong> 계산한다. 이것을 <strong>컨텍스트 전환</strong>이라고 한다. 사실 측정값을 반복 함수 안에서 부르면 자동으로 CALCULATE 가 감싸지지만, 일부러 써 두면 읽는 사람이 알아보기 쉽다.</p>
+</blockquote>
+<pre><code class="language-dax">재구매율 = DIVIDE([재구매 고객수], [고객수])
+</code></pre>
+<p>결과는 <strong>2,997명, 3.12%</strong>. 100명 중 3명만 다시 산다. Olist 고객 대부분이 한 번 사고 떠난다는 뜻이다.</p>
+<h2 id="5-3-시간-인텔리전스">5-3. 시간 인텔리전스</h2>
+<p>날짜 테이블이 있고 <strong>날짜 테이블로 표시</strong> 되어 있으면, 기간을 옮겨 계산하는 함수를 쓸 수 있다.</p>
+<figure><a href="../images/fig_time_intel.png" target="_blank"><img src="../images/fig_time_intel.png" alt="시간 인텔리전스 함수가 고르는 기간" loading="lazy"></a><figcaption>시간 인텔리전스 함수가 고르는 기간</figcaption></figure>
+<pre><code class="language-dax">매출 YTD = TOTALYTD([상품매출], '날짜'[Date])
+</code></pre>
+<pre><code class="language-dax">전년 동기 매출 = CALCULATE([상품매출], SAMEPERIODLASTYEAR('날짜'[Date]))
+</code></pre>
+<pre><code class="language-dax">전년 대비 성장률 = DIVIDE([상품매출] - [전년 동기 매출], [전년 동기 매출])
+</code></pre>
+<pre><code class="language-dax">전월 매출 = CALCULATE([상품매출], DATEADD('날짜'[Date], -1, MONTH))
+</code></pre>
+<pre><code class="language-dax">전월 대비 증감률 = DIVIDE([상품매출] - [전월 매출], [전월 매출])
+</code></pre>
+<pre><code class="language-dax">최근 3개월 월평균 매출 = CALCULATE([상품매출], DATESINPERIOD('날짜'[Date], MAX('날짜'[Date]), -3, MONTH)) / 3
+</code></pre>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>함수</th>
+<th>고르는 날짜</th>
+<th>예: 2018년 3월 행에서</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TOTALYTD</code></td>
+<td>그해 1월 1일 ~ 지금까지</td>
+<td>2018-01-01 ~ 2018-03-31</td>
+</tr>
+<tr>
+<td><code>SAMEPERIODLASTYEAR</code></td>
+<td>1년 전 같은 기간</td>
+<td>2017년 3월</td>
+</tr>
+<tr>
+<td><code>DATEADD(…, -1, MONTH)</code></td>
+<td>한 달 전</td>
+<td>2018년 2월</td>
+</tr>
+<tr>
+<td><code>DATESINPERIOD(…, MAX, -3, MONTH)</code></td>
+<td>마지막 날에서 3개월 거슬러</td>
+<td>2018-01-01 ~ 2018-03-31</td>
+</tr>
+</tbody>
+</table></div>
+<p>모두 CALCULATE 의 조건 자리에 들어가 <strong>날짜 필터를 다른 기간으로 바꾼다.</strong> 4장의 CALCULATE 와 같은 원리다.</p>
+<h2 id="5-4-분석-기간-정하기---시각적-개체-필터">5-4. 분석 기간 정하기 - 시각적 개체 필터</h2>
+<p>행렬 행에 날짜[연월]을 넣고 위 측정값들을 넣으면 이상한 숫자가 보인다.</p>
+<ul>
+<li>2016년은 주문이 300여 건뿐이고 11월은 0건이다. 그래서 2017년의 전년 대비 성장률이 수십만 % 가 된다.</li>
+<li>2018년 9~10월은 주문이 수십 건뿐이다. 데이터를 모은 시점에 끝난 달이라 거의 비어 있다.</li>
+</ul>
+<p>실제 데이터에는 이런 <strong>불완전한 기간</strong>이 흔하다. 분석할 기간을 정해 그 밖은 빼자.</p>
+<ol>
+<li>꺾은선형 차트를 고른다.</li>
+<li><strong>필터 창 → 이 시각적 개체의 필터</strong> 에 데이터 창의 날짜[Date] 를 끌어다 놓는다.</li>
+<li>필터 형식을 <strong>고급 필터링</strong> 으로 바꾸고, <code>다음 이후인 경우 2017-01-01</code> <strong>그리고</strong> <code>다음 이전인 경우 2018-08-31</code> → <strong>필터 적용</strong>.</li>
+<li>행렬에는 같은 기간 필터에 더해 <strong>날짜[연도] = 2018</strong> 필터를 건다. 2018년은 전년(2017년)과 비교할 수 있는 해다.</li>
+</ol>
+<figure><a href="../images/pbi_심화05_시간인텔리전스_p1.png" target="_blank"><img src="../images/pbi_심화05_시간인텔리전스_p1.png" alt="5장 완성 - 시간 인텔리전스" loading="lazy"></a><figcaption>5장 완성 - 시간 인텔리전스</figcaption></figure>
+<blockquote class="note">
+<p>시각적 개체 필터는 <strong>그 차트에만</strong> 걸린다. 카드의 전체 매출은 그대로 전체 기간이다. 페이지 전체 또는 모든 페이지에 걸려면 필터 창의 <strong>이 페이지의 필터 / 모든 페이지의 필터</strong> 칸에 넣는다.</p>
+</blockquote>
+<h2 id="정리">정리</h2>
+<ul>
+<li><code>SUMX(테이블, 식)</code> 처럼 X 로 끝나는 함수는 행마다 식을 계산한 뒤 모은다.</li>
+<li><code>FILTER(VALUES(열), 조건)</code> = 조건에 맞는 값 목록. 반복 함수 안에서 측정값을 쓰면 <strong>컨텍스트 전환</strong>으로 그 행의 필터에서 계산된다.</li>
+<li>시간 인텔리전스(<code>TOTALYTD</code>, <code>SAMEPERIODLASTYEAR</code>, <code>DATEADD</code>, <code>DATESINPERIOD</code>)는 날짜 필터를 다른 기간으로 바꾸는 CALCULATE 조건이다. <strong>날짜 테이블로 표시</strong>가 필요하다.</li>
+<li>불완전한 기간은 시각적 개체 필터로 빼고 분석한다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제</h2>
+<ol>
+<li><code>평균 주문 배송비 = AVERAGEX(VALUES('주문상품'[주문ID]), [배송비])</code> 를 만들어 보자. <code>[배송비] / [상품주문수]</code> 와 값이 같은가?</li>
+<li>2018년 8월의 상품매출과 전년 동기 매출은 각각 얼마인가? 전년 대비 성장률은?</li>
+<li>2018년 8월의 매출 YTD 는 얼마인가? 2018년 행렬의 상품매출을 1~8월 더한 값과 같은지 확인하자.</li>
+<li>재구매 고객 기준을 "세 번 이상 주문" 으로 바꾸면 몇 명인가?</li>
+</ol>
+<nav class="pager"><a href="ch04.html"><small>← 이전</small>4장 DAX ① CALCULATE</a><a class="next" href="ch06.html"><small>다음 →</small>6장 배송과 만족도 분석</a></nav>
+</article></div>
+<footer>Power BI 2단계 심화 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

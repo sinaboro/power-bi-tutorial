@@ -67,6 +67,16 @@ GUIDES = {
         cover_env="실습 환경  Windows + Power BI Desktop (무료, Microsoft Store)",
         accent="#F2C811",
     ),
+    "advanced": dict(
+        src=ROOT / "docs" / "advanced",
+        out=ROOT / "docs" / "PowerBI_심화_학습교안.pdf",
+        title="Power BI 심화",
+        cover_sub=["실제 전자상거래 데이터 분석", "Olist 주문 10만 건으로 대화형 보고서 만들기"],
+        cover_tools="매개 변수 · 쿼리 병합 · CALCULATE · 시간 인텔리전스 · 드릴스루 · RLS · PostgreSQL",
+        cover_course="2단계 · 약 24시간 · 10장 · 기초 과정을 마친 학생의 자기 주도 학습용",
+        cover_env="실습 환경  Windows + Power BI Desktop (무료) · (선택) Docker Desktop",
+        accent="#2E86C1",
+    ),
 }
 CFG = GUIDES["basic"]  # build() 에서 바꾼다
 

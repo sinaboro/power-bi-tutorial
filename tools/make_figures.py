@@ -160,7 +160,110 @@ def fig_layout():
     save(fig, "fig_layout.png")
 
 
+# ================================================================== 심화 과정 그림
+# ------------------------------------------------------------------ 심화 0장: Olist 파일과 연결 열
+def fig_olist_tables():
+    fig, ax = canvas(10, 5.2)
+    title(ax, "Olist 데이터 - 파일 7개와 연결 열")
+    box(ax, 38, 22, 24, 13, "orders (주문)\norder_id · customer_id\n주문상태 · 날짜 5개", "navy", 9.5, True)
+    box(ax, 2, 36, 26, 11, "customers (고객)\ncustomer_id\ncustomer_unique_id · state", "grey", 9)
+    box(ax, 72, 36, 26, 11, "order_reviews (리뷰)\nreview_id · order_id\nreview_score", "orange", 9)
+    box(ax, 72, 20, 26, 11, "order_payments (결제)\norder_id · payment_type\npayment_value", "orange", 9)
+    box(ax, 38, 3, 24, 11, "order_items (주문상품)\norder_id · product_id\nseller_id · price", "orange", 9, True)
+    box(ax, 2, 3, 26, 11, "products (상품)\nproduct_id\ncategory_name (포르투갈어)", "green", 9)
+    box(ax, 72, 3, 26, 11, "sellers (판매자)\nseller_id\nseller_city · seller_state", "green", 9)
+    arrow(ax, 28, 41, 38, 32, "customer_id", GREY, size=8)
+    arrow(ax, 72, 41, 62, 32, "order_id", ORANGE, size=8)
+    arrow(ax, 72, 25.5, 62, 28, "order_id", ORANGE, size=8, ly=1.5)
+    arrow(ax, 50, 14, 50, 22, "order_id", ORANGE, size=8)
+    arrow(ax, 38, 8.5, 28, 8.5, "product_id", GREEN, size=8, ly=2)
+    arrow(ax, 62, 8.5, 72, 8.5, "seller_id", GREEN, size=8, ly=2)
+    save(fig, "fig_olist_tables.png")
+
+
+# ------------------------------------------------------------------ 심화 3장: Olist 모델
+def fig_olist_model():
+    fig, ax = canvas(10, 5.6)
+    title(ax, "Olist 모델 - 필터는 화살표 방향(일 → 다)으로 흐른다")
+    box(ax, 4, 38, 18, 9, "날짜\n(Date)", "green", 10, True)
+    box(ax, 4, 22, 18, 9, "주\n(주코드·지역)", "green", 10, True)
+    box(ax, 38, 28, 24, 12, "주문\n주문ID · 고객ID · 고객주\n구매일 · 배송완료일 · 배송상태", "navy", 9.5, True)
+    box(ax, 76, 40, 20, 9, "리뷰\n평점", "orange", 9.5, True)
+    box(ax, 76, 26, 20, 9, "결제\n결제금액 · 결제수단", "orange", 9.5, True)
+    box(ax, 38, 6, 24, 11, "주문상품\n가격 · 배송비", "orange", 9.5, True)
+    box(ax, 4, 4, 18, 9, "상품\n카테고리 · 대분류", "green", 9.5, True)
+    box(ax, 78, 4, 18, 9, "판매자\n판매자주", "green", 9.5, True)
+    arrow(ax, 22, 43, 38, 37, "1 → *  구매일 (활성)", GREEN, size=8, ly=2.5)
+    ax.add_patch(FancyArrowPatch((22, 40), (38, 34), arrowstyle="-|>", mutation_scale=13, color=GREY, lw=1.3,
+                                 linestyle="--", clip_on=False))
+    ax.text(13, 34.2, "점선: 배송완료일 (비활성)", ha="center", fontsize=7.6, color=GREY)
+    arrow(ax, 22, 26.5, 38, 30, "1 → *", GREEN, size=8, ly=-2)
+    arrow(ax, 62, 37, 76, 44, "1 → *", NAVY, size=8)
+    arrow(ax, 62, 33, 76, 30.5, "1 → *", NAVY, size=8)
+    arrow(ax, 50, 28, 50, 17, "1 → *", NAVY, size=8, lx=4)
+    arrow(ax, 22, 8.5, 38, 10, "1 → *", GREEN, size=8, ly=2)
+    arrow(ax, 78, 8.5, 62, 10, "1 → *", GREEN, size=8, ly=2)
+    save(fig, "fig_olist_model.png")
+
+
+# ------------------------------------------------------------------ 심화 3장: 필터 방향 실험
+def fig_filter_direction():
+    fig, ax = canvas(10, 3.6)
+    title(ax, "행렬의 '가구·인테리어' 행 - 필터가 어디까지 흐를까?")
+    box(ax, 2, 10, 18, 12, "상품\n대분류 = 가구·인테리어", "green", 9.5, True)
+    box(ax, 38, 10, 22, 12, "주문상품\n→ 상품매출 2,239,686\n→ 상품주문수 18,221", "orange", 9.2, True)
+    box(ax, 76, 10, 22, 12, "주문\n걸러지지 않음\n→ 주문수 99,441 (전체)", "red", 9.2, True)
+    arrow(ax, 21, 16, 38, 16, "1 → * 흐른다 (O)", GREEN, size=8.5, ly=3)
+    ax.add_patch(FancyArrowPatch((60, 16), (76, 16), arrowstyle="-|>", mutation_scale=13, color=RED, lw=1.5,
+                                 linestyle="--", clip_on=False))
+    ax.text(68, 19.5, "* → 1 안 흐른다 (X)", ha="center", fontsize=8.5, color=RED)
+    ax.text(50, 4, "해결: 주문상품에서 세는 측정값(상품주문수) 또는 CROSSFILTER(…, Both) 로 그 측정값에서만 방향을 바꾼다",
+            ha="center", fontsize=8.8, color="#1f2937")
+    save(fig, "fig_filter_direction.png")
+
+
+# ------------------------------------------------------------------ 심화 4장: CALCULATE
+def fig_calculate():
+    fig, ax = canvas(10, 3.6)
+    title(ax, "CALCULATE([주문수], '주문'[주문상태] = \"배송완료\")  -  '남동부' 행에서")
+    box(ax, 2, 8, 24, 15, "① 원래 필터\n(행렬의 행)\n\n지역 = 남동부", "grey", 9.5)
+    box(ax, 36, 8, 26, 15, "② 조건을 바꾼 필터\n\n지역 = 남동부\n그리고 주문상태 = 배송완료", "navy", 9.5, True)
+    box(ax, 72, 8, 26, 15, "③ 바뀐 필터로 계산\n\n[주문수]\n= 남동부의 배송완료 주문 수", "green", 9.5)
+    arrow(ax, 26, 15.5, 36, 15.5, "조건 더하기", NAVY, size=8.5, ly=3)
+    arrow(ax, 62, 15.5, 72, 15.5, "계산", NAVY, size=8.5, ly=3)
+    ax.text(50, 2.5, "REMOVEFILTERS 는 ②에서 필터를 없애고, USERELATIONSHIP·CROSSFILTER 는 ②에서 관계를 바꾼다",
+            ha="center", fontsize=8.8, color="#1f2937")
+    save(fig, "fig_calculate.png")
+
+
+# ------------------------------------------------------------------ 심화 5장: 시간 인텔리전스
+def fig_time_intel():
+    import matplotlib.patches as mp
+    fig, ax = canvas(10, 4.2)
+    title(ax, "2018년 3월 행에서 각 함수가 고르는 기간")
+    months = ["17-01", "17-02", "17-03", "17-04", "…", "17-12", "18-01", "18-02", "18-03"]
+    xs = [16 + i * 9 for i in range(len(months))]
+    for x, m in zip(xs, months):
+        ax.text(x + 4, 30.5, m, ha="center", fontsize=8, color=GREY)
+    rows = [("TOTALYTD", [6, 7, 8], NAVY), ("SAMEPERIODLASTYEAR", [2], ORANGE),
+            ("DATEADD -1 MONTH", [7], GREEN), ("DATESINPERIOD -3 MONTH", [6, 7, 8], RED)]
+    for r, (name, idx, colr) in enumerate(rows):
+        y = 23 - r * 6.2
+        ax.text(14, y + 2, name, ha="right", va="center", fontsize=8.6, color="#1f2937")
+        for i, x in enumerate(xs):
+            on = i in idx
+            ax.add_patch(mp.Rectangle((x, y), 8, 4, fc=colr if on else "#eef0f3", ec="white", alpha=0.85 if on else 1))
+    ax.add_patch(mp.Rectangle((xs[8] - 0.4, 2.5), 8.8, 26, fill=False, ec=NAVY, lw=1.2, ls="--"))
+    ax.text(xs[8] + 4, 0.6, "지금 행", ha="center", fontsize=8, color=NAVY)
+    save(fig, "fig_time_intel.png")
+
+
 if __name__ == "__main__":
+    fig_olist_tables()
+    fig_olist_model()
+    fig_filter_direction()
+    fig_calculate()
+    fig_time_intel()
     fig_bi_flow()
     fig_query_steps()
     fig_star()

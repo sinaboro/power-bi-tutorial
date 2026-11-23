@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>부록 B. 용어 풀이 (심화) - Power BI 2단계 심화</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="부록 B. 용어 풀이 (심화) - Power BI 2단계 심화"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side .cap{font-weight:800;margin:4px 10px 6px;color:var(--sub)}
+.side .other{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>교안</b></a><span class="sp"></span>
+<a class="btn" href="../basic/ch00.html">기초</a>
+<a class="btn" href="../advanced/ch00.html">심화</a>
+<a class="btn hide-s" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><div class="cap">Power BI 2단계 심화</div><a href="ch00.html">0장 과정 안내와 Olist 데이터</a><a href="ch01.html">1장 여러 파일과 매개 변수</a><a href="ch02.html">2장 병합과 조건 열</a><a href="ch03.html">3장 모델링 심화</a><a href="ch04.html">4장 DAX ① CALCULATE</a><a href="ch05.html">5장 DAX ② 시간 인텔리전스</a><a href="ch06.html">6장 배송과 만족도 분석</a><a href="ch07.html">7장 고급 보고서 기능</a><a href="ch08.html">8장 행 수준 보안과 성능</a><a href="ch09.html">9장 프로젝트 - 판매자 성과</a><a href="ch10.html">10장 (선택) PostgreSQL 연결</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html" class=on>부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a><div class="other"><a href="../PowerBI_%EC%8B%AC%ED%99%94_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF 교안</a><a href="../basic/ch00.html">→ 1단계 기초 과정</a></div></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내와 Olist 데이터</option><option value="ch01.html">1장 여러 파일과 매개 변수</option><option value="ch02.html">2장 병합과 조건 열</option><option value="ch03.html">3장 모델링 심화</option><option value="ch04.html">4장 DAX ① CALCULATE</option><option value="ch05.html">5장 DAX ② 시간 인텔리전스</option><option value="ch06.html">6장 배송과 만족도 분석</option><option value="ch07.html">7장 고급 보고서 기능</option><option value="ch08.html">8장 행 수준 보안과 성능</option><option value="ch09.html">9장 프로젝트 - 판매자 성과</option><option value="ch10.html">10장 (선택) PostgreSQL 연결</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html" selected>부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="부록-b-용어-풀이-심화">부록 B. 용어 풀이 (심화)</h1>
+<p>기초 과정의 용어(측정값, 필터 컨텍스트, 관계, 카디널리티 등)는 기초 교안 부록 B 를 보자. 여기에는 심화 과정에서 새로 나온 용어만 모았다.</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>용어</th>
+<th>뜻</th>
+<th>나온 곳</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>매개 변수</strong> (parameter)</td>
+<td>여러 쿼리가 함께 쓰는 이름 붙은 값. 파일 경로처럼 바뀔 수 있는 값을 한 곳에 둔다</td>
+<td>1장</td>
+</tr>
+<tr>
+<td><strong>M</strong></td>
+<td>Power Query 의 식 언어. 적용된 단계 하나가 M 식 하나</td>
+<td>1장</td>
+</tr>
+<tr>
+<td><strong>QuoteStyle</strong></td>
+<td>CSV 에서 따옴표를 어떻게 읽을지. <code>Csv</code> 면 따옴표 안의 줄 바꿈을 값의 일부로 읽는다</td>
+<td>2장</td>
+</tr>
+<tr>
+<td><strong>쿼리 병합</strong> (merge)</td>
+<td>키 열로 짝을 지어 다른 쿼리의 열을 붙이는 작업. 엑셀의 VLOOKUP 과 비슷하다</td>
+<td>2장</td>
+</tr>
+<tr>
+<td><strong>조인 종류</strong></td>
+<td>병합할 때 어떤 행을 남길지. 왼쪽 외부, 내부, 왼쪽 앤티 등</td>
+<td>2장</td>
+</tr>
+<tr>
+<td><strong>로드 사용 안 함</strong></td>
+<td>쿼리를 Power Query 안에서만 쓰고 모델에는 넣지 않는 설정</td>
+<td>2장</td>
+</tr>
+<tr>
+<td><strong>조건 열</strong></td>
+<td>대화 상자로 만드는 if … then … else 열</td>
+<td>2장</td>
+</tr>
+<tr>
+<td><strong>사실 테이블 / 차원 테이블</strong></td>
+<td>일어난 일(주문, 결제)을 기록한 표 / 그 일을 설명하는 표(상품, 판매자, 날짜)</td>
+<td>3장</td>
+</tr>
+<tr>
+<td><strong>필터 방향</strong> (크로스 필터 방향)</td>
+<td>관계를 따라 필터가 흐르는 방향. 기본은 일(1) → 다(*) 단일 방향</td>
+<td>3장</td>
+</tr>
+<tr>
+<td><strong>비활성 관계</strong></td>
+<td>모델에 있지만 평소에는 쓰지 않는 관계(점선). USERELATIONSHIP 으로 켠다</td>
+<td>3장</td>
+</tr>
+<tr>
+<td><strong>계층</strong> (hierarchy)</td>
+<td>지역 → 주, 연도 → 분기 → 월 처럼 위아래가 있는 열 묶음</td>
+<td>3장</td>
+</tr>
+<tr>
+<td><strong>측정값 테이블</strong></td>
+<td>측정값만 모아 두는 테이블 (_측정값)</td>
+<td>3장</td>
+</tr>
+<tr>
+<td><strong>CALCULATE</strong></td>
+<td>필터를 바꾼 다음 식을 계산하는 함수</td>
+<td>4장</td>
+</tr>
+<tr>
+<td><strong>REMOVEFILTERS</strong></td>
+<td>테이블이나 열에 걸린 필터를 없앤다</td>
+<td>4장</td>
+</tr>
+<tr>
+<td><strong>VAR / RETURN</strong></td>
+<td>식 안에서 중간 결과에 이름을 붙이고(VAR), 최종 결과를 돌려준다(RETURN)</td>
+<td>4장</td>
+</tr>
+<tr>
+<td><strong>CROSSFILTER</strong></td>
+<td>측정값 안에서만 관계의 필터 방향을 바꾼다</td>
+<td>4장</td>
+</tr>
+<tr>
+<td><strong>USERELATIONSHIP</strong></td>
+<td>측정값 안에서만 비활성 관계를 켠다</td>
+<td>4장</td>
+</tr>
+<tr>
+<td><strong>반복 함수</strong> (iterator)</td>
+<td>SUMX, AVERAGEX, FILTER 처럼 표의 행을 하나씩 돌며 식을 계산하는 함수</td>
+<td>5장</td>
+</tr>
+<tr>
+<td><strong>컨텍스트 전환</strong></td>
+<td>반복 중인 행의 값이 CALCULATE(측정값) 안에서 필터로 바뀌는 일</td>
+<td>5장</td>
+</tr>
+<tr>
+<td><strong>시간 인텔리전스</strong></td>
+<td>TOTALYTD, SAMEPERIODLASTYEAR, DATEADD 처럼 날짜 필터를 다른 기간으로 바꾸는 함수</td>
+<td>5장</td>
+</tr>
+<tr>
+<td><strong>YTD</strong> (Year To Date)</td>
+<td>그해 1월 1일부터 지금까지의 누계</td>
+<td>5장</td>
+</tr>
+<tr>
+<td><strong>시각적 개체 필터</strong></td>
+<td>그 차트 하나에만 걸리는 필터</td>
+<td>5장</td>
+</tr>
+<tr>
+<td><strong>분산형 차트</strong></td>
+<td>두 측정값을 X·Y 축으로 놓아 점으로 그린 차트. 관계를 볼 때 쓴다</td>
+<td>6장</td>
+</tr>
+<tr>
+<td><strong>드릴다운 / 드릴업</strong></td>
+<td>계층의 아래 수준으로 파고들기 / 위로 돌아가기</td>
+<td>7장</td>
+</tr>
+<tr>
+<td><strong>상위 N 필터</strong></td>
+<td>측정값 기준으로 위(또는 아래)에서 N 개만 남기는 필터</td>
+<td>7장</td>
+</tr>
+<tr>
+<td><strong>조건부 서식</strong></td>
+<td>값에 따라 셀 배경색·글꼴색·막대·아이콘을 바꾸는 서식</td>
+<td>7장</td>
+</tr>
+<tr>
+<td><strong>도구 설명 페이지</strong></td>
+<td>마우스를 올리면 뜨는 작은 보고서 페이지</td>
+<td>7장</td>
+</tr>
+<tr>
+<td><strong>드릴스루</strong></td>
+<td>항목 하나를 골라 그 항목으로 걸러진 상세 페이지로 넘어가기</td>
+<td>7장</td>
+</tr>
+<tr>
+<td><strong>책갈피</strong></td>
+<td>보고서 화면 상태를 저장해 두고 단추로 불러오는 기능</td>
+<td>7장</td>
+</tr>
+<tr>
+<td><strong>행 수준 보안 (RLS)</strong></td>
+<td>역할마다 볼 수 있는 행을 DAX 필터 식으로 제한하는 기능</td>
+<td>8장</td>
+</tr>
+<tr>
+<td><strong>역할로 보기</strong></td>
+<td>Desktop 에서 역할이 걸린 상태를 시험해 보는 기능</td>
+<td>8장</td>
+</tr>
+<tr>
+<td><strong>성능 분석기</strong></td>
+<td>시각적 개체마다 계산·그리기에 걸린 시간을 재는 창</td>
+<td>8장</td>
+</tr>
+<tr>
+<td><strong>커넥터</strong></td>
+<td>Power BI 가 데이터 원본(PostgreSQL 등)에 연결하는 부품</td>
+<td>10장</td>
+</tr>
+<tr>
+<td><strong>네이티브 쿼리 / 쿼리 폴딩</strong></td>
+<td>데이터베이스가 직접 이해하는 SQL / Power Query 단계를 SQL 로 바꿔 데이터베이스에서 계산하게 하는 일</td>
+<td>10장</td>
+</tr>
+<tr>
+<td><strong>뷰</strong> (view)</td>
+<td>데이터베이스에 저장해 둔 SELECT 문. 표처럼 불러올 수 있다</td>
+<td>10장</td>
+</tr>
+<tr>
+<td><strong>가져오기 / DirectQuery</strong></td>
+<td>데이터를 .pbix 에 복사 / 볼 때마다 데이터베이스에 질의</td>
+<td>10장</td>
+</tr>
+<tr>
+<td><strong>헤알 (R$)</strong></td>
+<td>브라질의 화폐 단위. 이 교안의 금액 단위</td>
+<td>0장</td>
+</tr>
+</tbody>
+</table></div>
+<nav class="pager"><a href="appA.html"><small>← 이전</small>부록 A 오류 해결</a><a class="next" href="appC.html"><small>다음 →</small>부록 C 확인 문제 풀이</a></nav>
+</article></div>
+<footer>Power BI 2단계 심화 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>

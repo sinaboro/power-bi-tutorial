@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>7장. 고급 보고서 기능 - 드릴다운, 드릴스루, 도구 설명, 조건부 서식 - Power BI 2단계 심화</title>
+<meta name="description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:title" content="7장. 고급 보고서 기능 - 드릴다운, 드릴스루, 도구 설명, 조건부 서식 - Power BI 2단계 심화"><meta property="og:description" content="Power BI 를 처음 배우는 학생을 위한 기초 과정 (약 20시간)">
+<meta property="og:image" content="https://sinaboro.github.io/power-bi-tutorial/images/pbi_07_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C%EC%99%84%EC%84%B1_p1.png"><meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='14' width='6' height='14' fill='%23f2c811'/%3E%3Crect x='13' y='8' width='6' height='20' fill='%23e0a800'/%3E%3Crect x='22' y='3' width='6' height='25' fill='%23b07d00'/%3E%3C/svg%3E">
+<script>
+if(/KAKAOTALK/i.test(navigator.userAgent)){location.href='kakaotalk://web/openExternal?url='+encodeURIComponent(location.href);}
+</script>
+<style>
+:root{--ink:#1f2328;--sub:#59636e;--line:#e4e1d8;--bg:#faf8f3;--card:#fff;--navy:#1d2b4f;--yellow:#f2c811;
+--brown:#6b4a2f;--note:#fff8dc;--noteline:#e9c84a;--code:#f4f1ea;--link:#1a5fb4}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#e8e6e1;--sub:#a7a39b;--line:#38352f;--bg:#191815;
+--card:#23221e;--navy:#0f1730;--note:#2c2813;--noteline:#8a7420;--code:#2b2a25;--link:#8ab4f8}}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif;word-break:keep-all}
+a{color:var(--link)}img{max-width:100%;height:auto}
+header.top{background:var(--navy);color:#fff;position:sticky;top:0;z-index:5}
+header.top .in{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center}
+header.top a{color:#fff;text-decoration:none}.logo{font-weight:800;white-space:nowrap}.logo b{color:var(--yellow)}
+header.top .sp{flex:1}header.top .btn{font-size:14px;border:1px solid #ffffff55;border-radius:8px;padding:4px 10px;white-space:nowrap}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+/* 장 읽기 화면: 넓은 화면에서는 왼쪽 목차 */
+.doc{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;padding:24px 16px 60px;max-width:1100px;margin:0 auto}
+.side{position:sticky;top:64px;align-self:start;max-height:calc(100vh - 80px);overflow:auto;font-size:14px}
+.side a{display:block;padding:5px 10px;border-radius:6px;color:var(--ink);text-decoration:none}
+.side .cap{font-weight:800;margin:4px 10px 6px;color:var(--sub)}
+.side .other{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+.side a.on{background:var(--yellow);color:#222;font-weight:700}.side a:hover:not(.on){background:var(--line)}
+article{min-width:0}
+article h1{font-size:28px;line-height:1.35;margin:0 0 20px;padding-bottom:12px;border-bottom:4px solid var(--yellow)}
+article h2{font-size:22px;margin:40px 0 12px;padding-left:10px;border-left:5px solid var(--brown)}
+article h3{font-size:18px;margin:28px 0 8px}
+figure{margin:18px 0;text-align:center}figure img{border:1px solid var(--line);border-radius:8px;background:#fff}
+figcaption{font-size:13px;color:var(--sub);margin-top:6px}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:15px}
+th{background:var(--navy);color:#fff;text-align:left}th,td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--card) 70%,var(--line))}
+blockquote.note{margin:16px 0;padding:10px 16px;background:var(--note);border-left:5px solid var(--noteline);border-radius:6px}
+blockquote.note p{margin:6px 0}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font-family:Consolas,"D2Coding",monospace;font-size:.92em}
+pre{background:var(--code);padding:12px 14px;border-radius:8px;overflow-x:auto;border-left:4px solid var(--yellow)}
+pre code{background:none;padding:0;font-size:14px;line-height:1.55}
+.pager{display:flex;gap:12px;justify-content:space-between;margin-top:48px;padding-top:20px;border-top:1px solid var(--line)}
+.pager a{flex:1;padding:12px 14px;border:1px solid var(--line);border-radius:10px;text-decoration:none;color:var(--ink);background:var(--card)}
+.pager a small{display:block;color:var(--sub)}.pager .next{text-align:right}
+select.jump{display:none;width:100%;font-size:16px;padding:8px;margin-bottom:12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+@media (max-width:820px){.doc{display:block;padding-top:16px}.side{display:none}select.jump{display:block}article h1{font-size:23px}
+header.top .hide-s{display:none}}
+/* 첫 화면 */
+.hero{background:var(--navy);color:#fff;padding:44px 0 36px}
+.hero h1{font-size:40px;margin:0 0 8px;line-height:1.2}.hero h1 b{color:var(--yellow)}
+.hero p{margin:6px 0;color:#d9deea;max-width:640px}.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.cta a{padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:700}
+.cta .main{background:var(--yellow);color:#222}.cta .sub{border:1px solid #ffffff66;color:#fff}
+.hero .shot{margin-top:28px;border-radius:10px;border:1px solid #ffffff33;display:block}
+section{padding:36px 0 8px}section h2{font-size:24px;margin:0 0 6px}section .lead{color:var(--sub);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column}
+.card:hover{border-color:var(--yellow);box-shadow:0 4px 14px #0000001a}
+.card .im{aspect-ratio:16/9;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.card .im img{width:100%;height:100%;object-fit:cover;object-position:left top}
+.card .tx{padding:12px 14px}.card b{display:block}.card small{color:var(--sub)}
+.steps{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px 12px 54px;position:relative}
+.steps li:before{counter-increment:s;content:counter(s);position:absolute;left:14px;top:12px;width:28px;height:28px;border-radius:50%;
+background:var(--yellow);color:#222;font-weight:800;text-align:center;line-height:28px}
+.dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.dl a{display:block;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink)}
+.dl a:hover{border-color:var(--yellow)}.dl small{display:block;color:var(--sub)}
+footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
+@media (max-width:600px){.hero h1{font-size:30px}.hero{padding-top:30px}}
+</style></head><body>
+<header class="top"><div class="in">
+<a class="logo" href="../index.html">Power BI <b>교안</b></a><span class="sp"></span>
+<a class="btn" href="../basic/ch00.html">기초</a>
+<a class="btn" href="../advanced/ch00.html">심화</a>
+<a class="btn hide-s" href="../index.html#download">내려받기</a>
+</div></header>
+<div class="doc">
+<nav class="side"><div class="cap">Power BI 2단계 심화</div><a href="ch00.html">0장 과정 안내와 Olist 데이터</a><a href="ch01.html">1장 여러 파일과 매개 변수</a><a href="ch02.html">2장 병합과 조건 열</a><a href="ch03.html">3장 모델링 심화</a><a href="ch04.html">4장 DAX ① CALCULATE</a><a href="ch05.html">5장 DAX ② 시간 인텔리전스</a><a href="ch06.html">6장 배송과 만족도 분석</a><a href="ch07.html" class=on>7장 고급 보고서 기능</a><a href="ch08.html">8장 행 수준 보안과 성능</a><a href="ch09.html">9장 프로젝트 - 판매자 성과</a><a href="ch10.html">10장 (선택) PostgreSQL 연결</a><a href="appA.html">부록 A 오류 해결</a><a href="appB.html">부록 B 용어 풀이</a><a href="appC.html">부록 C 확인 문제 풀이</a><div class="other"><a href="../PowerBI_%EC%8B%AC%ED%99%94_%ED%95%99%EC%8A%B5%EA%B5%90%EC%95%88.pdf" target="_blank">PDF 교안</a><a href="../basic/ch00.html">→ 1단계 기초 과정</a></div></nav>
+<article>
+<select class="jump" onchange="location.href=this.value" aria-label="장 이동"><option value="ch00.html">0장 과정 안내와 Olist 데이터</option><option value="ch01.html">1장 여러 파일과 매개 변수</option><option value="ch02.html">2장 병합과 조건 열</option><option value="ch03.html">3장 모델링 심화</option><option value="ch04.html">4장 DAX ① CALCULATE</option><option value="ch05.html">5장 DAX ② 시간 인텔리전스</option><option value="ch06.html">6장 배송과 만족도 분석</option><option value="ch07.html" selected>7장 고급 보고서 기능</option><option value="ch08.html">8장 행 수준 보안과 성능</option><option value="ch09.html">9장 프로젝트 - 판매자 성과</option><option value="ch10.html">10장 (선택) PostgreSQL 연결</option><option value="appA.html">부록 A 오류 해결</option><option value="appB.html">부록 B 용어 풀이</option><option value="appC.html">부록 C 확인 문제 풀이</option></select>
+<h1 id="7장-고급-보고서-기능---드릴다운-드릴스루-도구-설명-조건부-서식">7장. 고급 보고서 기능 - 드릴다운, 드릴스루, 도구 설명, 조건부 서식</h1>
+<h2 id="학습-목표">학습 목표</h2>
+<ul>
+<li><strong>계층</strong>으로 차트를 위아래로 파고드는 <strong>드릴다운</strong>을 쓴다.</li>
+<li><strong>상위 N</strong> 필터로 많은 항목 중 중요한 것만 보여 준다.</li>
+<li>표의 값에 따라 색을 칠하는 <strong>조건부 서식</strong>을 건다.</li>
+<li>마우스를 올리면 뜨는 <strong>도구 설명 페이지</strong>, 오른쪽 클릭으로 넘어가는 <strong>드릴스루 페이지</strong>를 만든다.</li>
+</ul>
+<p>이 장에서 만드는 보고서는 0장 첫 화면의 보고서다. 6장 파일을 열고 새 페이지 <strong>판매 개요</strong> 를 만든다. 제목, 슬라이서(날짜[연도], 주[지역]), 카드 4개(상품매출, 상품주문수, 객단가, 평균 평점)는 6장과 같은 방법으로 놓는다.</p>
+<figure><a href="../images/pbi_심화07_고급보고서기능_p1.png" target="_blank"><img src="../images/pbi_심화07_고급보고서기능_p1.png" alt="7장 완성 - 판매 개요 페이지" loading="lazy"></a><figcaption>7장 완성 - 판매 개요 페이지</figcaption></figure>
+<h2 id="7-1-드릴다운---지역에서-주로">7-1. 드릴다운 - 지역에서 주로</h2>
+<ol>
+<li><strong>묶은 세로 막대형</strong> 을 놓고 X축에 주[지역]을, 그 아래에 주[주이름]을 넣는다. (3장에서 만든 <strong>지역 계층</strong> 을 통째로 끌어 놓아도 된다)</li>
+<li>Y축에 상품매출. 축 정렬은 상품매출 내림차순.</li>
+<li>차트 위에 마우스를 올리면 오른쪽 위에 화살표 단추들이 보인다.</li>
+</ol>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>단추</th>
+<th>하는 일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>↓ (드릴다운 켜기)</td>
+<td>켠 다음 막대를 누르면 그 지역 <strong>안의 주</strong>들이 나온다</td>
+</tr>
+<tr>
+<td>⇊ (다음 수준으로 이동)</td>
+<td>모든 지역을 풀어 <strong>주 전체</strong>를 보여 준다</td>
+</tr>
+<tr>
+<td>⑂ (계층 확장)</td>
+<td>지역과 주를 함께 표시한다 (남동부 SP, 남동부 RJ …)</td>
+</tr>
+<tr>
+<td>↑ (드릴업)</td>
+<td>한 단계 위로 돌아간다</td>
+</tr>
+</tbody>
+</table></div>
+<p>↓ 를 켜고 <strong>남동부</strong> 막대를 누르면 상파울루·리우데자네이루·미나스제라이스·이스피리투산투 4개 주의 매출이 나온다.</p>
+<blockquote class="note">
+<p>날짜도 같다. X축에 <strong>날짜 계층</strong>(연도 → 분기 → 월)을 넣으면 연도별 막대에서 분기, 월로 파고들 수 있다.</p>
+</blockquote>
+<h2 id="7-2-상위-n-필터---매출-상위-10-카테고리">7-2. 상위 N 필터 - 매출 상위 10 카테고리</h2>
+<p>카테고리는 70개가 넘는다. 전부 그리면 막대가 너무 가늘어진다.</p>
+<ol>
+<li><strong>묶은 가로 막대형</strong> 에 Y축 상품[카테고리], X축 상품매출을 넣고 상품매출 내림차순 정렬.</li>
+<li>차트를 고른 채 <strong>필터 창 → 이 시각적 개체의 필터</strong> 에서 <strong>카테고리</strong> 카드를 펼친다.</li>
+<li>필터 형식 <strong>상위 N</strong> → 항목 표시 <strong>위쪽 10</strong> → 값 칸에 <strong>상품매출</strong> 을 끌어 놓고 → <strong>필터 적용</strong>.</li>
+</ol>
+<figure><a href="../images/ui_a_topn.png" target="_blank"><img src="../images/ui_a_topn.png" alt="필터 창의 상위 N 필터" loading="lazy"></a><figcaption>필터 창의 상위 N 필터</figcaption></figure>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>순위</th>
+<th>카테고리</th>
+<th>상품매출</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>건강·뷰티</td>
+<td>1,258,681</td>
+</tr>
+<tr>
+<td>2</td>
+<td>시계·선물</td>
+<td>1,205,006</td>
+</tr>
+<tr>
+<td>3</td>
+<td>침구·욕실·식탁</td>
+<td>1,036,989</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote class="note">
+<p>상위 N 은 <strong>슬라이서에 따라 다시 계산된다.</strong> 연도를 2017 로 고르면 2017년의 상위 10이 나온다.</p>
+</blockquote>
+<h2 id="7-3-조건부-서식---지연율이-높으면-빨간색">7-3. 조건부 서식 - 지연율이 높으면 빨간색</h2>
+<p><strong>행렬</strong>에 행 상품[대분류], 값 상품매출 · 매출 비중 · 카테고리 지연율 · 카테고리 평균 평점을 넣는다. 카테고리 지연율은 4장의 카테고리 평균 평점과 같은 방법으로 만든다.</p>
+<pre><code class="language-dax">카테고리 지연율 = CALCULATE([지연율], CROSSFILTER('주문상품'[주문ID], '주문'[주문ID], Both))
+</code></pre>
+<ol>
+<li>행렬을 고르고 시각화 창 <strong>값</strong> 칸의 <strong>카테고리 지연율</strong> 오른쪽 ▾ → <strong>조건부 서식 → 배경색</strong>.</li>
+<li>서식 스타일 <strong>그라데이션</strong>, 최소값 흰색, 최대값 빨간색 → <strong>확인</strong>.</li>
+</ol>
+<p>지연율이 높은 대분류일수록 칸이 진한 빨간색이 된다. 숫자를 읽지 않아도 문제가 있는 곳이 눈에 띈다.</p>
+<blockquote class="note">
+<p>조건부 서식에는 배경색 외에 <strong>글꼴 색</strong>, <strong>데이터 막대</strong>(칸 안에 막대), <strong>아이콘</strong>(▲▼●) 이 있다. 서식 스타일 <strong>규칙</strong> 을 고르면 "8% 이상이면 빨강" 처럼 구간을 직접 정할 수 있다.</p>
+</blockquote>
+<h2 id="7-4-도구-설명-페이지---마우스를-올리면-요약-화면">7-4. 도구 설명 페이지 - 마우스를 올리면 요약 화면</h2>
+<p>차트의 막대에 마우스를 올리면 기본으로 값 몇 개가 뜬다. 이 자리에 <strong>작은 보고서 페이지</strong>를 띄울 수 있다.</p>
+<ol>
+<li>새 페이지를 만들고 이름을 <strong>카테고리 툴팁</strong> 으로 바꾼다.</li>
+<li>시각화 창 <strong>서식(붓) → 페이지 정보 → 도구 설명으로 사용</strong> 을 켠다.</li>
+<li><strong>캔버스 설정 → 형식 → 도구 설명</strong> (320 × 240 크기)으로 바꾼다.</li>
+<li>작은 카드 2개(상품매출, 카테고리 평균 평점)와 월별 매출 꺾은선형을 놓는다.</li>
+<li>페이지 탭을 오른쪽 클릭 → <strong>페이지 숨기기</strong>. (보고서를 보는 사람에게 이 페이지가 따로 보이지 않게)</li>
+<li><strong>판매 개요</strong> 페이지로 돌아와 상위 10 막대 차트를 고르고, <strong>서식 → 일반 → 도구 설명</strong> → 형식 <strong>보고서 페이지</strong>, 페이지 <strong>카테고리 툴팁</strong>.</li>
+</ol>
+<p>막대에 마우스를 올리면 그 카테고리의 매출·평점·월별 추이가 작은 화면으로 뜬다.</p>
+<figure><a href="../images/ui_a_tooltip.png" target="_blank"><img src="../images/ui_a_tooltip.png" alt="도구 설명 페이지 - 막대에 마우스를 올린 모습" loading="lazy"></a><figcaption>도구 설명 페이지 - 막대에 마우스를 올린 모습</figcaption></figure>
+<h2 id="7-5-드릴스루---오른쪽-클릭으로-상세-페이지">7-5. 드릴스루 - 오른쪽 클릭으로 상세 페이지</h2>
+<p><strong>드릴스루</strong>는 한 항목을 골라 그 항목만의 <strong>상세 페이지</strong>로 넘어가는 기능이다.</p>
+<ol>
+<li>새 페이지 <strong>카테고리 상세</strong> 를 만든다.</li>
+<li>시각화 창 <strong>빌드(필드)</strong> 아래쪽의 <strong>드릴스루</strong> 칸에 상품[카테고리]를 끌어 놓는다. 왼쪽 위에 <strong>← 돌아가기</strong> 단추가 자동으로 생긴다.</li>
+<li>이 페이지에 카드(상품매출, 상품주문수, 카테고리 평균 평점, 매출 비중), 월별 매출 꺾은선형, 고객 지역별 매출 도넛형, 판매자별 매출 표를 놓는다.</li>
+<li><strong>판매 개요</strong> 로 돌아가 상위 10 막대 중 하나를 <strong>오른쪽 클릭 → 드릴스루 → 카테고리 상세</strong>.</li>
+</ol>
+<figure><a href="../images/ui_a_drillthrough.png" target="_blank"><img src="../images/ui_a_drillthrough.png" alt="오른쪽 클릭 메뉴의 드릴스루" loading="lazy"></a><figcaption>오른쪽 클릭 메뉴의 드릴스루</figcaption></figure>
+<p>카테고리 상세 페이지가 그 카테고리 하나로 걸러져 열린다. 왼쪽 위 <strong>돌아가기</strong> 로 원래 페이지에 돌아온다.</p>
+<figure><a href="../images/pbi_심화07_고급보고서기능_p2.png" target="_blank"><img src="../images/pbi_심화07_고급보고서기능_p2.png" alt="카테고리 상세 페이지 (드릴스루 대상)" loading="lazy"></a><figcaption>카테고리 상세 페이지 (드릴스루 대상)</figcaption></figure>
+<blockquote class="note">
+<p>도구 설명은 <strong>잠깐 보기</strong>, 드릴스루는 <strong>자세히 보기</strong>다. 둘 다 같은 원리 - 고른 항목(카테고리)이 대상 페이지의 <strong>필터</strong>로 넘어간다.</p>
+</blockquote>
+<h2 id="7-6-더-알아보기---책갈피와-단추">7-6. 더 알아보기 - 책갈피와 단추</h2>
+<p><strong>보기 → 책갈피</strong> 창에서 <strong>추가</strong> 를 누르면 지금 화면 상태(슬라이서 선택, 보이는 차트)가 저장된다. <strong>삽입 → 단추</strong> 로 단추를 놓고 <strong>작업 → 책갈피</strong> 를 연결하면, 단추를 눌러 저장한 화면으로 바꿀 수 있다. "2018년만 보기", "차트 ↔ 표 바꾸기" 같은 보고서 메뉴를 만들 때 쓴다. 단추의 작업을 <strong>페이지 탐색</strong> 으로 바꾸면 다른 페이지로 가는 메뉴 단추가 된다.</p>
+<h2 id="정리">정리</h2>
+<ul>
+<li>계층을 축에 넣으면 <strong>드릴다운</strong>(↓ ⇊ ⑂ ↑)으로 위아래 수준을 오간다.</li>
+<li><strong>상위 N</strong> 필터는 측정값 기준으로 위에서 N개만 남긴다. 슬라이서에 따라 다시 계산된다.</li>
+<li><strong>조건부 서식</strong>(배경색·글꼴색·데이터 막대·아이콘)으로 숫자를 색으로 읽게 한다.</li>
+<li><strong>도구 설명 페이지</strong>(마우스 올리기)와 <strong>드릴스루 페이지</strong>(오른쪽 클릭)는 고른 항목을 필터로 넘겨받는 작은/상세 페이지다.</li>
+</ul>
+<h2 id="확인-문제">확인 문제</h2>
+<ol>
+<li>드릴다운으로 <strong>북동부</strong> 를 열었을 때 매출이 가장 큰 주는 어디인가?</li>
+<li>상위 10 필터를 <strong>아래쪽 5</strong> 로 바꾸면 어떤 카테고리가 나오는가? (분류 없음 포함)</li>
+<li>대분류 행렬에서 카테고리 지연율이 가장 높은 대분류는 어디인가?</li>
+<li>드릴스루로 <strong>건강·뷰티</strong> 상세 페이지를 열었다. 고객 지역 중 남동부의 매출 비중은 몇 % 인가?</li>
+</ol>
+<nav class="pager"><a href="ch06.html"><small>← 이전</small>6장 배송과 만족도 분석</a><a class="next" href="ch08.html"><small>다음 →</small>8장 행 수준 보안과 성능</a></nav>
+</article></div>
+<footer>Power BI 2단계 심화 학습 교안 · 강사 김대철 · <a href="https://github.com/sinaboro/power-bi-tutorial">GitHub</a></footer>
+</body></html>
