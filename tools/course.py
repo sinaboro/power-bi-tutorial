@@ -33,8 +33,8 @@ def m_sales(stage):
     #"바꾼 값" = Table.ReplaceValue(#"필터링된 행","신용카드","카드",Replacer.ReplaceText,{"결제수단"}),
     #"바꾼 값1" = Table.ReplaceValue(#"바꾼 값","CARD","카드",Replacer.ReplaceText,{"결제수단"}),
     #"삽입된 날짜" = Table.AddColumn(#"바꾼 값1", "날짜", each DateTime.Date([주문일시]), type date),
-    #"삽입된 시간" = Table.AddColumn(#"삽입된 날짜", "시", each Time.Hour([주문일시]), Int64.Type),
-    #"이름을 바꾼 열 수" = Table.RenameColumns(#"삽입된 시간",{{"날짜", "주문일자"}, {"시", "주문시"}}),
+    #"삽입된 시간" = Table.AddColumn(#"삽입된 날짜", "시간", each Time.Hour([주문일시]), Int64.Type),
+    #"이름을 바꾼 열 수" = Table.RenameColumns(#"삽입된 시간",{{"날짜", "주문일자"}, {"시간", "주문시"}}),
     #"추가된 사용자 지정 항목" = Table.AddColumn(#"이름을 바꾼 열 수", "매출액", each [수량] * [단가]),
     #"변경된 유형1" = Table.TransformColumnTypes(#"추가된 사용자 지정 항목",{{"매출액", Int64.Type}}),
     #"제거된 열 수" = Table.RemoveColumns(#"변경된 유형1",{"주문상세번호", "주문일시"})

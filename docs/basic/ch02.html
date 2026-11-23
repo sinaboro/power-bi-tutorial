@@ -87,7 +87,7 @@ footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
 <h2 id="학습-목표">학습 목표</h2>
 <ul>
 <li>Power Query 편집기를 열고 화면 구성을 안다.</li>
-<li>중복 행 제거, 빈 값 거르기, 값 바꾸기, 공백 제거로 지저분한 데이터를 정리한다.</li>
+<li>중복 행 제거, 빈 값 거르기, 값 바꾸기, 공백 자르기로 지저분한 데이터를 정리한다.</li>
 <li>날짜·시간을 나누고, 계산된 열(매출액)을 추가하고, 필요 없는 열을 지운다.</li>
 <li>"적용된 단계" 가 무엇이고 왜 편리한지 설명할 수 있다.</li>
 </ul>
@@ -210,8 +210,8 @@ footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
 <ol>
 <li><strong>주문일시</strong> 열을 고른다.</li>
 <li><strong>열 추가 → 날짜 → 날짜만</strong>. 맨 오른쪽에 <code>날짜</code> 열이 생긴다.</li>
-<li>다시 <strong>주문일시</strong> 열을 고르고 <strong>열 추가 → 시간 → 시</strong>. <code>시</code> 열이 생긴다.</li>
-<li>새 열 머리글을 두 번 눌러 이름을 바꾼다: <code>날짜</code> → <strong>주문일자</strong>, <code>시</code> → <strong>주문시</strong>.</li>
+<li>다시 <strong>주문일시</strong> 열을 고르고 <strong>열 추가 → 시간 → 시간 → 시간</strong>. (시간 단추 ▾ 에서 <strong>시간</strong> 에 마우스를 올리면 하위 메뉴가 나오고, 그 안의 첫 번째 <strong>시간</strong> 을 누른다) <code>시간</code> 열이 생기고 0~23 숫자가 들어 있다.</li>
+<li>새 열 머리글을 두 번 눌러 이름을 바꾼다: <code>날짜</code> → <strong>주문일자</strong>, <code>시간</code> → <strong>주문시</strong>.</li>
 </ol>
 <blockquote class="note">
 <p><strong>열 추가</strong> 탭의 단추는 원래 열을 그대로 두고 <strong>새 열을 만든다.</strong> 같은 이름의 <strong>변환</strong> 탭 단추는 원래 열을 <strong>바꿔 버린다.</strong> 지금은 열 추가를 써야 한다.</p>
@@ -253,7 +253,7 @@ footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
 <h2 id="2-4-메뉴-쿼리-정리하기">2-4. 메뉴 쿼리 정리하기</h2>
 <ol>
 <li>왼쪽에서 <strong>메뉴</strong> 쿼리를 고른다.</li>
-<li><strong>메뉴명</strong> 열을 고르고 <strong>변환 → 서식 → 공백 제거</strong>. 앞뒤 빈칸이 사라진다 (단계 <code>잘린 텍스트</code>).</li>
+<li><strong>메뉴명</strong> 열을 고르고 <strong>변환 → 서식 → 자르기</strong>. 앞뒤 빈칸이 사라진다 (단계 <code>잘린 텍스트</code>).</li>
 <li><strong>Ctrl+A</strong> 로 모든 열을 고르고 <strong>홈 → 행 제거 → 중복된 항목 제거</strong>. 23줄이 22줄이 된다.</li>
 </ol>
 <figure><a href="../images/ui_pq_menu.png" target="_blank"><img src="../images/ui_pq_menu.png" alt="정리한 메뉴 쿼리" loading="lazy"></a><figcaption>정리한 메뉴 쿼리</figcaption></figure>
@@ -274,7 +274,7 @@ footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
 <ul>
 <li>Power Query 편집기: <strong>홈 → 데이터 변환</strong>. 작업은 <strong>적용된 단계</strong>로 기록되고 새로 고침 때마다 다시 실행된다.</li>
 <li>행 정리: 중복된 항목 제거(Ctrl+A 로 모든 열), 필터로 (null) 제거.</li>
-<li>값 정리: 값 바꾸기, 공백 제거, 형식 바꾸기.</li>
+<li>값 정리: 값 바꾸기, 자르기(앞뒤 공백 제거), 형식 바꾸기.</li>
 <li>열 만들기: <strong>열 추가</strong> 탭(날짜만, 시, 사용자 지정 열). 필요 없는 열은 지운다.</li>
 <li>끝나면 <strong>닫기 및 적용</strong>.</li>
 </ul>
