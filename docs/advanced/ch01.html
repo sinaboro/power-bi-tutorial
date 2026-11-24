@@ -161,6 +161,7 @@ footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
 <li>미리 보기가 그대로 나오면 성공이다. 경로 글자를 잘못 치면 노란 경고와 함께 "파일을 찾을 수 없습니다" 가 나온다. 경로와 <code>\</code> 를 다시 확인하자.</li>
 </ol>
 <blockquote class="note">
+<p><strong>식을 고치기 어렵다면 - 톱니바퀴로 하기</strong> 원본 단계 오른쪽 <strong>톱니바퀴</strong> 를 누르면 <strong>쉼표로 구분된 값</strong> 창이 열린다. 위쪽 <strong>고급</strong> 을 고르면 <strong>파일 경로 파트</strong> 가 두 칸으로 나뉜다. 첫 칸 왼쪽 ▾ 에서 <strong>매개 변수</strong> → <code>DataPath</code>, 둘째 칸에 <code>\olist_orders_dataset.csv</code> 를 적고 <strong>확인</strong>. 수식 입력줄을 보면 위 3번과 같은 식이 만들어져 있다.</p>
 <p><strong>수식 입력줄 = 단계의 진짜 모습.</strong> Power Query 에서 단추를 누르면 그 작업이 M 식으로 기록된다. 단추로 할 수 없는 일(매개 변수 끼워 넣기 같은)은 식을 직접 고치면 된다. 식 전체를 외울 필요는 없고, <strong>어디를 바꾸면 되는지</strong>만 알면 된다.</p>
 </blockquote>
 <h2 id="1-5-나머지-파일-불러오기">1-5. 나머지 파일 불러오기</h2>
@@ -208,6 +209,7 @@ footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
 <ol>
 <li>캔버스에 <strong>카드</strong> 를 하나 놓고, 데이터 창에서 <strong>주문</strong> 의 <code>order_id</code> 를 끌어 놓는다.</li>
 <li>카드 값 칸의 <code>order_id</code> 오른쪽 ▾ 를 눌러 <strong>개수</strong> 를 고른다. (<strong>개수(고유)</strong> 는 서로 다른 값의 수라서 행 수가 아니다)</li>
+<li>카드에 <code>99천</code> 처럼 줄여서 보이면 <strong>시각적 개체 서식 지정 → 시각적 개체 → 설명 → 값 → 표시 단위</strong> 를 <strong>없음</strong> 으로 바꾼다 (기초 6장).</li>
 <li>같은 방법으로 테이블마다 카드를 만든다. 아래는 완성 파일의 화면이다.</li>
 </ol>
 <figure><a href="../images/pbi_심화01_여러파일과매개변수_p1.png" target="_blank"><img src="../images/pbi_심화01_여러파일과매개변수_p1.png" alt="1장 완성 - 테이블별 행 수" loading="lazy"></a><figcaption>1장 완성 - 테이블별 행 수</figcaption></figure>

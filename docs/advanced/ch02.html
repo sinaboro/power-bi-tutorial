@@ -135,7 +135,7 @@ footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
 <li><strong>리뷰</strong> 쿼리의 <strong>원본</strong> 단계를 누른다.</li>
 <li>
 <p>수식 입력줄 끝의 <code>QuoteStyle=QuoteStyle.None</code> 을 <code>QuoteStyle=QuoteStyle.Csv</code> 로 바꾸고 <strong>Enter</strong>.
-   (원본 단계 오른쪽 톱니바퀴를 눌러 <strong>줄 바꿈</strong> 설정을 바꿔도 같은 식이 된다)</p>
+   식을 고치기 어렵다면 <strong>원본</strong> 단계 오른쪽 <strong>톱니바퀴</strong> → <strong>줄 바꿈</strong> 을 <code>모든 줄 바꿈 적용</code> 에서 <strong><code>따옴표 붙은 줄 바꿈 무시</code></strong> 로 바꾸고 <strong>확인</strong> 해도 같은 식이 된다.</p>
 </li>
 <li>
 <p>맨 아래 <strong>변경된 유형</strong> 단계를 다시 누른다. 이상한 값이 섞여 있던 <code>review_score</code> 열이 1~5 숫자만 남는다.</p>
@@ -223,15 +223,18 @@ footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
 <p>주문에는 날짜/시간 열이 5개 있다. 분석에는 날짜만 있으면 된다.</p>
 <ol>
 <li><strong>열 추가 → 사용자 지정 열</strong>.</li>
-<li>새 열 이름 <code>구매일</code>, 식 <code>DateTime.Date([order_purchase_timestamp])</code>, 아래 <strong>데이터 형식</strong> 을 <strong>날짜</strong> 로 고르고 <strong>확인</strong>.</li>
+<li>새 열 이름 <code>구매일</code>, 사용자 지정 열 수식 <code>DateTime.Date([order_purchase_timestamp])</code> → <strong>확인</strong>. (오른쪽 <strong>사용 가능한 열</strong> 목록에서 열을 두 번 누르면 <code>[열 이름]</code> 이 수식에 들어간다)</li>
 <li>같은 방법으로 두 열을 더 만든다.</li>
 </ol>
+<blockquote class="note">
+<p>사용자 지정 열 창에는 <strong>데이터 형식을 고르는 칸이 없다.</strong> 그래서 새 열 머리글에 형식 아이콘 <code>ABC123</code>(형식 없음)이 붙는다. 형식은 2-6 끝에서 한꺼번에 정한다.</p>
+</blockquote>
 <div class="tbl"><table>
 <thead>
 <tr>
 <th>새 열 이름</th>
 <th>식</th>
-<th>형식</th>
+<th>나중에 정할 형식</th>
 </tr>
 </thead>
 <tbody>
@@ -253,13 +256,13 @@ footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
 </tbody>
 </table></div>
 <ol start="4">
-<li>배송에 걸린 날 수를 계산한다. 새 열 이름 <code>배송일수</code>, 형식 <strong>정수</strong>, 식은</li>
+<li>배송에 걸린 날 수를 계산한다. 새 열 이름 <code>배송일수</code>, 식은</li>
 </ol>
 <pre><code class="language-text">if [배송완료일] = null then null else Duration.Days([배송완료일] - [구매일])
 </code></pre>
 <p>날짜에서 날짜를 빼면 <strong>기간</strong>(duration)이 되고, <code>Duration.Days</code> 가 그 기간의 날 수를 꺼낸다. 아직 배송되지 않은 주문은 배송완료일이 비어 있으므로(null) 계산하지 않고 null 로 둔다.</p>
 <ol start="5">
-<li>배송이 늦었는지 표시하는 열을 하나 더 만든다. 새 열 이름 <code>배송상태</code>, 형식 <strong>텍스트</strong>.</li>
+<li>배송이 늦었는지 표시하는 열을 하나 더 만든다. 새 열 이름 <code>배송상태</code>.</li>
 </ol>
 <pre><code class="language-text">if [배송완료일] = null then &quot;미배송&quot;
 else if [배송완료일] &gt; [예상배송일] then &quot;지연&quot;
@@ -302,6 +305,14 @@ else &quot;정시&quot;
 </tbody>
 </table></div>
 <p><strong>확인</strong> 하면 단계 <code>추가된 조건 열</code> 이 생긴다. 수식 입력줄을 보면 2-5 에서 직접 쓴 것과 같은 모양의 if 식이다.</p>
+<h3 id="새-열의-형식-정하기">새 열의 형식 정하기</h3>
+<p>2-5, 2-6 에서 만든 열 6개는 아직 형식이 없다(<code>ABC123</code>). 형식이 없으면 3장에서 날짜 관계를 만들 수 없고, 배송일수 평균도 구할 수 없다.</p>
+<ol>
+<li><strong>구매일</strong> 머리글을 누르고 <strong>Ctrl</strong> 을 누른 채 <strong>배송완료일</strong>, <strong>예상배송일</strong> 을 누른다.</li>
+<li>아무 머리글의 형식 아이콘(<code>ABC123</code>)을 눌러 <strong>날짜</strong>.</li>
+<li><strong>배송일수</strong> 는 <strong>정수</strong>, <strong>배송상태</strong>·<strong>주문상태</strong> 는 <strong>텍스트</strong> 로 바꾼다.</li>
+</ol>
+<p>형식을 연달아 바꾸면 단계 <code>변경된 유형1</code> 하나에 모인다. ("현재 전환 바꾸기" 를 묻는 창이 나오면 <strong>현재 전환 바꾸기</strong> 를 누른다)</p>
 <h2 id="2-7-열-정리">2-7. 열 정리</h2>
 <p><strong>주문</strong> 에서</p>
 <ol>
@@ -324,7 +335,7 @@ else &quot;정시&quot;
 </tr>
 <tr>
 <td><strong>결제</strong></td>
-<td>조건 열 <code>결제수단</code> (credit_card→신용카드, boleto→볼레토, voucher→바우처, debit_card→체크카드, 기타) 추가 후 <code>payment_type</code> 제거. 이름: order_id→<strong>주문ID</strong>, payment_sequential→<strong>결제순번</strong>, payment_installments→<strong>할부개월</strong>, payment_value→<strong>결제금액</strong></td>
+<td>조건 열 <code>결제수단</code> (credit_card→신용카드, boleto→볼레토, voucher→바우처, debit_card→체크카드, 기타) 추가, 결제수단 형식을 <strong>텍스트</strong> 로, <code>payment_type</code> 제거. 이름: order_id→<strong>주문ID</strong>, payment_sequential→<strong>결제순번</strong>, payment_installments→<strong>할부개월</strong>, payment_value→<strong>결제금액</strong></td>
 </tr>
 <tr>
 <td><strong>판매자</strong></td>

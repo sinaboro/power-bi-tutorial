@@ -95,7 +95,7 @@ footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
 <figure><a href="../images/pbi_심화07_고급보고서기능_p1.png" target="_blank"><img src="../images/pbi_심화07_고급보고서기능_p1.png" alt="7장 완성 - 판매 개요 페이지" loading="lazy"></a><figcaption>7장 완성 - 판매 개요 페이지</figcaption></figure>
 <h2 id="7-1-드릴다운---지역에서-주로">7-1. 드릴다운 - 지역에서 주로</h2>
 <ol>
-<li><strong>묶은 세로 막대형</strong> 을 놓고 X축에 주[지역]을, 그 아래에 주[주이름]을 넣는다. (3장에서 만든 <strong>지역 계층</strong> 을 통째로 끌어 놓아도 된다)</li>
+<li><strong>묶은 세로 막대형</strong> 을 놓고 X축에 주[지역]을, 그 아래에 주[주이름]을 넣는다. (3장에서 만든 <strong>지역 계층 구조</strong> 를 통째로 끌어 놓아도 된다)</li>
 <li>Y축에 상품매출. 정렬은 <strong>… → 기준 정렬 → 상품매출</strong>, 내림차순.</li>
 <li>차트 위에 마우스를 올리면 오른쪽 위에 화살표 단추들이 보인다.</li>
 </ol>
@@ -127,7 +127,7 @@ footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
 </table></div>
 <p>↓ 를 켜고 <strong>남동부</strong> 막대를 누르면 상파울루·리우데자네이루·미나스제라이스·이스피리투산투 4개 주의 매출이 나온다.</p>
 <blockquote class="note">
-<p>날짜도 같다. X축에 <strong>날짜 계층</strong>(연도 → 분기 → 월)을 넣으면 연도별 막대에서 분기, 월로 파고들 수 있다.</p>
+<p>날짜도 같다. X축에 <strong>연도 계층 구조</strong>(연도 → 분기 → 월)를 넣으면 연도별 막대에서 분기, 월로 파고들 수 있다.</p>
 </blockquote>
 <h2 id="7-2-상위-n-필터---매출-상위-10-카테고리">7-2. 상위 N 필터 - 매출 상위 10 카테고리</h2>
 <p>카테고리는 70개가 넘는다. 전부 그리면 막대가 너무 가늘어진다.</p>
@@ -182,11 +182,11 @@ footer{padding:40px 0 50px;color:var(--sub);font-size:14px;text-align:center}
 <p>차트의 막대에 마우스를 올리면 기본으로 값 몇 개가 뜬다. 이 자리에 <strong>작은 보고서 페이지</strong>를 띄울 수 있다.</p>
 <ol>
 <li>새 페이지를 만들고 이름을 <strong>카테고리 툴팁</strong> 으로 바꾼다.</li>
-<li>시각화 창 <strong>서식(붓) → 페이지 정보 → 도구 설명으로 사용</strong> 을 켠다.</li>
-<li><strong>캔버스 설정 → 형식 → 도구 설명</strong> (320 × 240 크기)으로 바꾼다.</li>
+<li>캔버스 빈 곳(시각적 개체가 없는 곳)을 누르고 시각화 창 <strong>서식 페이지</strong>(붓 아이콘) → <strong>페이지 정보 → 도구 설명으로 사용</strong> 을 켠다.</li>
+<li>같은 창 <strong>캔버스 설정 → 유형</strong> 을 <strong>도구 설명</strong> 으로 바꾼다. 크기가 320 × 240 이 된다.</li>
 <li>작은 카드 2개(상품매출, 카테고리 평균 평점)와 월별 매출 꺾은선형을 놓는다.</li>
 <li>페이지 탭을 오른쪽 클릭 → <strong>페이지 숨기기</strong>. (보고서를 보는 사람에게 이 페이지가 따로 보이지 않게)</li>
-<li><strong>판매 개요</strong> 페이지로 돌아와 상위 10 막대 차트를 고르고, <strong>서식 → 일반 → 도구 설명</strong> → 형식 <strong>보고서 페이지</strong>, 페이지 <strong>카테고리 툴팁</strong>.</li>
+<li><strong>판매 개요</strong> 페이지로 돌아와 상위 10 막대 차트를 고르고, <strong>시각적 개체 서식 지정 → 일반 → 도구 설명 → 옵션</strong> → 유형 <strong>보고서 페이지</strong>, 페이지 <strong>카테고리 툴팁</strong>.</li>
 </ol>
 <p>막대에 마우스를 올리면 그 카테고리의 매출·평점·월별 추이가 작은 화면으로 뜬다.</p>
 <figure><a href="../images/ui_a_tooltip.png" target="_blank"><img src="../images/ui_a_tooltip.png" alt="도구 설명 페이지 - 막대에 마우스를 올린 모습" loading="lazy"></a><figcaption>도구 설명 페이지 - 막대에 마우스를 올린 모습</figcaption></figure>

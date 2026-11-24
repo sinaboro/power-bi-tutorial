@@ -61,20 +61,23 @@ def m_orders(stage):
         ("병합된 쿼리", 'Table.NestedJoin(#"변경된 유형", {"customer_id"}, 고객, {"customer_id"}, "고객", JoinKind.LeftOuter)'),
         ("확장된 고객", 'Table.ExpandTableColumn(#"병합된 쿼리", "고객", {"customer_unique_id", "customer_state"}, '
                      '{"customer_unique_id", "customer_state"})'),
-        ("추가된 사용자 지정 항목", 'Table.AddColumn(#"확장된 고객", "구매일", each DateTime.Date([order_purchase_timestamp]), type date)'),
+        ("추가된 사용자 지정 항목", 'Table.AddColumn(#"확장된 고객", "구매일", each DateTime.Date([order_purchase_timestamp]))'),
         ("추가된 사용자 지정 항목1", 'Table.AddColumn(#"추가된 사용자 지정 항목", "배송완료일", '
-                               'each DateTime.Date([order_delivered_customer_date]), type date)'),
+                               'each DateTime.Date([order_delivered_customer_date]))'),
         ("추가된 사용자 지정 항목2", 'Table.AddColumn(#"추가된 사용자 지정 항목1", "예상배송일", '
-                               'each DateTime.Date([order_estimated_delivery_date]), type date)'),
+                               'each DateTime.Date([order_estimated_delivery_date]))'),
         ("추가된 사용자 지정 항목3", 'Table.AddColumn(#"추가된 사용자 지정 항목2", "배송일수", '
-                               'each if [배송완료일] = null then null else Duration.Days([배송완료일] - [구매일]), Int64.Type)'),
+                               'each if [배송완료일] = null then null else Duration.Days([배송완료일] - [구매일]))'),
         # 배송상태는 빈 값(null) 검사가 필요해 사용자 지정 열(식)로, 주문상태는 조건 열 대화 상자로 만든다
         ("추가된 사용자 지정 항목4", 'Table.AddColumn(#"추가된 사용자 지정 항목3", "배송상태", each if [배송완료일] = null then "미배송" '
-                               'else if [배송완료일] > [예상배송일] then "지연" else "정시", type text)'),
+                               'else if [배송완료일] > [예상배송일] then "지연" else "정시")'),
         ("추가된 조건 열", 'Table.AddColumn(#"추가된 사용자 지정 항목4", "주문상태", each if [order_status] = "delivered" then "배송완료" '
                        'else if [order_status] = "shipped" then "배송중" else if [order_status] = "canceled" then "취소" '
-                       'else "기타", type text)'),
-        ("제거된 열 수", 'Table.RemoveColumns(#"추가된 조건 열",{"customer_id", "order_status", "order_purchase_timestamp", '
+                       'else "기타")'),
+        # 사용자 지정 열·조건 열 대화 상자에는 데이터 형식 칸이 없다 → 만든 뒤 한 번에 형식을 바꾼다
+        ("변경된 유형1", 'Table.TransformColumnTypes(#"추가된 조건 열",{{"구매일", type date}, {"배송완료일", type date}, '
+                      '{"예상배송일", type date}, {"배송일수", Int64.Type}, {"배송상태", type text}, {"주문상태", type text}})'),
+        ("제거된 열 수", 'Table.RemoveColumns(#"변경된 유형1",{"customer_id", "order_status", "order_purchase_timestamp", '
                      '"order_approved_at", "order_delivered_carrier_date", "order_delivered_customer_date", '
                      '"order_estimated_delivery_date"})'),
         ("이름을 바꾼 열 수", 'Table.RenameColumns(#"제거된 열 수",{{"order_id", "주문ID"}, {"customer_unique_id", "고객ID"}, '
@@ -105,8 +108,9 @@ def m_payments(stage):
     return steps(*base,
         ("추가된 조건 열", 'Table.AddColumn(#"변경된 유형", "결제수단", each if [payment_type] = "credit_card" then "신용카드" '
                        'else if [payment_type] = "boleto" then "볼레토" else if [payment_type] = "voucher" then "바우처" '
-                       'else if [payment_type] = "debit_card" then "체크카드" else "기타", type text)'),
-        ("제거된 열 수", 'Table.RemoveColumns(#"추가된 조건 열",{"payment_type"})'),
+                       'else if [payment_type] = "debit_card" then "체크카드" else "기타")'),
+        ("변경된 유형1", 'Table.TransformColumnTypes(#"추가된 조건 열",{{"결제수단", type text}})'),
+        ("제거된 열 수", 'Table.RemoveColumns(#"변경된 유형1",{"payment_type"})'),
         ("이름을 바꾼 열 수", 'Table.RenameColumns(#"제거된 열 수",{{"order_id", "주문ID"}, {"payment_sequential", "결제순번"}, '
                          '{"payment_installments", "할부개월"}, {"payment_value", "결제금액"}})'))
 
@@ -237,10 +241,10 @@ def tables(stage):
         Table("리뷰", [C("리뷰ID", "string"), C("주문ID", "string"), C("평점", "int64", "0", "none"),
                      C("리뷰작성일", "dateTime", "yyyy-mm-dd")], m=m_reviews(stage)),
         Table("상품", [C("상품ID", "string"), C("카테고리", "string"), C("대분류", "string")], m=m_products(stage),
-              hierarchies={"카테고리 계층": ["대분류", "카테고리"]} if stage >= 3 else None),
+              hierarchies={"대분류 계층 구조": ["대분류", "카테고리"]} if stage >= 3 else None),
         Table("판매자", [C("판매자ID", "string"), C("판매자도시", "string"), C("판매자주", "string")], m=m_sellers(stage)),
         Table("주", [C("주코드", "string"), C("주이름", "string"), C("지역", "string")], m=m_states(stage),
-              hierarchies={"지역 계층": ["지역", "주이름"]} if stage >= 3 else None),
+              hierarchies={"지역 계층 구조": ["지역", "주이름"]} if stage >= 3 else None),
     ]
     if stage >= 3:
         d = C("Date", "dateTime", "yyyy-mm-dd", is_key=True)
@@ -255,7 +259,7 @@ def tables(stage):
             C("요일", "string", expr="FORMAT('날짜'[Date], \"aaa\")", sort_by="요일번호"),
             C("요일번호", "int64", "0", "none", expr="WEEKDAY('날짜'[Date], 2)"),
         ], dax="CALENDAR(DATE(2016, 1, 1), DATE(2018, 12, 31))", data_category="Time",
-            hierarchies={"날짜 계층": ["연도", "분기", "월"]}))
+            hierarchies={"연도 계층 구조": ["연도", "분기", "월"]}))
         t.insert(0, Table("_측정값", [C("임시", "int64", hidden=True, expr=None)], dax='ROW("임시", 0)',
                           measures=measures(stage)))
         t[0].columns[0].calc_source = True
